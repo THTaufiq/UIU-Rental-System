@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — UIU Student Rental System</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    .about-mission-grid {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .about-mission-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header / Navbar ── -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <!-- Logo -->
+      <a href="../index.html" style="display: flex; align-items: center; gap: 10px; flex-shrink: 0; text-decoration: none;">
+        <div style="width: 36px; height: 36px; background: #2563EB; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="9 22 9 12 15 12 15 22" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-size: 16px; font-weight: 700; color: #0F172A; line-height: 1.1;">UIU Rental</div>
+          <div style="font-size: 10px; color: #64748B; font-weight: 500;">System</div>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <div style="display: flex; align-items: center; gap: 4px;" class="desktop-nav">
+        <a href="../index.html" class="nav-link-btn">Home</a>
+        <a href="browse.html" class="nav-link-btn">Browse Rentals</a>
+        <a href="about.html" class="nav-link-btn active">About</a>
+        <a href="contact.html" class="nav-link-btn">Contact</a>
+      </div>
+
+      <!-- Guest Right Actions -->
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="login.html" class="btn-secondary btn-sm">Login</a>
+        <a href="signup.html" class="btn-primary btn-sm">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section style="background: linear-gradient(135deg, #0F172A, #1E3A5F); padding: 80px 24px; text-align: center;">
+    <div style="max-width: 680px; margin: 0 auto; text-align: center;">
+      <p style="font-size: 12px; font-weight: 700; color: #60A5FA; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px;">About Us</p>
+      <h1 style="font-size: 42px; font-weight: 800; color: #fff; margin: 0 0 16px;">Built for UIU Students</h1>
+      <p style="font-size: 17px; color: rgba(255,255,255,0.7); line-height: 1.8;">UIU Rental System is a dedicated student housing platform developed to simplify the process of finding safe, affordable, and verified rentals near United International University, Dhaka.</p>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section style="padding: 72px 24px; background: #fff;">
+    <div class="about-mission-grid">
+      <div>
+        <p style="font-size: 12px; font-weight: 700; color: #2563EB; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">Our Mission</p>
+        <h2 style="font-size: 28px; font-weight: 700; color: #0F172A; margin: 0 0 20px; line-height: 1.3;">Connecting Students with Safe Homes Near UIU</h2>
+        <p style="font-size: 15px; color: #64748B; line-height: 1.8; margin-bottom: 20px;">We believe every UIU student deserves access to safe, affordable, and well-maintained housing. Our platform eliminates the stress of house-hunting by connecting verified students with trusted landlords in neighborhoods surrounding the UIU campus.</p>
+        <p style="font-size: 15px; color: #64748B; line-height: 1.8;">From verified listings to in-app rent payments, maintenance tracking, and direct landlord chat — we've built everything a student needs to manage their off-campus housing in one place.</p>
+        <div style="display: flex; gap: 16px; margin-top: 28px; flex-wrap: wrap;">
+          <a href="browse.html" class="btn-primary">Browse Rentals</a>
+          <a href="contact.html" class="btn-secondary">Contact Us</a>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div class="card" style="padding: 20px; text-align: center;">
+          <div style="font-size: 28px; margin-bottom: 8px;">🎓</div>
+          <div style="font-size: 13px; font-weight: 700; color: #0F172A; margin-bottom: 4px;">Student-First</div>
+          <div style="font-size: 12px; color: #64748B; line-height: 1.5;">Designed with UIU students as the primary users.</div>
+        </div>
+        <div class="card" style="padding: 20px; text-align: center;">
+          <div style="font-size: 28px; margin-bottom: 8px;">🔒</div>
+          <div style="font-size: 13px; font-weight: 700; color: #0F172A; margin-bottom: 4px;">Verified Listings</div>
+          <div style="font-size: 12px; color: #64748B; line-height: 1.5;">Every property is manually verified by our team.</div>
+        </div>
+        <div class="card" style="padding: 20px; text-align: center;">
+          <div style="font-size: 28px; margin-bottom: 8px;">💰</div>
+          <div style="font-size: 13px; font-weight: 700; color: #0F172A; margin-bottom: 4px;">Affordable Prices</div>
+          <div style="font-size: 12px; color: #64748B; line-height: 1.5;">Find housing that fits a student budget.</div>
+        </div>
+        <div class="card" style="padding: 20px; text-align: center;">
+          <div style="font-size: 28px; margin-bottom: 8px;">🛡️</div>
+          <div style="font-size: 13px; font-weight: 700; color: #0F172A; margin-bottom: 4px;">Safe Platform</div>
+          <div style="font-size: 12px; color: #64748B; line-height: 1.5;">Secure payments and fraud protection built-in.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section style="background: #2563EB; padding: 56px 24px;">
+    <div style="max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 20px;">
+      <div style="text-align: center; color: #fff;">
+        <div style="font-size: 28px; font-weight: 800; line-height: 1;">2022</div>
+        <div style="font-size: 13px; opacity: 0.8; margin-top: 6px;">Year Founded</div>
+      </div>
+      <div style="text-align: center; color: #fff;">
+        <div style="font-size: 28px; font-weight: 800; line-height: 1;">8,500+</div>
+        <div style="font-size: 13px; opacity: 0.8; margin-top: 6px;">Active Students</div>
+      </div>
+      <div style="text-align: center; color: #fff;">
+        <div style="font-size: 28px; font-weight: 800; line-height: 1;">2,400+</div>
+        <div style="font-size: 13px; opacity: 0.8; margin-top: 6px;">Listed Properties</div>
+      </div>
+      <div style="text-align: center; color: #fff;">
+        <div style="font-size: 28px; font-weight: 800; line-height: 1;">98%</div>
+        <div style="font-size: 13px; opacity: 0.8; margin-top: 6px;">Satisfaction Rate</div>
+      </div>
+      <div style="text-align: center; color: #fff;">
+        <div style="font-size: 28px; font-weight: 800; line-height: 1;">1,200+</div>
+        <div style="font-size: 13px; opacity: 0.8; margin-top: 6px;">Verified Landlords</div>
+      </div>
+      <div style="text-align: center; color: #fff;">
+        <div style="font-size: 28px; font-weight: 800; line-height: 1;">Dhaka</div>
+        <div style="font-size: 13px; opacity: 0.8; margin-top: 6px;">City Coverage</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section style="padding: 72px 24px; background: #F8FAFC;">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <p style="font-size: 12px; font-weight: 700; color: #2563EB; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">The Team</p>
+        <h2 style="font-size: 28px; font-weight: 700; color: #0F172A; margin: 0;">Meet the People Behind UIU Rental</h2>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;">
+        <div class="card" style="padding: 28px; text-align: center;">
+          <div style="width: 64px; height: 64px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; font-weight: 700; margin: 0 auto 14px;">RI</div>
+          <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 4px;">Dr. Md. Rafiqul Islam</div>
+          <div style="font-size: 13px; color: #2563EB; font-weight: 600; margin-bottom: 4px;">Project Director</div>
+          <div style="font-size: 12px; color: #64748B;">CSE, UIU</div>
+        </div>
+        <div class="card" style="padding: 28px; text-align: center;">
+          <div style="width: 64px; height: 64px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; font-weight: 700; margin: 0 auto 14px;">SK</div>
+          <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 4px;">Asst. Prof. Sarah Khan</div>
+          <div style="font-size: 13px; color: #2563EB; font-weight: 600; margin-bottom: 4px;">Platform Lead</div>
+          <div style="font-size: 12px; color: #64748B;">CSE, UIU</div>
+        </div>
+        <div class="card" style="padding: 28px; text-align: center;">
+          <div style="width: 64px; height: 64px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; font-weight: 700; margin: 0 auto 14px;">MH</div>
+          <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 4px;">Mehedi Hasan</div>
+          <div style="font-size: 13px; color: #2563EB; font-weight: 600; margin-bottom: 4px;">Lead Developer</div>
+          <div style="font-size: 12px; color: #64748B;">Student, CSE</div>
+        </div>
+        <div class="card" style="padding: 28px; text-align: center;">
+          <div style="width: 64px; height: 64px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; font-weight: 700; margin: 0 auto 14px;">NA</div>
+          <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 4px;">Nusrat Akter</div>
+          <div style="font-size: 13px; color: #2563EB; font-weight: 600; margin-bottom: 4px;">UI/UX Designer</div>
+          <div style="font-size: 12px; color: #64748B;">Student, CSE</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section style="padding: 72px 24px; background: #fff;">
+    <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+      <p style="font-size: 12px; font-weight: 700; color: #2563EB; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">Our Values</p>
+      <h2 style="font-size: 28px; font-weight: 700; color: #0F172A; margin: 0 0 40px;">What We Stand For</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;">
+        <div style="padding: 24px; background: #F8FAFC; border-radius: 12px; border: 1px solid #E2E8F0; text-align: left;">
+          <div style="font-size: 28px; margin-bottom: 12px;">🌟</div>
+          <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 8px;">Transparency</div>
+          <div style="font-size: 14px; color: #64748B; line-height: 1.6;">We believe in honest, clear communication between all parties.</div>
+        </div>
+        <div style="padding: 24px; background: #F8FAFC; border-radius: 12px; border: 1px solid #E2E8F0; text-align: left;">
+          <div style="font-size: 28px; margin-bottom: 12px;">🤝</div>
+          <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 8px;">Trust</div>
+          <div style="font-size: 14px; color: #64748B; line-height: 1.6;">We build trust through verified listings and secure transactions.</div>
+        </div>
+        <div style="padding: 24px; background: #F8FAFC; border-radius: 12px; border: 1px solid #E2E8F0; text-align: left;">
+          <div style="font-size: 28px; margin-bottom: 12px;">💡</div>
+          <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 8px;">Innovation</div>
+          <div style="font-size: 14px; color: #64748B; line-height: 1.6;">We constantly improve the platform based on student feedback.</div>
+        </div>
+        <div style="padding: 24px; background: #F8FAFC; border-radius: 12px; border: 1px solid #E2E8F0; text-align: left;">
+          <div style="font-size: 28px; margin-bottom: 12px;">🌍</div>
+          <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 8px;">Community</div>
+          <div style="font-size: 14px; color: #64748B; line-height: 1.6;">We foster a positive community of students and responsible landlords.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section style="background: #0F172A; padding: 72px 24px; text-align: center;">
+    <h2 style="font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 12px;">Ready to Find Your Perfect Home?</h2>
+    <p style="font-size: 15px; color: rgba(255,255,255,0.6); margin-bottom: 28px;">Join thousands of UIU students on the platform.</p>
+    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+      <a href="login.html" class="btn-primary" style="padding: 13px 28px; text-decoration: none;">Get Started</a>
+      <a href="contact.html" class="btn-primary" style="padding: 13px 28px; text-decoration: none;">Contact Us</a>
+    </div>
+  </section>
+
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

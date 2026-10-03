@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — UIU Student Rental System</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+      <!-- Logo -->
+      <div style="padding: 18px 20px 14px; border-bottom: 1px solid #E2E8F0;">
+        <a href="../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+          <div style="width: 34px; height: 34px; background: #DC2626; border-radius: 9px; display: flex; align-items: center; justify-content: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: #0F172A; line-height: 1.1;">UIU Rental</div>
+            <div style="font-size: 10px; color: #DC2626; font-weight: 700;">System Admin</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- User Identity Panel -->
+      <div style="padding: 14px 20px; border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; gap: 10px;">
+        <div style="width: 38px; height: 38px; border-radius: 50%; background: #DC2626; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 700;">
+          AD
+        </div>
+        <div style="overflow: hidden;">
+          <div style="font-size: 13px; font-weight: 700; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">System Administrator</div>
+          <div style="font-size: 11px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">admin@uiu.ac.bd</div>
+          <span style="display: inline-block; margin-top: 3px; font-size: 10px; font-weight: 700; background: rgba(220,38,38,0.1); color: #DC2626; border-radius: 99px; padding: 1px 8px;">
+            Super Admin
+          </span>
+        </div>
+      </div>
+
+      <!-- Nav links -->
+      <nav style="padding: 10px; flex: 1;">
+        <a href="admin-dashboard.html" class="sidebar-link active"><span>⊞</span><span>Dashboard</span></a>
+        <a href="admin-users.html" class="sidebar-link"><span>👥</span><span>User Management</span></a>
+        <a href="admin-properties.html" class="sidebar-link"><span>🏠</span><span>Property Approvals</span></a>
+        <a href="admin-categories.html" class="sidebar-link"><span>🏷️</span><span>Categories</span></a>
+        <a href="admin-reports.html" class="sidebar-link"><span>📊</span><span>Reports & Analytics</span></a>
+        <a href="admin-settings.html" class="sidebar-link"><span>⚙️</span><span>Platform Settings</span></a>
+        <a href="admin-profile.html" class="sidebar-link"><span>👤</span><span>Admin Profile</span></a>
+      </nav>
+
+      <!-- Logout -->
+      <div style="padding: 10px; border-top: 1px solid #E2E8F0;">
+        <button onclick="logoutUser()" class="sidebar-link" style="color: #EF4444; width: 100%; border: none; background: none; text-align: left; cursor: pointer;">
+          <span>🚪</span><span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ── Main Content ── -->
+    <div class="main-content">
+      <!-- Top header bar -->
+      <header class="top-bar">
+        <div style="display: flex; align-items: center; gap: 12px; margin-left: auto;">
+          <button onclick="toggleAdminNotifications()" style="background: none; border: none; cursor: pointer; position: relative; padding: 6px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            <span style="position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; background: #EF4444; border-radius: 50%; border: 1.5px solid #fff;"></span>
+          </button>
+          <a href="admin-profile.html" style="width: 34px; height: 34px; border-radius: 50%; background: #DC2626; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; text-decoration: none;">AD</a>
+        </div>
+      </header>
+
+      <!-- Dropdown Notification Drawer Popup -->
+      <div id="admin-notif-drawer" style="display: none; position: fixed; top: 68px; right: 20px; z-index: 900; background: #fff; border-radius: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); border: 1px solid #E2E8F0; width: 360px; max-height: 440px; overflow-y: auto;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 14px; font-weight: 700; color: #0F172A;">System Alerts (3)</div>
+          <button onclick="showToast('All notifications marked as read')" style="background: none; border: none; font-size: 12px; color: #2563EB; cursor: pointer;">Mark all read</button>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <div style="padding: 12px 16px; border-bottom: 1px solid #F1F5F9; background: #FFF7ED; font-size: 12.5px; color: #374151;">
+            ⚠️ 47 Verifications pending review (23 Students, 24 Landlords).
+          </div>
+          <div style="padding: 12px 16px; border-bottom: 1px solid #F1F5F9; background: #EFF6FF; font-size: 12.5px; color: #374151;">
+            🔔 New landlord Abdul Kader submitted verification docs.
+          </div>
+          <div style="padding: 12px 16px; background: #F0FDF4; font-size: 12.5px; color: #374151;">
+            ✅ Monthly analytics report compiled successfully.
+          </div>
+        </div>
+      </div>
+
+      <!-- Scrollable Main Content -->
+      <main class="main-scroll-area fade-in tab-wrapper">
+        <div class="flex justify-between items-center" style="margin-bottom: 28px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h1 class="page-title">Admin Dashboard</h1>
+            <p class="page-subtitle">Platform overview — UIU Student Rental System</p>
+          </div>
+          <a href="admin-reports.html" class="btn-secondary btn-sm">📊 View Platform Reports</a>
+        </div>
+
+        <!-- Tab Controls -->
+        <div class="tab-container">
+          <button class="tab-btn active" data-tab-target="tab-overview">Overview</button>
+          <button class="tab-btn" data-tab-target="tab-students">Students</button>
+          <button class="tab-btn" data-tab-target="tab-landlords">Landlords</button>
+          <button class="tab-btn" data-tab-target="tab-properties">Properties</button>
+        </div>
+
+        <!-- ── TAB 1: OVERVIEW ── -->
+        <div id="tab-overview" class="tab-content active">
+          <!-- Stat Cards -->
+          <div class="grid-4" style="margin-bottom: 28px;">
+            <a href="admin-users.html" class="stat-card" style="text-decoration: none; display: block;">
+              <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #2563EB;"></div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <div style="font-size: 12px; color: #64748B; font-weight: 600; margin-bottom: 8px; text-transform: uppercase;">Total Users</div>
+                  <div style="font-size: 24px; font-weight: 800; color: #0F172A;">9,740</div>
+                  <div style="font-size: 12px; color: #22C55E; margin-top: 4px;">↑ 12% vs last month</div>
+                </div>
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(37,99,235,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px;">👥</div>
+              </div>
+            </a>
+
+            <a href="admin-properties.html" class="stat-card" style="text-decoration: none; display: block;">
+              <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #10B981;"></div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <div style="font-size: 12px; color: #64748B; font-weight: 600; margin-bottom: 8px; text-transform: uppercase;">Listed Properties</div>
+                  <div style="font-size: 24px; font-weight: 800; color: #0F172A;">2,413</div>
+                  <div style="font-size: 12px; color: #22C55E; margin-top: 4px;">↑ 8% vs last month</div>
+                </div>
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(16,185,129,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px;">🏠</div>
+              </div>
+            </a>
+
+            <a href="admin-reports.html" class="stat-card" style="text-decoration: none; display: block;">
+              <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #F59E0B;"></div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <div style="font-size: 12px; color: #64748B; font-weight: 600; margin-bottom: 8px; text-transform: uppercase;">Monthly Revenue</div>
+                  <div style="font-size: 24px; font-weight: 800; color: #0F172A;">৳0</div>
+                  <div style="font-size: 12px; color: #22C55E; margin-top: 4px;">↑ 15% vs last month</div>
+                </div>
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(245,158,11,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px;">💰</div>
+              </div>
+            </a>
+
+            <a href="admin-properties.html" class="stat-card" style="text-decoration: none; display: block;">
+              <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #EF4444;"></div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <div style="font-size: 12px; color: #64748B; font-weight: 600; margin-bottom: 8px; text-transform: uppercase;">Pending Verifications</div>
+                  <div style="font-size: 24px; font-weight: 800; color: #0F172A;">47</div>
+                  <div style="font-size: 12px; color: #EF4444; margin-top: 4px;">Needs review</div>
+                </div>
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(239,68,68,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px;">📋</div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Revenue Chart & User Distribution -->
+          <div class="grid-2" style="margin-bottom: 24px;">
+            <!-- Revenue Bar Chart -->
+            <div class="card" style="padding: 24px;">
+              <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 20px;">Monthly Platform Growth (৳ Lakhs)</h3>
+              <div style="display: flex; align-items: flex-end; gap: 10px; height: 140px;" id="monthly-growth-chart">
+              </div>
+            </div>
+
+            <!-- User Distribution -->
+            <div class="card" style="padding: 24px;">
+              <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 20px;">User Role Breakdown</h3>
+              <div style="display: flex; flex-direction: column; gap: 14px;" id="user-role-breakdown">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TAB 2: STUDENTS ── -->
+        <div id="tab-students" class="tab-content">
+          <div class="card" style="padding: 24px;">
+            <div class="flex justify-between items-center" style="margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+              <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0;">Registered Students</h3>
+              <a href="admin-users.html" class="btn-primary btn-sm">Manage All Students →</a>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Student ID</th>
+                    <th>Program</th>
+                    <th>Joined Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-row">
+                    <td style="font-weight: 600;">Rakib Hassan</td>
+                    <td>0112300001</td>
+                    <td>BSc CSE</td>
+                    <td>Nov 10, 2024</td>
+                    <td><span class="badge badge-green">Active</span></td>
+                    <td><a href="admin-users.html" class="btn-secondary btn-sm">View Details</a></td>
+                  </tr>
+                  <tr class="table-row">
+                    <td style="font-weight: 600;">Nusrat Jahan</td>
+                    <td>0112300045</td>
+                    <td>BBA</td>
+                    <td>Nov 12, 2024</td>
+                    <td><span class="badge badge-green">Active</span></td>
+                    <td><a href="admin-users.html" class="btn-secondary btn-sm">View Details</a></td>
+                  </tr>
+                  <tr class="table-row">
+                    <td style="font-weight: 600;">Mehedi Islam</td>
+                    <td>0112299988</td>
+                    <td>BSc EEE</td>
+                    <td>Nov 15, 2024</td>
+                    <td><span class="badge badge-orange">Pending</span></td>
+                    <td><a href="admin-users.html" class="btn-primary btn-sm">Review App</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TAB 3: LANDLORDS ── -->
+        <div id="tab-landlords" class="tab-content">
+          <div class="card" style="padding: 24px;">
+            <div class="flex justify-between items-center" style="margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+              <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0;">Registered Landlords</h3>
+              <a href="admin-users.html" class="btn-primary btn-sm">Manage All Landlords →</a>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Properties</th>
+                    <th>Joined</th>
+                    <th>Revenue</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-row">
+                    <td style="font-weight: 600;">Kamal Ahmed</td>
+                    <td>12 Properties</td>
+                    <td>Jan 2022</td>
+                    <td style="color: #2563EB; font-weight: 700;">৳1,12,000</td>
+                    <td><span class="badge badge-green">Verified Active</span></td>
+                    <td><a href="admin-users.html" class="btn-secondary btn-sm">Manage</a></td>
+                  </tr>
+                  <tr class="table-row">
+                    <td style="font-weight: 600;">Rina Begum</td>
+                    <td>5 Properties</td>
+                    <td>Mar 2023</td>
+                    <td style="color: #2563EB; font-weight: 700;">৳42,000</td>
+                    <td><span class="badge badge-green">Verified Active</span></td>
+                    <td><a href="admin-users.html" class="btn-secondary btn-sm">Manage</a></td>
+                  </tr>
+                  <tr class="table-row">
+                    <td style="font-weight: 600;">Abdul Kader</td>
+                    <td>3 Properties</td>
+                    <td>Nov 2024</td>
+                    <td style="color: #94A3B8;">৳0</td>
+                    <td><span class="badge badge-orange">Pending Review</span></td>
+                    <td><a href="admin-users.html" class="btn-primary btn-sm">Review Verification</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TAB 4: PROPERTIES ── -->
+        <div id="tab-properties" class="tab-content">
+          <div class="card" style="padding: 24px;">
+            <div class="flex justify-between items-center" style="margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+              <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0;">Property Approvals</h3>
+              <a href="admin-properties.html" class="btn-primary btn-sm">Open Property Manager →</a>
+            </div>
+            <div class="grid-3">
+              <div class="card" style="overflow: hidden;">
+                <div style="height: 120px; background: #EFF6FF; position: relative;">
+                  <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=300&h=130&fit=crop&auto=format" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                  <span class="badge badge-green" style="position: absolute; top: 8px; left: 8px;">Approved</span>
+                </div>
+                <div style="padding: 12px;">
+                  <h4 style="font-size: 13px; font-weight: 700; color: #0F172A; margin: 0 0 2px;">Studio Apt, Badda</h4>
+                  <div style="font-size: 12px; color: #64748B;">By Kamal Ahmed · ৳8,500/mo</div>
+                </div>
+              </div>
+
+              <div class="card" style="overflow: hidden;">
+                <div style="height: 120px; background: #EFF6FF; position: relative;">
+                  <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=300&h=130&fit=crop&auto=format" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                  <span class="badge badge-orange" style="position: absolute; top: 8px; left: 8px;">Pending Review</span>
+                </div>
+                <div style="padding: 12px;">
+                  <h4 style="font-size: 13px; font-weight: 700; color: #0F172A; margin: 0 0 2px;">Mess, Shahjadpur</h4>
+                  <div style="font-size: 12px; color: #64748B;">By Abdul Kader · ৳4,500/mo</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    function toggleAdminNotifications() {
+      const drawer = document.getElementById('admin-notif-drawer');
+      if (drawer) {
+        drawer.style.display = drawer.style.display === 'none' ? 'block' : 'none';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('../../backend/admin/dashboard.php')
+        .then(res => res.json())
+        .then(res => {
+          if (res.success && res.data) {
+            const stats = res.data.statistics;
+            const user = res.data.user;
+
+            // Update user info
+            const nameEls = document.querySelectorAll('.sidebar div[style*="font-size: 13px; font-weight: 700"]');
+            if (nameEls.length && user.full_name) {
+              nameEls[0].textContent = user.full_name;
+            }
+            const emailEls = document.querySelectorAll('.sidebar div[style*="font-size: 11px; color: #64748B"]');
+            if (emailEls.length && user.email) {
+              emailEls[0].textContent = user.email;
+            }
+
+            // Format Monthly Revenue
+            const monthlyRev = stats.monthly_revenue || 0;
+            let formattedRev = '৳0';
+            if (monthlyRev >= 100000) {
+              formattedRev = '৳' + (monthlyRev / 100000).toFixed(1).replace(/\.0$/, '') + 'L';
+            } else {
+              formattedRev = '৳' + Math.round(monthlyRev).toLocaleString();
+            }
+
+            // Update Stat Cards
+            const cardValues = document.querySelectorAll('.stat-card div[style*="font-size: 24px"]');
+            if (cardValues.length >= 4) {
+              cardValues[0].textContent = stats.total_users !== undefined ? stats.total_users.toLocaleString() : '0';
+              cardValues[1].textContent = stats.total_properties !== undefined ? stats.total_properties.toLocaleString() : '0';
+              cardValues[2].textContent = formattedRev;
+              cardValues[3].textContent = stats.pending_verifications !== undefined ? stats.pending_verifications.toLocaleString() : '0';
+            }
+
+            // Render User Role Breakdown
+            const roleContainer = document.getElementById('user-role-breakdown');
+            if (roleContainer) {
+              const total = stats.total_users || 1;
+              const studentCount = stats.total_students || 0;
+              const landlordCount = stats.total_landlords || 0;
+              const adminCount = stats.total_admins || 0;
+
+              const studentPct = Math.round((studentCount / total) * 100);
+              const landlordPct = Math.round((landlordCount / total) * 100);
+              const adminPct = Math.max(0, 100 - studentPct - landlordPct);
+
+              roleContainer.innerHTML = `
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px;">
+                    <span style="color: #374151; font-weight: 500;">Students</span><strong>${studentCount.toLocaleString()} (${studentPct}%)</strong>
+                  </div>
+                  <div style="height: 8px; background: #F1F5F9; border-radius: 4px;">
+                    <div style="height: 100%; width: ${studentPct}%; background: #2563EB; border-radius: 4px; transition: width 0.3s ease;"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px;">
+                    <span style="color: #374151; font-weight: 500;">Landlords</span><strong>${landlordCount.toLocaleString()} (${landlordPct}%)</strong>
+                  </div>
+                  <div style="height: 8px; background: #F1F5F9; border-radius: 4px;">
+                    <div style="height: 100%; width: ${landlordPct}%; background: #10B981; border-radius: 4px; transition: width 0.3s ease;"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px;">
+                    <span style="color: #374151; font-weight: 500;">Administrators</span><strong>${adminCount.toLocaleString()} (${adminPct}%)</strong>
+                  </div>
+                  <div style="height: 8px; background: #F1F5F9; border-radius: 4px;">
+                    <div style="height: 100%; width: ${adminPct}%; background: #DC2626; border-radius: 4px; transition: width 0.3s ease;"></div>
+                  </div>
+                </div>
+              `;
+            }
+
+            // Render Monthly Platform Growth Chart
+            const chartContainer = document.getElementById('monthly-growth-chart');
+            if (chartContainer && Array.isArray(stats.monthly_growth)) {
+              const maxVal = Math.max(...stats.monthly_growth.map(m => m.value), 1);
+              const maxBarHeight = 110;
+              let html = '';
+              stats.monthly_growth.forEach((item, idx) => {
+                const isCurrent = (idx === stats.monthly_growth.length - 1);
+                const height = Math.max(10, Math.round((item.value / maxVal) * maxBarHeight));
+
+                let formattedVal = '৳0';
+                if (item.value >= 100000) {
+                  formattedVal = (item.value / 100000).toFixed(1).replace(/\.0$/, '') + 'L';
+                } else if (item.value >= 1000) {
+                  formattedVal = '৳' + Math.round(item.value / 1000) + 'k';
+                } else if (item.value > 0) {
+                  formattedVal = '৳' + Math.round(item.value);
+                }
+
+                const barBg = isCurrent ? '#2563EB' : '#BFDBFE';
+                const valColor = isCurrent ? '#2563EB' : '#64748B';
+                const valWeight = isCurrent ? '700' : '400';
+                const labelColor = isCurrent ? '#0F172A' : '#94A3B8';
+                const labelWeight = isCurrent ? '700' : '400';
+
+                html += `
+                  <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                    <span style="font-size: 9px; color: ${valColor}; font-weight: ${valWeight};">${formattedVal}</span>
+                    <div style="width: 100%; background: ${barBg}; border-radius: 4px 4px 0 0; height: ${height}px; transition: height 0.3s ease;"></div>
+                    <span style="font-size: 10px; color: ${labelColor}; font-weight: ${labelWeight};">${item.month}</span>
+                  </div>
+                `;
+              });
+              chartContainer.innerHTML = html;
+            }
+          }
+        })
+        .catch(err => console.error('Error loading admin dashboard stats:', err));
+    });
+  </script>
+</body>
+</html>

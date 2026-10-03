@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Details — UIU Student Rental System</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    #property-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      #property-detail-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body style="background: #F8FAFC;">
+
+  <!-- Breadcrumb Bar -->
+  <div style="background: #fff; border-bottom: 1px solid #E2E8F0; padding: 12px 24px;">
+    <div style="max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #64748B;">
+      <button onclick="window.history.back()" class="btn-secondary btn-sm" style="padding: 4px 10px; font-size: 12px;">← Back</button>
+      <div style="width: 1px; height: 16px; background: #E2E8F0; margin: 0 4px;"></div>
+      <a href="../index.html" style="color: #2563EB;">Home</a>
+      <span>›</span>
+      <a href="browse.html" style="color: #2563EB;">Browse Rentals</a>
+      <span>›</span>
+      <span style="color: #0F172A; font-weight: 500;" id="breadcrumb-prop-title">Loading...</span>
+    </div>
+  </div>
+
+  <div style="max-width: 1100px; margin: 0 auto; padding: 28px 24px;">
+    <div id="property-detail-grid">
+      <!-- Left Main Column -->
+      <div>
+        <!-- Image Gallery -->
+        <div style="border-radius: 16px; overflow: hidden; margin-bottom: 16px; background: #EFF6FF; height: 400px;">
+          <img id="main-hero-img" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=440&fit=crop&auto=format" alt="Property" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div style="display: flex; gap: 8px; margin-bottom: 28px; overflow-x: auto;" id="thumb-gallery-container">
+          <div onclick="selectGalleryImgUrl('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=440&fit=crop&auto=format', 0)" class="thumb-box active" style="width: 80px; height: 56px; border-radius: 8px; overflow: hidden; border: 2px solid #2563EB; cursor: pointer; flex-shrink: 0;">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=100&h=70&fit=crop&auto=format" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        </div>
+        <!-- Title & Badges -->
+        <div style="margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span class="badge badge-blue" id="prop-badge-verified">✓ Verified</span>
+              <span class="badge badge-green" id="prop-badge-status">Available</span>
+              <span class="badge badge-gray" id="prop-badge-type">Studio</span>
+            </div>
+            <button id="btn-favorite-toggle" class="btn-secondary btn-sm" onclick="toggleFavorite()" style="display: inline-flex; align-items: center; gap: 6px;">
+              🤍 Favorite
+            </button>
+          </div>
+          <h1 style="font-size: 24px; font-weight: 700; color: #0F172A; margin: 0;" id="prop-title">Loading Property...</h1>
+          <div style="font-size: 14px; color: #64748B; margin-top: 6px;" id="prop-location">📍 Badda, Dhaka</div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 24px;">
+          <span style="color: #F59E0B; font-size: 16px;">★★★★★</span>
+          <span style="font-size: 15px; font-weight: 700;" id="header-avg-rating">4.5</span>
+          <span style="font-size: 13px; color: #64748B;" id="header-review-count">(0 reviews)</span>
+        </div>
+
+        <!-- Specs Grid -->
+        <div class="grid-4" style="margin-bottom: 28px;">
+          <div style="background: #F8FAFC; border-radius: 10px; padding: 12px; text-align: center; border: 1px solid #E2E8F0;">
+            <div style="font-size: 22px; margin-bottom: 4px;">🛏️</div>
+            <div style="font-size: 12px; color: #374151; font-weight: 500;" id="spec-bed">1 Bedroom</div>
+          </div>
+          <div style="background: #F8FAFC; border-radius: 10px; padding: 12px; text-align: center; border: 1px solid #E2E8F0;">
+            <div style="font-size: 22px; margin-bottom: 4px;">🚿</div>
+            <div style="font-size: 12px; color: #374151; font-weight: 500;" id="spec-bath">1 Bathroom</div>
+          </div>
+          <div style="background: #F8FAFC; border-radius: 10px; padding: 12px; text-align: center; border: 1px solid #E2E8F0;">
+            <div style="font-size: 22px; margin-bottom: 4px;">📐</div>
+            <div style="font-size: 12px; color: #374151; font-weight: 500;" id="spec-sqft">650 sqft</div>
+          </div>
+          <div style="background: #F8FAFC; border-radius: 10px; padding: 12px; text-align: center; border: 1px solid #E2E8F0;">
+            <div style="font-size: 22px; margin-bottom: 4px;">🏢</div>
+            <div style="font-size: 12px; color: #374151; font-weight: 500;" id="spec-floor">4th Floor</div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="card" style="padding: 24px; margin-bottom: 24px;">
+          <h3 style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0 0 12px;">About This Property</h3>
+          <p style="font-size: 14px; color: #374151; line-height: 1.8; margin: 0;" id="prop-description">
+            Loading property details...
+          </p>
+        </div>
+
+        <!-- Facilities -->
+        <div class="card" style="padding: 24px; margin-bottom: 24px;">
+          <h3 style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0 0 16px;">Facilities & Amenities</h3>
+          <div class="grid-3" id="facilities-container">
+            <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0;"><span style="font-size: 18px;">📶</span><span style="font-size: 13px; color: #374151;">High-Speed WiFi</span></div>
+          </div>
+        </div>
+
+        <!-- Property Reviews Section -->
+        <div class="card" style="padding: 24px;">
+          <!-- Section Header -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h3 style="font-size: 18px; font-weight: 700; color: #0F172A; margin: 0 0 4px;">Student Reviews</h3>
+              <div style="font-size: 13px; color: #64748B;">Verified feedback from UIU student tenants</div>
+            </div>
+            <button class="btn-primary btn-sm" onclick="openGiveReviewModal()" style="display: inline-flex; align-items: center; gap: 6px;">
+              <span>⭐</span> Give Review
+            </button>
+          </div>
+
+          <!-- Rating Summary Box -->
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; background: #F8FAFC; border-radius: 12px; padding: 20px; margin-bottom: 24px; border: 1px solid #E2E8F0; align-items: center;" id="rating-summary-box">
+            <div style="text-align: center; border-right: 1px solid #E2E8F0; padding-right: 16px;">
+              <div style="font-size: 36px; font-weight: 800; color: #0F172A; line-height: 1;" id="avg-score-display">4.5</div>
+              <div style="font-size: 12px; color: #64748B; margin-top: 4px;">out of 5.0</div>
+              <div style="color: #F59E0B; font-size: 16px; margin: 6px 0;" id="avg-stars-display">★★★★★</div>
+              <div style="font-size: 12px; color: #64748B;" id="based-on-text">Based on 0 reviews</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 6px;" id="rating-breakdown-bars">
+              <!-- Dynamically populated breakdown bars -->
+            </div>
+          </div>
+
+          <!-- Individual Reviews Container -->
+          <div id="reviews-list-container" style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- Review items dynamically injected -->
+          </div>
+
+          <!-- Expand / Collapse Button -->
+          <div style="text-align: center; margin-top: 20px;" id="toggle-reviews-btn-wrapper">
+            <button class="btn-secondary" id="btn-toggle-reviews" onclick="toggleViewAllReviews()" style="width: 100%; justify-content: center; padding: 10px; font-size: 13px; font-weight: 600;">
+              View All Reviews (<span id="reviews-count-btn-val">0</span>) ▼
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Booking Card -->
+      <div style="position: sticky; top: 20px;">
+        <div class="card" style="padding: 24px; margin-bottom: 16px;">
+          <div style="margin-bottom: 20px;">
+            <span style="font-size: 28px; font-weight: 800; color: #2563EB;" id="prop-price">৳0</span>
+            <span style="font-size: 14px; color: #64748B;"> / month</span>
+          </div>
+
+          <div style="background: #F8FAFC; border-radius: 10px; padding: 16px; margin-bottom: 20px; border: 1px solid #E2E8F0;">
+            <div class="flex justify-between" style="font-size: 13px; margin-bottom: 8px;">
+              <span style="color: #64748B;">Available From</span>
+              <span style="font-weight: 600;" id="prop-avail-from">Dec 1, 2024</span>
+            </div>
+            <div class="flex justify-between" style="font-size: 13px; margin-bottom: 8px;">
+              <span style="color: #64748B;">Minimum Stay</span>
+              <span style="font-weight: 600;" id="prop-min-stay">6 months</span>
+            </div>
+            <div class="flex justify-between" style="font-size: 13px;">
+              <span style="color: #64748B;">Deposit</span>
+              <span style="font-weight: 600;" id="prop-deposit">৳0</span>
+            </div>
+          </div>
+
+          <div id="landlord-action-box">
+            <button class="btn-primary" id="btn-apply-now" onclick="handleApplyClick()" style="width: 100%; padding: 13px; font-size: 15px; margin-bottom: 16px;">
+              Apply Now
+            </button>
+            <button id="btn-applied-status" style="display: none; width: 100%; padding: 13px; font-size: 15px; font-weight: 700; margin-bottom: 16px; background: #10B981; color: #ffffff; border: none; border-radius: 8px; text-align: center; cursor: default;">
+              ✓ Application Submitted
+            </button>
+
+            <div id="landlord-contact-box" style="background: #F8FAFC; border-radius: 10px; padding: 12px 16px; border: 1px solid #E2E8F0; text-align: center; margin-bottom: 16px;">
+              <div style="font-size: 11px; color: #64748B; font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;">Landlord Contact</div>
+              <div style="font-size: 14px; font-weight: 700; color: #0F172A; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                📞 <span id="landlord-phone">+880 1712-345678</span>
+              </div>
+            </div>
+            <a id="btn-chat-landlord" href="chat.html" class="btn-secondary" onclick="event.preventDefault(); const href = this.getAttribute('href'); window.location.href = getAuthUser() ? href : 'login.html';" style="width: 100%; padding: 13px; font-size: 15px; margin-bottom: 0;">
+              💬 Chat Landlord
+            </a>
+          </div>
+        </div>
+
+        <!-- Landlord Card -->
+        <div class="card" style="padding: 24px; margin-bottom: 16px;">
+          <h4 style="font-size: 14px; font-weight: 700; color: #0F172A; margin: 0 0 16px;">Landlord</h4>
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <div id="landlord-avatar" style="width: 48px; height: 48px; border-radius: 50%; background: #059669; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; font-weight: 700;">
+              KA
+            </div>
+            <div>
+              <div style="font-size: 15px; font-weight: 600; color: #0F172A;" id="landlord-name">Kamal Ahmed</div>
+              <div style="font-size: 12px; color: #64748B;" id="landlord-since">Member since 2021</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Apply Modal Overlay -->
+  <div id="apply-modal" class="modal-overlay">
+    <div class="modal-box" style="padding: 32px; max-width: 480px;">
+      <div class="flex justify-between items-center" style="margin-bottom: 24px;">
+        <h3 style="font-size: 18px; font-weight: 700; color: #0F172A; margin: 0;">Apply for Rental</h3>
+        <button onclick="closeModal('apply-modal')" style="background: none; border: none; font-size: 20px; cursor: pointer;">✕</button>
+      </div>
+      <form onsubmit="submitRentalApplication(event)">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Move-in Date *</label>
+            <input class="input-field" type="date" id="apply-movein-date" value="2024-12-01" required>
+          </div>
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Duration (months) *</label>
+            <select class="input-field" id="apply-duration" required>
+              <option value="3 months">3 months</option>
+              <option value="6 months" selected>6 months</option>
+              <option value="9 months">9 months</option>
+              <option value="12 months">12 months</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Message to Landlord</label>
+            <textarea class="input-field" id="apply-message" rows="3" placeholder="Introduce yourself and explain your situation..."></textarea>
+          </div>
+          <div style="font-size: 12px; color: #64748B; background: #F8FAFC; border: 1px solid #E2E8F0; padding: 10px 12px; border-radius: 8px; line-height: 1.4;">
+            ℹ️ Your student ID and UIU enrollment will be verified before the landlord sees your application.
+          </div>
+          <div style="display: flex; gap: 10px; margin-top: 6px;">
+            <button type="button" class="btn-secondary" onclick="closeModal('apply-modal')" style="flex: 1;">Cancel</button>
+            <button type="submit" class="btn-primary" style="flex: 2;">Submit Application</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Give Review Modal Overlay -->
+  <div id="give-review-modal" class="modal-overlay">
+    <div class="modal-box" style="padding: 32px; max-width: 480px;">
+      <div class="flex justify-between items-center" style="margin-bottom: 20px;">
+        <h3 style="font-size: 18px; font-weight: 700; color: #0F172A; margin: 0;">Give Your Review</h3>
+        <button onclick="closeGiveReviewModal()" style="background: none; border: none; font-size: 20px; cursor: pointer;">✕</button>
+      </div>
+
+      <form onsubmit="handleReviewSubmit(event)">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 8px;">Rating *</label>
+            <div id="star-rating-selector" style="display: flex; gap: 8px; font-size: 28px; cursor: pointer; color: #D1D5DB; user-select: none;">
+              <span class="star-opt" data-val="1" onclick="setRating(1)" onmouseover="hoverRating(1)" onmouseleave="resetHoverRating()">★</span>
+              <span class="star-opt" data-val="2" onclick="setRating(2)" onmouseover="hoverRating(2)" onmouseleave="resetHoverRating()">★</span>
+              <span class="star-opt" data-val="3" onclick="setRating(3)" onmouseover="hoverRating(3)" onmouseleave="resetHoverRating()">★</span>
+              <span class="star-opt" data-val="4" onclick="setRating(4)" onmouseover="hoverRating(4)" onmouseleave="resetHoverRating()">★</span>
+              <span class="star-opt" data-val="5" onclick="setRating(5)" onmouseover="hoverRating(5)" onmouseleave="resetHoverRating()">★</span>
+            </div>
+            <input type="hidden" id="selected-rating-val" value="0">
+          </div>
+
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Comment *</label>
+            <textarea id="review-comment-input" class="input-field" rows="4" placeholder="Write your honest experience about the room, facilities, landlord, and location..." style="resize: vertical;" required></textarea>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 8px;">
+            <button type="button" class="btn-secondary" onclick="closeGiveReviewModal()" style="flex: 1;">Cancel</button>
+            <button type="submit" class="btn-primary" style="flex: 2; justify-content: center;">Submit Review</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    function selectGalleryImgUrl(url, index) {
+      document.getElementById('main-hero-img').src = url;
+      document.querySelectorAll('#thumb-gallery-container .thumb-box').forEach((box, i) => {
+        box.style.borderColor = i === index ? '#2563EB' : 'transparent';
+      });
+    }
+
+    function getImageUrl(img) {
+      if (!img) return 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=440&fit=crop&auto=format';
+      if (img.startsWith('http')) return img;
+      if (img.startsWith('photo-')) return `https://images.unsplash.com/${img}?w=800&h=440&fit=crop&auto=format`;
+      return `../../${img}`;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const propId = urlParams.get('id') || '1';
+
+    let currentReviews = [];
+    let showAllReviews = false;
+    let selectedRating = 0;
+    let isLandlordOwner = false;
+    let loadedLandlordName = '';
+
+    function getFacilityIcon(name) {
+      const n = name.toLowerCase();
+      if (n.includes('wifi') || n.includes('wi-fi')) return '📶';
+      if (n.includes('ac') || n.includes('air')) return '❄️';
+      if (n.includes('bath')) return '🚿';
+      if (n.includes('kitchen')) return '🍳';
+      if (n.includes('dining')) return '🍽️';
+      if (n.includes('generator') || n.includes('backup')) return '💡';
+      if (n.includes('lift')) return '🛗';
+      if (n.includes('park')) return '🅿️';
+      if (n.includes('security')) return '🔒';
+      if (n.includes('cctv')) return '📷';
+      if (n.includes('gas')) return '🔥';
+      if (n.includes('water')) return '🚰';
+      if (n.includes('furnish')) return '🛋️';
+      if (n.includes('balcony')) return '🌅';
+      if (n.includes('wash')) return '🧺';
+      if (n.includes('study')) return '📚';
+      return '✔️';
+    }
+
+    function initPropertyDetails() {
+      const fromRole = urlParams.get('from') || urlParams.get('role');
+      const fromParam = fromRole ? `&from=${encodeURIComponent(fromRole)}` : '';
+      fetch(`../../backend/public/landing/property-details.php?id=${propId}${fromParam}`)
+        .then(res => res.json())
+        .then(result => {
+          if (!result || !result.success) {
+            if (typeof showToast === 'function') {
+              showToast(result?.message || 'Property not found', 'error');
+            }
+            return;
+          }
+          populatePropertyDetails(result.data);
+        })
+        .catch(err => {
+          console.error('Fetch error:', err);
+        });
+    }
+
+    function populatePropertyDetails(data) {
+      const p = data.property || {};
+      const landlord = data.landlord || {};
+      const images = data.images || [];
+      const facilities = data.facilities || [];
+      const rating = data.rating || {};
+      const reviews = data.reviews || [];
+
+      loadedLandlordName = landlord.full_name || '';
+
+      const breadcrumbSpan = document.getElementById('breadcrumb-prop-title');
+      if (breadcrumbSpan) breadcrumbSpan.textContent = p.title || 'Property Details';
+
+      const titleEl = document.getElementById('prop-title');
+      if (titleEl) titleEl.textContent = p.title;
+
+      const locEl = document.getElementById('prop-location');
+      if (locEl) locEl.textContent = `📍 ${p.full_address || p.neighborhood + ', ' + p.city} · ${p.distance_from_uiu_km} km from UIU Main Gate`;
+
+      const priceEl = document.getElementById('prop-price');
+      if (priceEl) priceEl.textContent = `৳${Number(p.monthly_rent).toLocaleString()}`;
+
+      const depositEl = document.getElementById('prop-deposit');
+      if (depositEl) depositEl.textContent = `৳${Number(p.security_deposit).toLocaleString()}`;
+
+      const typeEl = document.getElementById('prop-badge-type');
+      if (typeEl) typeEl.textContent = p.category_name || 'Apartment';
+
+      const verBadge = document.getElementById('prop-badge-verified');
+      if (verBadge) {
+        if (p.verified == 1 || p.verified === true) {
+          verBadge.style.display = 'inline-block';
+          verBadge.textContent = '✓ Verified';
+          verBadge.className = 'badge badge-blue';
+        } else {
+          verBadge.style.display = 'none';
+        }
+      }
+
+      const statusBadge = document.getElementById('prop-badge-status');
+      if (statusBadge) {
+        const statusVal = (p.status || '').toLowerCase();
+        if (statusVal === 'approved' || statusVal === 'available') {
+          statusBadge.textContent = 'Available';
+          statusBadge.className = 'badge badge-green';
+        } else if (statusVal === 'rented') {
+          statusBadge.textContent = 'Rented';
+          statusBadge.className = 'badge badge-orange';
+        } else if (statusVal === 'pending') {
+          statusBadge.textContent = 'Pending Review';
+          statusBadge.className = 'badge badge-yellow';
+        } else if (statusVal === 'rejected') {
+          statusBadge.textContent = 'Rejected';
+          statusBadge.className = 'badge badge-red';
+        } else if (statusVal === 'removed') {
+          statusBadge.textContent = 'Removed';
+          statusBadge.className = 'badge badge-red';
+        } else {
+          statusBadge.textContent = p.status ? (p.status.charAt(0).toUpperCase() + p.status.slice(1)) : 'Available';
+          statusBadge.className = 'badge badge-gray';
+        }
+      }
+
+      const availFromEl = document.getElementById('prop-avail-from');
+      if (availFromEl) availFromEl.textContent = p.available_from ? new Date(p.available_from).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Immediate';
+
+      const minStayEl = document.getElementById('prop-min-stay');
+      if (minStayEl) minStayEl.textContent = `${p.minimum_stay_months || 1} months`;
+
+      const bedEl = document.getElementById('spec-bed');
+      if (bedEl) bedEl.textContent = `${p.bedroom_count} Bedroom${p.bedroom_count > 1 ? 's' : ''}`;
+
+      const bathEl = document.getElementById('spec-bath');
+      if (bathEl) bathEl.textContent = `${p.bathroom_count} Bathroom${p.bathroom_count > 1 ? 's' : ''}`;
+
+      const sqftEl = document.getElementById('spec-sqft');
+      if (sqftEl) sqftEl.textContent = `${p.area_sqft} sqft`;
+
+      const floorEl = document.getElementById('spec-floor');
+      if (floorEl) floorEl.textContent = p.floor_label || 'N/A';
+
+      const descEl = document.getElementById('prop-description');
+      if (descEl) descEl.textContent = p.description || '';
+
+      const phoneEl = document.getElementById('landlord-phone');
+      if (phoneEl) phoneEl.textContent = landlord.phone || 'N/A';
+
+      const landlordNameEl = document.getElementById('landlord-name');
+      if (landlordNameEl) landlordNameEl.textContent = landlord.full_name || 'Landlord';
+
+      const landlordSinceEl = document.getElementById('landlord-since');
+      if (landlordSinceEl) landlordSinceEl.textContent = landlord.member_since ? `Member since ${new Date(landlord.member_since).getFullYear()}` : 'Member';
+
+      const landlordAvatarEl = document.getElementById('landlord-avatar');
+      if (landlordAvatarEl) {
+        const parts = (landlord.full_name || 'LA').trim().split(' ');
+        const initials = parts.length >= 2 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : parts[0].substring(0, 2).toUpperCase();
+        landlordAvatarEl.textContent = initials;
+      }
+
+      const chatBtn = document.getElementById('btn-chat-landlord');
+      if (chatBtn) {
+        const targetLandlordId = p.landlord_id || landlord.user_id || landlord.landlord_id || '';
+        chatBtn.href = `chat.html?property_id=${p.property_id}&landlord_id=${targetLandlordId}`;
+      }
+
+      // Images & Gallery
+      const mainImg = document.getElementById('main-hero-img');
+      const galleryBox = document.getElementById('thumb-gallery-container');
+      if (images.length > 0) {
+        if (mainImg) mainImg.src = getImageUrl(images[0].image_url);
+        if (galleryBox) {
+          galleryBox.innerHTML = images.map((imgObj, i) => `
+            <div onclick="selectGalleryImgUrl('${getImageUrl(imgObj.image_url)}', ${i})" class="thumb-box ${i === 0 ? 'active' : ''}"
+              style="width: 80px; height: 56px; border-radius: 8px; overflow: hidden; border: 2px solid ${i === 0 ? '#2563EB' : 'transparent'}; cursor: pointer; flex-shrink: 0;">
+              <img src="${getImageUrl(imgObj.image_url)}" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+          `).join('');
+        }
+      }
+
+      // Facilities
+      const facBox = document.getElementById('facilities-container');
+      if (facBox) {
+        if (facilities.length === 0) {
+          facBox.innerHTML = '<div style="font-size: 13px; color: #94A3B8;">No facility information available.</div>';
+        } else {
+          facBox.innerHTML = facilities.map(facName => `
+            <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0;">
+              <span style="font-size: 18px;">${getFacilityIcon(facName)}</span>
+              <span style="font-size: 13px; color: #374151;">${facName}</span>
+            </div>
+          `).join('');
+        }
+      }
+
+      // Rating Summary
+      const avgScoreEl = document.getElementById('avg-score-display');
+      if (avgScoreEl) avgScoreEl.textContent = rating.average ? rating.average.toFixed(1) : '4.5';
+
+      const basedOnEl = document.getElementById('based-on-text');
+      if (basedOnEl) basedOnEl.textContent = `Based on ${rating.count || 0} reviews`;
+
+      const headerAvgEl = document.getElementById('header-avg-rating');
+      if (headerAvgEl) headerAvgEl.textContent = rating.average ? rating.average.toFixed(1) : '4.5';
+
+      const headerCountEl = document.getElementById('header-review-count');
+      if (headerCountEl) headerCountEl.textContent = `(${rating.count || 0} reviews)`;
+
+      // Reviews array mapping
+      if (reviews && reviews.length > 0) {
+        currentReviews = reviews.map(r => {
+          const rParts = (r.reviewer_name || 'Student').trim().split(' ');
+          const rInitials = rParts.length >= 2 ? (rParts[0][0] + rParts[rParts.length - 1][0]).toUpperCase() : rParts[0].substring(0, 2).toUpperCase();
+          return {
+            name: r.reviewer_name || 'Student Tenant',
+            initials: rInitials,
+            bg: '#2563EB',
+            rating: parseInt(r.rating) || 5,
+            comment: r.comment,
+            date: r.created_at ? new Date(r.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : '',
+            reply: r.landlord_reply ? {
+              name: landlord.full_name || 'Landlord',
+              initials: (landlord.full_name || 'LA').substring(0, 2).toUpperCase(),
+              bg: '#059669',
+              comment: r.landlord_reply,
+              date: r.replied_at ? new Date(r.replied_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : ''
+            } : null
+          };
+        });
+      } else {
+        currentReviews = [];
+      }
+      renderReviewsSection();
+
+      updateRoleContextUI();
+    }
+
+    function updateRoleContextUI() {
+      const fromRole = urlParams.get('from') || urlParams.get('role');
+      const authUser = getAuthUser();
+
+      const isLandlordView = fromRole === 'landlord' || (document.referrer && document.referrer.includes('landlord'));
+      const isAdminView = fromRole === 'admin' || (document.referrer && document.referrer.includes('admin')) || (authUser && authUser.role === 'admin' && fromRole !== 'student');
+      const isCurrentRentalView = (fromRole === 'current_rental' || fromRole === 'current') && authUser && authUser.role === 'student';
+      const isGuestMode = (!authUser || authUser.role !== 'student' || fromRole === 'public' || fromRole === 'guest') && !isLandlordView && !isAdminView;
+      const isApplied = !isGuestMode && localStorage.getItem('uiu_applied_prop_' + propId) === 'true';
+
+      if (isLandlordView || isAdminView) {
+        const actionBox = document.getElementById('landlord-action-box');
+        if (actionBox) actionBox.style.display = 'none';
+        const giveReviewBtn = document.querySelector('button[onclick="openGiveReviewModal()"]');
+        if (giveReviewBtn) giveReviewBtn.style.display = 'none';
+      } else if (isGuestMode) {
+        const applyBtn = document.getElementById('btn-apply-now');
+        if (applyBtn) applyBtn.style.display = 'block';
+        const appliedStatusBtn = document.getElementById('btn-applied-status');
+        if (appliedStatusBtn) appliedStatusBtn.style.display = 'none';
+      } else if (isCurrentRentalView) {
+        const applyBtn = document.getElementById('btn-apply-now');
+        if (applyBtn) applyBtn.style.display = 'none';
+        const appliedStatusBtn = document.getElementById('btn-applied-status');
+        if (appliedStatusBtn) appliedStatusBtn.style.display = 'none';
+      } else if (isApplied) {
+        const applyBtn = document.getElementById('btn-apply-now');
+        if (applyBtn) applyBtn.style.display = 'none';
+        const appliedStatusBtn = document.getElementById('btn-applied-status');
+        if (appliedStatusBtn) appliedStatusBtn.style.display = 'block';
+      } else {
+        const applyBtn = document.getElementById('btn-apply-now');
+        if (applyBtn) applyBtn.style.display = 'block';
+        const appliedStatusBtn = document.getElementById('btn-applied-status');
+        if (appliedStatusBtn) appliedStatusBtn.style.display = 'none';
+      }
+    }
+
+    function checkOwnership() {
+      const fromRole = urlParams.get('from') || urlParams.get('role');
+      const isLandlordView = fromRole === 'landlord' || (document.referrer && document.referrer.includes('landlord'));
+      const authUser = getAuthUser();
+      const loggedInLandlord = authUser && authUser.role === 'landlord' ? authUser.name : (isLandlordView ? 'Kamal Ahmed' : null);
+
+      if (loggedInLandlord && loadedLandlordName && loadedLandlordName === loggedInLandlord) {
+        isLandlordOwner = true;
+      } else {
+        isLandlordOwner = false;
+      }
+    }
+
+    function initReviews() {
+      checkOwnership();
+      showAllReviews = false;
+      renderReviewsSection();
+    }
+
+    function renderReviewsSection() {
+      const total = currentReviews.length;
+      const avgScore = total > 0 ? (currentReviews.reduce((sum, r) => sum + r.rating, 0) / total).toFixed(1) : '4.5';
+
+      document.getElementById('avg-score-display').textContent = avgScore;
+      document.getElementById('based-on-text').textContent = `Based on ${total} reviews`;
+      document.getElementById('reviews-count-btn-val').textContent = total;
+
+      const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+      currentReviews.forEach(r => { counts[r.rating] = (counts[r.rating] || 0) + 1; });
+
+      const breakdownEl = document.getElementById('rating-breakdown-bars');
+      breakdownEl.innerHTML = [5, 4, 3, 2, 1].map(star => {
+        const cnt = counts[star] || 0;
+        const pct = total > 0 ? (cnt / total * 100).toFixed(0) : 0;
+        return `
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 12px; color: #64748B;">
+            <span style="width: 42px; font-weight: 500;">${star} star</span>
+            <div style="flex: 1; height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden;">
+              <div style="width: ${pct}%; height: 100%; background: #2563EB; border-radius: 4px; transition: width 0.3s;"></div>
+            </div>
+            <span style="width: 24px; text-align: right; font-weight: 600; color: #0F172A;">${cnt}</span>
+          </div>
+        `;
+      }).join('');
+
+      const listEl = document.getElementById('reviews-list-container');
+      const itemsToDisplay = showAllReviews ? currentReviews : currentReviews.slice(0, 3);
+
+      if (itemsToDisplay.length === 0) {
+        listEl.innerHTML = '<div style="font-size: 13px; color: #94A3B8; padding: 12px 0;">No reviews submitted yet for this property.</div>';
+      } else {
+        listEl.innerHTML = itemsToDisplay.map((r) => {
+          const realIndex = currentReviews.indexOf(r);
+          let replyMarkup = '';
+          if (r.reply) {
+            replyMarkup = `
+              <div id="reply-display-${realIndex}" style="margin-top: 12px; margin-left: 16px; padding: 12px 14px; background: #F8FAFC; border-left: 3px solid #059669; border-radius: 0 8px 8px 0; font-size: 13px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 26px; height: 26px; border-radius: 50%; background: ${r.reply.bg || '#059669'}; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0;">${r.reply.initials || 'KA'}</div>
+                    <span style="font-weight: 700; color: #0F172A;">${r.reply.name || 'Kamal Ahmed'}</span>
+                    <span style="font-size: 10px; font-weight: 700; background: rgba(5,150,105,0.1); color: #059669; border-radius: 99px; padding: 1px 8px; border: 1px solid rgba(5,150,105,0.2);">Landlord Response</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; color: #94A3B8;">${r.reply.date || ''}</span>
+                  </div>
+                </div>
+                <p style="color: #334155; margin: 0; line-height: 1.5;">"${r.reply.comment}"</p>
+              </div>
+            `;
+          }
+
+          return `
+            <div style="border-bottom: 1px solid #F1F5F9; padding-bottom: 16px;" data-review-index="${realIndex}">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                  <div style="width: 38px; height: 38px; border-radius: 50%; background: ${r.bg || '#2563EB'}; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 13px;">${r.initials || 'ST'}</div>
+                  <div>
+                    <div style="font-size: 14px; font-weight: 600; color: #0F172A;">${r.name}</div>
+                    <div style="color: #F59E0B; font-size: 13px;">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+                  </div>
+                </div>
+                <span style="font-size: 12px; color: #94A3B8;">${r.date}</span>
+              </div>
+              <p style="font-size: 14px; color: #374151; margin: 0; line-height: 1.6;">${r.comment}</p>
+              ${replyMarkup}
+            </div>
+          `;
+        }).join('');
+      }
+
+      const toggleBtn = document.getElementById('btn-toggle-reviews');
+      if (total <= 3) {
+        document.getElementById('toggle-reviews-btn-wrapper').style.display = 'none';
+      } else {
+        document.getElementById('toggle-reviews-btn-wrapper').style.display = 'block';
+        toggleBtn.innerHTML = showAllReviews ? 'Show Less ▲' : `View All Reviews (${total}) ▼`;
+      }
+    }
+
+    function toggleViewAllReviews() {
+      showAllReviews = !showAllReviews;
+      renderReviewsSection();
+    }
+
+    function openGiveReviewModal() {
+      openModal('give-review-modal');
+    }
+
+    function closeGiveReviewModal() {
+      closeModal('give-review-modal');
+      setRating(0);
+      document.getElementById('review-comment-input').value = '';
+    }
+
+    function setRating(val) {
+      selectedRating = val;
+      document.getElementById('selected-rating-val').value = val;
+      updateStarsUI(val);
+    }
+
+    function hoverRating(val) {
+      updateStarsUI(val);
+    }
+
+    function resetHoverRating() {
+      updateStarsUI(selectedRating);
+    }
+
+    function updateStarsUI(val) {
+      document.querySelectorAll('#star-rating-selector .star-opt').forEach((star, idx) => {
+        if (idx < val) {
+          star.style.color = '#F59E0B';
+        } else {
+          star.style.color = '#D1D5DB';
+        }
+      });
+    }
+
+    function toggleFavorite() {
+      fetch('../../backend/student/favorites.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ property_id: propId, action: 'toggle' })
+      })
+      .then(res => {
+        if (res.status === 401 || res.status === 403) {
+          showToast('Please login to save properties to favorites.', 'error');
+          return;
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (data && data.success) {
+          const btn = document.getElementById('btn-favorite-toggle');
+          if (btn) {
+            btn.innerHTML = data.is_favorite ? '❤️ Saved' : '🤍 Favorite';
+            btn.className = data.is_favorite ? 'btn-primary btn-sm' : 'btn-secondary btn-sm';
+          }
+          if (typeof showToast === 'function') {
+            showToast(data.message || (data.is_favorite ? 'Added to favorites' : 'Removed from favorites'));
+          }
+        }
+      })
+      .catch(err => console.error('Error toggling favorite:', err));
+    }
+
+    function checkFavoriteStatus() {
+      fetch(`../../backend/student/favorites.php?property_id=${propId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.success) {
+            const btn = document.getElementById('btn-favorite-toggle');
+            if (btn) {
+              btn.innerHTML = data.is_favorite ? '❤️ Saved' : '🤍 Favorite';
+              btn.className = data.is_favorite ? 'btn-primary btn-sm' : 'btn-secondary btn-sm';
+            }
+          }
+        })
+        .catch(err => console.error('Error checking favorite status:', err));
+    }
+
+    function handleReviewSubmit(e) {
+      e.preventDefault();
+      const commentInput = document.getElementById('review-comment-input');
+      const comment = commentInput ? commentInput.value.trim() : '';
+
+      if (selectedRating < 1 || selectedRating > 5) {
+        showToast('Please select a rating between 1 and 5 stars.', 'error');
+        return;
+      }
+      if (!comment) {
+        showToast('Please write a review comment.', 'error');
+        return;
+      }
+
+      fetch('../../backend/student/reviews.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          property_id: propId,
+          rating: selectedRating,
+          comment: comment
+        })
+      })
+      .then(res => {
+        if (res.status === 401 || res.status === 403) {
+          showToast('Please login as a student to submit a review.', 'error');
+          return;
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (data && data.success) {
+          closeGiveReviewModal();
+          initPropertyDetails();
+          showToast(data.message || 'Thank you! Your review has been submitted.');
+        } else {
+          showToast(data?.message || 'Unable to submit review.', 'error');
+        }
+      })
+      .catch(err => {
+        console.error('Error submitting review:', err);
+        showToast('Server error submitting review.', 'error');
+      });
+    }
+
+    function handleApplyClick() {
+      const fromRole = urlParams.get('from') || urlParams.get('role');
+      const authUser = getAuthUser();
+      const isGuestMode = !authUser || authUser.role !== 'student' || fromRole === 'public' || fromRole === 'guest';
+
+      if (isGuestMode) {
+        showToast('Please login to apply for this rental property.', 'error');
+        localStorage.setItem('uiu_login_redirect', `property.html?id=${propId}`);
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 800);
+        return;
+      }
+
+      const isApplied = localStorage.getItem('uiu_applied_prop_' + propId) === 'true';
+      if (isApplied) return;
+      openModal('apply-modal');
+    }
+
+    function submitRentalApplication(e) {
+      e.preventDefault();
+      const moveinDate = document.getElementById('apply-movein-date').value;
+      const durationStr = document.getElementById('apply-duration').value;
+      const message = document.getElementById('apply-message').value.trim();
+
+      if (!moveinDate) {
+        showToast('Please select a move-in date.', 'error');
+        return;
+      }
+      if (!durationStr) {
+        showToast('Please select a rental duration.', 'error');
+        return;
+      }
+
+      const durationMonths = parseInt(durationStr) || 6;
+
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+      }
+
+      fetch('../../backend/student/apply.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          property_id: propId,
+          move_in_date: moveinDate,
+          duration_months: durationMonths,
+          message: message
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          localStorage.setItem('uiu_applied_prop_' + propId, 'true');
+          closeModal('apply-modal');
+          const applyBtn = document.getElementById('btn-apply-now');
+          const appliedStatusBtn = document.getElementById('btn-applied-status');
+          if (applyBtn) applyBtn.style.display = 'none';
+          if (appliedStatusBtn) appliedStatusBtn.style.display = 'block';
+          showToast(data.message || 'Application submitted successfully!');
+        } else {
+          showToast(data.message || 'Failed to submit application.', 'error');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Application';
+          }
+        }
+      })
+      .catch(err => {
+        console.error('Error submitting application:', err);
+        showToast('Server error while submitting application.', 'error');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Application';
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initPropertyDetails();
+      checkFavoriteStatus();
+    });
+  </script>
+</body>
+
+</html>

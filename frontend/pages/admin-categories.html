@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Categories — UIU Student Rental Admin</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    .modal-overlay {
+      z-index: 1100;
+    }
+
+    .modal-overlay > .modal-content {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+      padding: 24px;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+      <div style="padding: 18px 20px 14px; border-bottom: 1px solid #E2E8F0;">
+        <a href="../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+          <div style="width: 34px; height: 34px; background: #DC2626; border-radius: 9px; display: flex; align-items: center; justify-content: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: #0F172A; line-height: 1.1;">UIU Rental</div>
+            <div style="font-size: 10px; color: #DC2626; font-weight: 700;">System Admin</div>
+          </div>
+        </a>
+      </div>
+
+      <div style="padding: 14px 20px; border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; gap: 10px;">
+        <div style="width: 38px; height: 38px; border-radius: 50%; background: #DC2626; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 700;">
+          AD
+        </div>
+        <div style="overflow: hidden;">
+          <div style="font-size: 13px; font-weight: 700; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">System Administrator</div>
+          <div style="font-size: 11px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">admin@uiu.ac.bd</div>
+          <span style="display: inline-block; margin-top: 3px; font-size: 10px; font-weight: 700; background: rgba(220,38,38,0.1); color: #DC2626; border-radius: 99px; padding: 1px 8px;">
+            Super Admin
+          </span>
+        </div>
+      </div>
+
+      <nav style="padding: 10px; flex: 1;">
+        <a href="admin-dashboard.html" class="sidebar-link"><span>⊞</span><span>Dashboard</span></a>
+        <a href="admin-users.html" class="sidebar-link"><span>👥</span><span>User Management</span></a>
+        <a href="admin-properties.html" class="sidebar-link"><span>🏠</span><span>Property Approvals</span></a>
+        <a href="admin-categories.html" class="sidebar-link active"><span>🏷️</span><span>Categories</span></a>
+        <a href="admin-reports.html" class="sidebar-link"><span>📊</span><span>Reports & Analytics</span></a>
+        <a href="admin-settings.html" class="sidebar-link"><span>⚙️</span><span>Platform Settings</span></a>
+        <a href="admin-profile.html" class="sidebar-link"><span>👤</span><span>Admin Profile</span></a>
+      </nav>
+
+      <div style="padding: 10px; border-top: 1px solid #E2E8F0;">
+        <button onclick="logoutUser()" class="sidebar-link" style="color: #EF4444; width: 100%; border: none; background: none; text-align: left; cursor: pointer;">
+          <span>🚪</span><span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ── Main Content ── -->
+    <div class="main-content">
+      <header class="top-bar">
+        <div style="display: flex; align-items: center; gap: 12px; margin-left: auto;">
+          <a href="admin-profile.html" style="width: 34px; height: 34px; border-radius: 50%; background: #DC2626; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; text-decoration: none;">AD</a>
+        </div>
+      </header>
+
+      <main class="main-scroll-area fade-in" style="max-width: 900px; margin: 0 auto;">
+        <div class="flex justify-between items-center" style="margin-bottom: 28px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h1 class="page-title">Property Category Management</h1>
+            <p class="page-subtitle">Configure listing types and category tags for student browsing.</p>
+          </div>
+          <button class="btn-primary" onclick="openAddCategoryModal()">+ Add New Category</button>
+        </div>
+
+        <div class="card" style="padding: 24px; margin-bottom: 32px;">
+          <div style="overflow-x: auto;">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Category Name</th>
+                  <th>Total Listings</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="categories-table-body">
+                <tr>
+                  <td colspan="4" style="text-align: center; color: #64748B; padding: 20px;">Loading categories...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Facility Management Section -->
+        <div class="flex justify-between items-center" style="margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h2 style="font-size: 20px; font-weight: 700; color: #0F172A; margin: 0 0 4px;">Property Facilities</h2>
+            <p class="page-subtitle" style="margin: 0;">Configure available property features and amenities.</p>
+          </div>
+          <button class="btn-primary" onclick="openAddFacilityModal()">+ Add New Facility</button>
+        </div>
+
+        <div class="card" style="padding: 24px;">
+          <div style="overflow-x: auto;">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Facility Name</th>
+                  <th>Properties Count</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="facilities-table-body">
+                <tr>
+                  <td colspan="4" style="text-align: center; color: #64748B; padding: 20px;">Loading facilities...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Add/Edit Category Modal -->
+        <div id="cat-modal-overlay" class="modal-overlay" onclick="closeCategoryModal(event)">
+          <div class="modal-content" style="max-width: 400px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #E2E8F0; padding-bottom: 12px;">
+              <h3 style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0;" id="cat-modal-title">Add New Category</h3>
+              <button onclick="closeCategoryModalForce()" style="background: none; border: none; font-size: 18px; cursor: pointer;">✕</button>
+            </div>
+
+            <form onsubmit="saveCategoryModal(event)">
+              <div style="margin-bottom: 16px;">
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Category Name *</label>
+                <input class="input-field" placeholder="e.g. Sublet / Short Term" id="cat-name-input" required>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Description</label>
+                <input class="input-field" placeholder="Optional category description" id="cat-desc-input">
+              </div>
+
+              <div style="display: flex; gap: 10px;">
+                <button type="button" class="btn-secondary" style="flex: 1;" onclick="closeCategoryModalForce()">Cancel</button>
+                <button type="submit" class="btn-primary" style="flex: 1;">Save Category</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Add/Edit Facility Modal -->
+        <div id="fac-modal-overlay" class="modal-overlay" onclick="closeFacilityModal(event)">
+          <div class="modal-content" style="max-width: 400px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #E2E8F0; padding-bottom: 12px;">
+              <h3 style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0;" id="fac-modal-title">Add New Facility</h3>
+              <button onclick="closeFacilityModalForce()" style="background: none; border: none; font-size: 18px; cursor: pointer;">✕</button>
+            </div>
+
+            <form onsubmit="saveFacilityModal(event)">
+              <div style="margin-bottom: 20px;">
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Facility Name *</label>
+                <input class="input-field" placeholder="e.g. Generator Backup" id="fac-name-input" required>
+              </div>
+
+              <div style="display: flex; gap: 10px;">
+                <button type="button" class="btn-secondary" style="flex: 1;" onclick="closeFacilityModalForce()">Cancel</button>
+                <button type="submit" class="btn-primary" style="flex: 1;">Save Facility</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    let activeEditCatId = null;
+    let activeEditFacId = null;
+    let categoriesList = [];
+    let facilitiesList = [];
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadAdminCategories();
+      loadAdminFacilities();
+    });
+
+    function loadAdminCategories() {
+      fetch('../../backend/admin/categories.php')
+        .then(res => res.json())
+        .then(res => {
+          if (res.success && Array.isArray(res.data)) {
+            categoriesList = res.data;
+            renderCategoriesTable(res.data);
+          } else {
+            document.getElementById('categories-table-body').innerHTML = '<tr><td colspan="4" style="text-align:center; color:#EF4444;">' + (res.message || 'Error loading categories.') + '</td></tr>';
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById('categories-table-body').innerHTML = '<tr><td colspan="4" style="text-align:center; color:#EF4444;">Failed to connect to backend server.</td></tr>';
+        });
+    }
+
+    function renderCategoriesTable(list) {
+      const tbody = document.getElementById('categories-table-body');
+      if (!tbody) return;
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#64748B;">No categories found.</td></tr>';
+        return;
+      }
+      let html = '';
+      list.forEach(c => {
+        const catName = escapeHtml(c.category_name);
+        const desc = escapeHtml(c.description || '');
+        const propCount = c.total_properties || 0;
+        const statusBadge = c.is_active ? '<span class="badge badge-green">Active</span>' : '<span class="badge badge-red">Inactive</span>';
+
+        html += `
+          <tr class="table-row" id="cat-row-${c.category_id}">
+            <td style="font-weight: 600;">
+              ${catName}
+              ${desc ? `<div style="font-size: 11px; color: #64748B; font-weight: 400;">${desc}</div>` : ''}
+            </td>
+            <td>${propCount}</td>
+            <td>${statusBadge}</td>
+            <td>
+              <div style="display: flex; gap: 6px;">
+                <button class="btn-secondary btn-sm" onclick="openEditCategoryModal(${c.category_id})">Edit</button>
+                <button class="btn-danger btn-sm" onclick="deleteCategoryRow(${c.category_id})">Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+    }
+
+    function openAddCategoryModal() {
+      activeEditCatId = null;
+      document.getElementById('cat-modal-title').innerText = 'Add New Category';
+      document.getElementById('cat-name-input').value = '';
+      document.getElementById('cat-desc-input').value = '';
+      document.getElementById('cat-modal-overlay').classList.add('active');
+    }
+
+    function openEditCategoryModal(id) {
+      const cat = categoriesList.find(item => Number(item.category_id) === Number(id));
+      if (!cat) return;
+      activeEditCatId = cat.category_id;
+      document.getElementById('cat-modal-title').innerText = 'Edit Category';
+      document.getElementById('cat-name-input').value = cat.category_name || '';
+      document.getElementById('cat-desc-input').value = cat.description || '';
+      document.getElementById('cat-modal-overlay').classList.add('active');
+    }
+
+    function saveCategoryModal(e) {
+      e.preventDefault();
+      const name = document.getElementById('cat-name-input').value.trim();
+      const desc = document.getElementById('cat-desc-input').value.trim();
+      if (!name) return;
+
+      const payload = {
+        action: activeEditCatId ? 'update' : 'create',
+        category_id: activeEditCatId,
+        category_name: name,
+        description: desc
+      };
+
+      fetch('../../backend/admin/categories.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          if (typeof showToast === 'function') showToast(res.message);
+          else alert(res.message);
+          closeCategoryModalForce();
+          loadAdminCategories();
+        } else {
+          if (typeof showToast === 'function') showToast(res.message || 'Operation failed', 'error');
+          else alert(res.message || 'Operation failed');
+        }
+      })
+      .catch(err => console.error(err));
+    }
+
+    function deleteCategoryRow(id) {
+      const cat = categoriesList.find(item => Number(item.category_id) === Number(id));
+      const name = cat ? cat.category_name : '';
+      if (!confirm('Are you sure you want to delete category "' + name + '"?')) return;
+
+      fetch('../../backend/admin/categories.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', category_id: id })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          if (typeof showToast === 'function') showToast(res.message);
+          else alert(res.message);
+          loadAdminCategories();
+        } else {
+          if (typeof showToast === 'function') showToast(res.message || 'Cannot delete category.', 'error');
+          else alert(res.message || 'Cannot delete category.');
+        }
+      })
+      .catch(err => console.error(err));
+    }
+
+    function closeCategoryModal(e) {
+      if (e.target === document.getElementById('cat-modal-overlay')) {
+        closeCategoryModalForce();
+      }
+    }
+
+    function closeCategoryModalForce() {
+      document.getElementById('cat-modal-overlay').classList.remove('active');
+    }
+
+    /* Facility Functions */
+    function loadAdminFacilities() {
+      fetch('../../backend/admin/facilities.php')
+        .then(res => res.json())
+        .then(res => {
+          if (res.success && Array.isArray(res.data)) {
+            facilitiesList = res.data;
+            renderFacilitiesTable(res.data);
+          } else {
+            document.getElementById('facilities-table-body').innerHTML = '<tr><td colspan="4" style="text-align:center; color:#EF4444;">' + (res.message || 'Error loading facilities.') + '</td></tr>';
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById('facilities-table-body').innerHTML = '<tr><td colspan="4" style="text-align:center; color:#EF4444;">Failed to connect to backend server.</td></tr>';
+        });
+    }
+
+    function renderFacilitiesTable(list) {
+      const tbody = document.getElementById('facilities-table-body');
+      if (!tbody) return;
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#64748B;">No facilities found.</td></tr>';
+        return;
+      }
+      let html = '';
+      list.forEach(f => {
+        const facName = escapeHtml(f.facility_name);
+        const propCount = f.total_properties || 0;
+        const statusBadge = f.is_active ? '<span class="badge badge-green">Active</span>' : '<span class="badge badge-red">Inactive</span>';
+
+        html += `
+          <tr class="table-row" id="fac-row-${f.facility_id}">
+            <td style="font-weight: 600;">${facName}</td>
+            <td>${propCount}</td>
+            <td>${statusBadge}</td>
+            <td>
+              <div style="display: flex; gap: 6px;">
+                <button class="btn-secondary btn-sm" onclick="openEditFacilityModal(${f.facility_id})">Edit</button>
+                <button class="btn-danger btn-sm" onclick="deleteFacilityRow(${f.facility_id})">Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+    }
+
+    function openAddFacilityModal() {
+      activeEditFacId = null;
+      document.getElementById('fac-modal-title').innerText = 'Add New Facility';
+      document.getElementById('fac-name-input').value = '';
+      document.getElementById('fac-modal-overlay').classList.add('active');
+    }
+
+    function openEditFacilityModal(id) {
+      const fac = facilitiesList.find(item => Number(item.facility_id) === Number(id));
+      if (!fac) return;
+      activeEditFacId = fac.facility_id;
+      document.getElementById('fac-modal-title').innerText = 'Edit Facility';
+      document.getElementById('fac-name-input').value = fac.facility_name || '';
+      document.getElementById('fac-modal-overlay').classList.add('active');
+    }
+
+    function saveFacilityModal(e) {
+      e.preventDefault();
+      const name = document.getElementById('fac-name-input').value.trim();
+      if (!name) return;
+
+      const payload = {
+        action: activeEditFacId ? 'update' : 'create',
+        facility_id: activeEditFacId,
+        facility_name: name
+      };
+
+      fetch('../../backend/admin/facilities.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          if (typeof showToast === 'function') showToast(res.message);
+          else alert(res.message);
+          closeFacilityModalForce();
+          loadAdminFacilities();
+        } else {
+          if (typeof showToast === 'function') showToast(res.message || 'Operation failed', 'error');
+          else alert(res.message || 'Operation failed');
+        }
+      })
+      .catch(err => console.error(err));
+    }
+
+    function deleteFacilityRow(id) {
+      const fac = facilitiesList.find(item => Number(item.facility_id) === Number(id));
+      const name = fac ? fac.facility_name : '';
+      if (!confirm('Are you sure you want to delete facility "' + name + '"?')) return;
+
+      fetch('../../backend/admin/facilities.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', facility_id: id })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          if (typeof showToast === 'function') showToast(res.message);
+          else alert(res.message);
+          loadAdminFacilities();
+        } else {
+          if (typeof showToast === 'function') showToast(res.message || 'Cannot delete facility.', 'error');
+          else alert(res.message || 'Cannot delete facility.');
+        }
+      })
+      .catch(err => console.error(err));
+    }
+
+    function closeFacilityModal(e) {
+      if (e.target === document.getElementById('fac-modal-overlay')) {
+        closeFacilityModalForce();
+      }
+    }
+
+    function closeFacilityModalForce() {
+      document.getElementById('fac-modal-overlay').classList.remove('active');
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+</html>

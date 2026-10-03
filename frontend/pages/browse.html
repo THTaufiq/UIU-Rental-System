@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Rentals — UIU Student Rental System</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    .filter-pill {
+      padding: 4px 10px; border-radius: 20px; font-size: 12px; cursor: pointer; font-family: 'Poppins', sans-serif;
+      background: #F8FAFC; color: #64748B; border: 1px solid #E2E8F0; transition: all 0.15s;
+    }
+    .filter-pill.active {
+      background: #2563EB; color: #fff; border-color: #2563EB; font-weight: 600;
+    }
+  </style>
+</head>
+<body style="background: #F8FAFC;">
+
+  <!-- Header -->
+  <div style="background: #fff; border-bottom: 1px solid #E2E8F0; padding: 20px 24px;">
+    <div style="max-width: 1300px; margin: 0 auto;">
+      <button onclick="window.history.back()" class="btn-secondary btn-sm" style="margin-bottom: 14px; display: inline-flex; align-items: center; gap: 6px;">
+        ← Back
+      </button>
+      <div>
+        <h1 style="font-size: 22px; font-weight: 700; color: #0F172A; margin: 0 0 4px;">Browse Rentals</h1>
+        <p style="font-size: 13px; color: #64748B; margin: 0;" id="results-count">Loading properties...</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width: 1300px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: 280px 1fr; gap: 24px;" id="browse-layout">
+    <!-- Sidebar Filters -->
+    <aside>
+      <div class="card" style="padding: 20px; position: sticky; top: 20px;">
+        <div class="flex justify-between items-center" style="margin-bottom: 20px;">
+          <span style="font-size: 15px; font-weight: 700; color: #0F172A;">Filters</span>
+          <button onclick="resetFilters()" style="background: none; border: none; cursor: pointer; font-size: 12px; color: #2563EB; font-weight: 600;">Clear All</button>
+        </div>
+
+        <!-- Price Range -->
+        <div style="margin-bottom: 24px;">
+          <div style="font-size: 13px; font-weight: 600; color: #0F172A; margin-bottom: 12px;">Price Range (৳/month)</div>
+          <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+            <input class="input-field" type="number" placeholder="Min" id="min-price" value="0" style="font-size: 13px; padding: 7px 10px;">
+            <input class="input-field" type="number" placeholder="Max" id="max-price" value="25000" style="font-size: 13px; padding: 7px 10px;">
+          </div>
+          <input type="range" min="0" max="25000" step="500" value="25000" id="price-slider" style="width: 100%; accent-color: #2563EB;">
+          <div class="flex justify-between" style="font-size: 12px; color: #64748B;">
+            <span>৳0</span><span id="price-max-label">৳25,000</span>
+          </div>
+        </div>
+
+        <!-- Room Type -->
+        <div style="margin-bottom: 24px;">
+          <div style="font-size: 13px; font-weight: 600; color: #0F172A; margin-bottom: 12px;">Room Type</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; color: #374151;">
+              <input type="checkbox" class="type-check" value="Studio" style="accent-color: #2563EB;"> Studio
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; color: #374151;">
+              <input type="checkbox" class="type-check" value="Single" style="accent-color: #2563EB;"> Single Room
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; color: #374151;">
+              <input type="checkbox" class="type-check" value="2 Bedroom" style="accent-color: #2563EB;"> 2 Bedroom
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; color: #374151;">
+              <input type="checkbox" class="type-check" value="3 Bedroom" style="accent-color: #2563EB;"> 3 Bedroom
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; color: #374151;">
+              <input type="checkbox" class="type-check" value="Mess" style="accent-color: #2563EB;"> Mess / Shared
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; color: #374151;">
+              <input type="checkbox" class="type-check" value="Sublet" style="accent-color: #2563EB;"> Sublet
+            </label>
+          </div>
+        </div>
+
+        <!-- Distance -->
+        <div style="margin-bottom: 24px;">
+          <div style="font-size: 13px; font-weight: 600; color: #0F172A; margin-bottom: 12px;">Distance from UIU</div>
+          <input type="range" min="0.1" max="5" step="0.1" value="5" id="distance-slider" style="width: 100%; accent-color: #2563EB;">
+          <div style="font-size: 12px; color: #64748B; text-align: right;" id="distance-label">Within 5.0 km</div>
+        </div>
+
+        <!-- Toggles -->
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <label style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 13px; color: #374151;">
+            Verified Only
+            <input type="checkbox" id="verified-toggle" style="accent-color: #2563EB;">
+          </label>
+          <label style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 13px; color: #374151;">
+            Available Only
+            <input type="checkbox" id="available-toggle" style="accent-color: #2563EB;">
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main View Content -->
+    <div>
+      <!-- Grid View -->
+      <div id="grid-view-container" class="grid-auto-fit" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <!-- Property cards will render here -->
+      </div>
+
+      <!-- Map View -->
+      <div id="map-view-container" style="display: none; border-radius: 16px; overflow: hidden; border: 1px solid #E2E8F0; background: #E5E3DF; height: 600px; position: relative;">
+        <!-- Embedded SVG Map Canvas -->
+        <div style="position: absolute; top: 12px; left: 12px; right: 52px; background: #fff; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); display: flex; align-items: center; padding: 0 12px; height: 40px; gap: 10px; z-index: 10;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#5F6368" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="#5F6368" stroke-width="2" stroke-linecap="round"/></svg>
+          <span style="font-size: 13px; color: #5F6368; flex: 1;">Search areas near UIU, Badda, Dhaka</span>
+        </div>
+        <svg width="100%" height="100%" viewBox="0,0,800,600" preserveAspectRatio="xMidYMid slice" style="display: block;">
+          <rect width="800" height="600" fill="#E5E3DF"/>
+          <rect x="60" y="440" width="120" height="80" rx="4" fill="#C5DCCA"/>
+          <path d="M 0,530 C 50,510 120,525 180,515 C 240,505 280,520 340,510 C 400,500 440,515 500,508 C 560,500 610,518 660,512 L 800,600 L 0,600 Z" fill="#9FC3D3"/>
+          <rect x="246" y="200" width="308" height="88" rx="6" fill="#BBDEFB" stroke="#1976D2" stroke-width="1.5"/>
+          <text x="400" y="246" text-anchor="middle" fill="#0D47A1" font-size="11" font-weight="800">UIU</text>
+          <text x="400" y="259" text-anchor="middle" fill="#0D47A1" font-size="7">United International University</text>
+          <!-- Property Pins -->
+          <g onclick="window.location.href='property.html'" style="cursor: pointer;">
+            <path d="M 118 153 C 104 153 104 133 118 133 C 132 133 132 153 118 153 Z" fill="#EA4335"/>
+            <text x="118" y="146" text-anchor="middle" fill="#FFF" font-size="8" font-weight="700">৳8.5k</text>
+          </g>
+          <g onclick="window.location.href='property.html'" style="cursor: pointer;">
+            <path d="M 260 108 C 246 108 246 88 260 88 C 274 88 274 108 260 108 Z" fill="#FFF" stroke="#9E9E9E"/>
+            <text x="260" y="101" text-anchor="middle" fill="#212121" font-size="8" font-weight="700">৳14k</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Pagination -->
+      <div style="display: flex; justify-content: center; gap: 8px; margin-top: 32px;" id="pagination-box">
+        <button class="btn-primary btn-sm">1</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    function getImageUrl(img) {
+      if (!img) return 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=220&fit=crop&auto=format';
+      if (img.startsWith('http')) return img;
+      if (img.startsWith('photo-')) return `https://images.unsplash.com/${img}?w=400&h=220&fit=crop&auto=format`;
+      return `../../${img}`;
+    }
+
+    function renderProperties() {
+      const grid = document.getElementById('grid-view-container');
+      const minPrice = parseInt(document.getElementById('min-price').value) || 0;
+      const maxPrice = parseInt(document.getElementById('price-slider').value) || 25000;
+      const maxDist = parseFloat(document.getElementById('distance-slider').value) || 5;
+      const verifiedOnly = document.getElementById('verified-toggle').checked;
+      const availableOnly = document.getElementById('available-toggle').checked;
+      const selectedTypes = Array.from(document.querySelectorAll('.type-check:checked')).map(c => c.value);
+
+      const params = new URLSearchParams();
+      if (minPrice > 0) params.append('min_price', minPrice);
+      if (maxPrice > 0) params.append('max_price', maxPrice);
+      if (maxDist > 0) params.append('max_distance', maxDist);
+      if (verifiedOnly) params.append('verified_only', '1');
+      if (availableOnly) params.append('available_only', '1');
+      if (selectedTypes.length) params.append('room_types', selectedTypes.join(','));
+
+      fetch(`../../backend/public/landing/properties.php?${params.toString()}`)
+        .then(res => res.json())
+        .then(result => {
+          if (!result || !result.success) {
+            document.getElementById('results-count').textContent = '0 properties found near UIU';
+            grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 60px; color: #64748B;">
+              <div style="font-size: 40px; margin-bottom: 12px;">🏠</div>
+              <div style="font-size: 16px; font-weight: 600;">Failed to load properties</div>
+            </div>`;
+            return;
+          }
+
+          const filtered = result.data || [];
+          document.getElementById('results-count').textContent = `${filtered.length} properties found near UIU`;
+
+          if (filtered.length === 0) {
+            grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 60px; color: #64748B;">
+              <div style="font-size: 40px; margin-bottom: 12px;">🏠</div>
+              <div style="font-size: 16px; font-weight: 600;">No properties found</div>
+              <div style="font-size: 14px; margin-top: 8px;">Try adjusting your filters</div>
+            </div>`;
+            return;
+          }
+
+          grid.innerHTML = filtered.map(p => `
+            <div class="property-card" onclick="window.location.href='property.html?id=${p.id}'" style="cursor: pointer;">
+              <div style="position: relative; height: 190px; background: #EFF6FF; overflow: hidden;">
+                <img src="${getImageUrl(p.img || p.image_url)}" alt="${p.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                <div style="position: absolute; top: 10px; left: 10px; display: flex; gap: 6px;">
+                  ${p.verified ? '<span class="badge badge-blue">✓ Verified</span>' : ''}
+                  <span class="badge ${p.available ? 'badge-green' : 'badge-red'}">${p.available ? 'Available' : 'Occupied'}</span>
+                </div>
+                <button onclick="toggleFavBrowse(event, ${p.id})" title="Favorite" style="position: absolute; bottom: 10px; right: 10px; background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">❤️</button>
+                <div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.55); border-radius: 8px; padding: 3px 8px; color: #fff; font-size: 11px; font-weight: 600;">📍 ${p.distance}km</div>
+              </div>
+              <div style="padding: 12px 16px 14px;">
+                <h3 style="font-size: 14px; font-weight: 600; color: #0F172A; margin: 0 0 4px;">${p.title}</h3>
+                <div style="font-size: 12px; color: #64748B; margin-bottom: 8px;">📍 ${p.location}</div>
+                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 10px;">
+                  <span style="color: #F59E0B;">★</span>
+                  <span style="font-size: 12px; font-weight: 600;">${p.rating || 4.5}</span>
+                  <span style="font-size: 12px; color: #94A3B8;">(${p.reviews || 0})</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div><span style="font-size: 17px; font-weight: 700; color: #2563EB;">৳${Number(p.price).toLocaleString()}</span><span style="font-size: 12px; color: #64748B;">/mo</span></div>
+                  <a href="property.html?id=${p.id}" class="btn-primary btn-sm" onclick="event.stopPropagation()">View</a>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        })
+        .catch(err => {
+          console.error('Error loading properties:', err);
+          document.getElementById('results-count').textContent = 'Error loading properties';
+        });
+    }
+
+    // Event listeners
+    document.getElementById('price-slider').addEventListener('input', (e) => {
+      document.getElementById('max-price').value = e.target.value;
+      document.getElementById('price-max-label').textContent = '৳' + parseInt(e.target.value).toLocaleString();
+      renderProperties();
+    });
+    document.getElementById('min-price').addEventListener('input', renderProperties);
+    document.getElementById('max-price').addEventListener('input', (e) => {
+      document.getElementById('price-slider').value = e.target.value;
+      document.getElementById('price-max-label').textContent = '৳' + parseInt(e.target.value || 0).toLocaleString();
+      renderProperties();
+    });
+    document.getElementById('distance-slider').addEventListener('input', (e) => {
+      document.getElementById('distance-label').textContent = `Within ${parseFloat(e.target.value).toFixed(1)} km`;
+      renderProperties();
+    });
+    document.querySelectorAll('.type-check, #verified-toggle, #available-toggle').forEach(el => el.addEventListener('change', renderProperties));
+
+    function resetFilters() {
+      document.getElementById('price-slider').value = 25000;
+      document.getElementById('min-price').value = 0;
+      document.getElementById('max-price').value = 25000;
+      document.getElementById('price-max-label').textContent = '৳25,000';
+      document.getElementById('distance-slider').value = 5;
+      document.getElementById('distance-label').textContent = 'Within 5.0 km';
+      document.getElementById('verified-toggle').checked = false;
+      document.getElementById('available-toggle').checked = false;
+      document.querySelectorAll('.type-check').forEach(c => c.checked = false);
+      renderProperties();
+    }
+
+    function toggleFavBrowse(e, propId) {
+      if (e) e.stopPropagation();
+      fetch('../../backend/student/favorites.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ property_id: propId, action: 'toggle' })
+      })
+      .then(res => {
+        if (res.status === 401 || res.status === 403) {
+          if (typeof showToast === 'function') showToast('Please login as a student to save favorites.', 'error');
+          return;
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (data && data.success) {
+          if (typeof showToast === 'function') {
+            showToast(data.message || (data.is_favorite ? 'Added to favorites' : 'Removed from favorites'));
+          }
+        }
+      })
+      .catch(err => console.error('Error saving favorite:', err));
+    }
+
+    document.addEventListener('DOMContentLoaded', renderProperties);
+  </script>
+</body>
+</html>

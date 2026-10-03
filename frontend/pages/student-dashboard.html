@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard — UIU Student Rental System</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+      <!-- Logo -->
+      <div style="padding: 18px 20px 14px; border-bottom: 1px solid #E2E8F0;">
+        <a href="../index.html" style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 34px; height: 34px; background: #2563EB; border-radius: 9px; display: flex; align-items: center; justify-content: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: #0F172A; line-height: 1.1;">UIU Rental</div>
+            <div style="font-size: 10px; color: #64748B; font-weight: 500;">Student Portal</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- User Identity Panel -->
+      <div style="padding: 14px 20px; border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; gap: 10px;">
+        <div id="user-sidebar-avatar" style="width: 38px; height: 38px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 700;">
+          ST
+        </div>
+        <div style="overflow: hidden;">
+          <div id="user-sidebar-name" style="font-size: 13px; font-weight: 700; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Student User</div>
+          <div id="user-sidebar-email" style="font-size: 11px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">student@uiu.ac.bd</div>
+          <span style="display: inline-block; margin-top: 3px; font-size: 10px; font-weight: 700; background: rgba(37,99,235,0.1); color: #2563EB; border-radius: 99px; padding: 1px 8px;">
+            Student
+          </span>
+        </div>
+      </div>
+
+      <!-- Nav links -->
+      <nav style="padding: 10px; flex: 1;">
+        <a href="student-dashboard.html" class="sidebar-link active"><span>⊞</span><span>Dashboard</span></a>
+        <a href="browse.html" class="sidebar-link"><span>🏠</span><span>Browse Rentals</span></a>
+        <a href="payment.html" class="sidebar-link"><span>💳</span><span>Payments</span></a>
+        <a href="maintenance.html" class="sidebar-link"><span>🔧</span><span>Maintenance</span></a>
+        <a href="chat.html" class="sidebar-link"><span>💬</span><span>Chat</span></a>
+        <a href="profile.html" class="sidebar-link"><span>👤</span><span>Profile</span></a>
+        <a href="settings.html" class="sidebar-link"><span>⚙️</span><span>Settings</span></a>
+      </nav>
+
+      <!-- Logout -->
+      <div style="padding: 10px; border-top: 1px solid #E2E8F0;">
+        <a href="login.html" onclick="logoutUser()" class="sidebar-link" style="color: #EF4444; text-decoration: none;">
+          <span>🚪</span><span>Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ── Main Content ── -->
+    <div class="main-content">
+      <!-- Top header bar -->
+      <header class="top-bar">
+        <div style="display: flex; align-items: center; gap: 12px; margin-left: auto;">
+          <a id="user-topbar-avatar" class="topbar-avatar" href="profile.html" style="width: 34px; height: 34px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700;">ST</a>
+        </div>
+      </header>
+
+      <!-- Scrollable Main Content -->
+      <main class="main-scroll-area fade-in tab-wrapper">
+        <div style="margin-bottom: 28px;">
+          <h1 class="page-title">Student Dashboard</h1>
+          <p id="user-welcome-subtitle" class="page-subtitle">Welcome back! Here's your rental overview.</p>
+        </div>
+
+        <!-- Tab Bar -->
+        <div class="tab-container">
+          <button class="tab-btn active" data-tab-target="tab-overview">Overview</button>
+          <button class="tab-btn" data-tab-target="tab-applications">My Applications</button>
+          <button class="tab-btn" data-tab-target="tab-history">Payment History</button>
+        </div>
+
+        <!-- ── TAB 1: OVERVIEW ── -->
+        <div id="tab-overview" class="tab-content active">
+          <!-- Stat Cards -->
+          <div class="grid-4" style="margin-bottom: 28px;">
+            <div class="stat-card">
+              <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #2563EB;"></div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <div style="font-size: 12px; color: #64748B; font-weight: 600; margin-bottom: 8px; text-transform: uppercase;">Current Rent</div>
+                  <div id="stat-current-rent-amount" style="font-size: 24px; font-weight: 800; color: #0F172A;">৳8,500</div>
+                  <div id="stat-current-rent-sub" style="font-size: 12px; color: #64748B; margin-top: 4px;">Studio Apt, Badda</div>
+                </div>
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(37,99,235,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px;">🏠</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #F59E0B;"></div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <div style="font-size: 12px; color: #64748B; font-weight: 600; margin-bottom: 8px; text-transform: uppercase;">Rent Due Date</div>
+                  <div id="stat-rent-due-date" style="font-size: 24px; font-weight: 800; color: #0F172A;">Dec 1</div>
+                  <div id="stat-rent-due-sub" style="font-size: 12px; color: #64748B; margin-top: 4px;">3 days remaining</div>
+                </div>
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(245,158,11,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px;">📅</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #22C55E;"></div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <div style="font-size: 12px; color: #64748B; font-weight: 600; margin-bottom: 8px; text-transform: uppercase;">Payment Status</div>
+                  <div id="stat-payment-status" style="font-size: 24px; font-weight: 800; color: #0F172A;">Paid</div>
+                  <div id="stat-payment-status-sub" style="font-size: 12px; color: #64748B; margin-top: 4px;">November 2024</div>
+                </div>
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(34,197,94,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px;">✅</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #8B5CF6;"></div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <div style="font-size: 12px; color: #64748B; font-weight: 600; margin-bottom: 8px; text-transform: uppercase;">Applications</div>
+                  <div id="stat-applications-count" style="font-size: 24px; font-weight: 800; color: #0F172A;">2</div>
+                  <div id="stat-applications-sub" style="font-size: 12px; color: #64748B; margin-top: 4px;">1 pending, 1 approved</div>
+                </div>
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(139,92,246,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px;">📋</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two Columns: Notifications & Recent Activity -->
+          <div class="grid-2" style="margin-bottom: 24px;">
+            <!-- Notifications -->
+            <div class="card" style="padding: 24px;">
+              <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 16px; display: flex; align-items: center; gap: 8px;">
+                🔔 Notifications <span id="notif-badge-count" class="badge badge-red" style="font-size: 11px;">3</span>
+              </h3>
+              <div id="notif-list-container" style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 8px; background: #FFF7ED; border: 1px solid #FED7AA;">
+                  <span style="font-size: 16px;">⏰</span>
+                  <span style="font-size: 13px; color: #374151;">Rent due in 3 days – ৳8,500</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card" style="padding: 24px;">
+              <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 16px;">Recent Activity</h3>
+              <div id="activity-list-container" style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                  <div style="width: 36px; height: 36px; border-radius: 50%; background: #F8FAFC; border: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: center; font-size: 16px;">💳</div>
+                  <div>
+                    <div style="font-size: 13px; color: #374151; font-weight: 500;">Rent payment of ৳8,500 processed</div>
+                    <div style="font-size: 11px; color: #94A3B8; margin-top: 2px;">2 hours ago</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Current Rental Card -->
+          <div class="card" style="padding: 24px;">
+            <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 16px;">Current Rental</h3>
+            <div id="current-rental-container">
+              <div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;">
+                <div style="flex: 1;">
+                  <div style="display: flex; gap: 8px; margin-bottom: 6px;">
+                    <span class="badge badge-green">Active Lease</span>
+                    <span class="badge badge-blue">Verified</span>
+                  </div>
+                  <h4 style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0 0 4px;">Modern Studio Apartment</h4>
+                  <p style="font-size: 13px; color: #64748B; margin: 0 0 12px;">📍 House 12, Road 3, Block C, Badda, Dhaka · 0.3 km from UIU</p>
+                  <div class="grid-3">
+                    <div style="background: #F8FAFC; border-radius: 8px; padding: 8px 10px;">
+                      <div style="font-size: 11px; color: #94A3B8;">Monthly Rent</div>
+                      <div style="font-size: 13px; font-weight: 600; color: #0F172A;">৳8,500</div>
+                    </div>
+                    <div style="background: #F8FAFC; border-radius: 8px; padding: 8px 10px;">
+                      <div style="font-size: 11px; color: #94A3B8;">Lease End</div>
+                      <div style="font-size: 13px; font-weight: 600; color: #0F172A;">May 31, 2025</div>
+                    </div>
+                    <div style="background: #F8FAFC; border-radius: 8px; padding: 8px 10px;">
+                      <div style="font-size: 11px; color: #94A3B8;">Landlord</div>
+                      <div style="font-size: 13px; font-weight: 600; color: #0F172A;">Kamal Ahmed</div>
+                    </div>
+                  </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  <a href="payment.html" class="btn-primary btn-sm">Pay Rent</a>
+                  <a href="maintenance.html" class="btn-secondary btn-sm">Maintenance</a>
+                  <a href="property.html" class="btn-secondary btn-sm">View Property</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TAB 2: APPLICATIONS ── -->
+        <div id="tab-applications" class="tab-content">
+          <div class="card" style="padding: 24px;">
+            <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 20px;">My Applications</h3>
+            <div id="applications-list-container" style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="display: flex; gap: 14px; align-items: center; padding: 16px; border: 1px solid #E2E8F0; border-radius: 10px;">
+                <div style="flex: 1;">
+                  <div style="font-size: 14px; font-weight: 600; color: #0F172A;">Modern Studio Apartment, Badda</div>
+                  <div style="font-size: 12px; color: #64748B;">Applied: Nov 20, 2024 · ৳8,500/mo</div>
+                </div>
+                <span class="badge badge-green">Approved</span>
+                <a href="payment.html" class="btn-primary btn-sm">Pay Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TAB 3: PAYMENT HISTORY ── -->
+        <div id="tab-history" class="tab-content">
+          <div class="card" style="padding: 24px;">
+            <div class="flex justify-between items-center" style="margin-bottom: 20px;">
+              <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0;">Payment History</h3>
+              <button class="btn-secondary btn-sm" onclick="showToast('Downloading Payment History PDF...')">Export PDF</button>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Receipt</th>
+                  </tr>
+                </thead>
+                <tbody id="payment-history-tbody">
+                  <tr class="table-row">
+                    <td style="font-weight: 500;">November 2024</td>
+                    <td style="font-weight: 700; color: #2563EB;">৳8,500</td>
+                    <td>bKash</td>
+                    <td>Nov 1, 2024</td>
+                    <td><span class="badge badge-green">Paid</span></td>
+                    <td><a href="payment-success.html" class="btn-secondary btn-sm">📄 Download</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('../../backend/student/dashboard.php')
+        .then(res => {
+          if (res.status === 401 || res.status === 403) {
+            window.location.href = 'login.html';
+            return;
+          }
+          return res.json();
+        })
+        .then(result => {
+          if (!result || !result.success) {
+            if (typeof showToast === 'function') {
+              showToast(result?.message || 'Failed to load dashboard data', 'error');
+            }
+            return;
+          }
+          populateDashboard(result.data);
+        })
+        .catch(err => {
+          console.error('Error fetching student dashboard:', err);
+        });
+    });
+
+    function getInitials(name) {
+      if (!name) return 'ST';
+      const parts = name.trim().split(' ');
+      if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+      return name.substring(0, 2).toUpperCase();
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return 'N/A';
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) return dateStr;
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function formatMonth(dateStr) {
+      if (!dateStr) return 'N/A';
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) return dateStr;
+      return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    }
+
+    function populateDashboard(data) {
+      const user = data.user || {};
+      const stats = data.stats || {};
+      const rental = data.active_rental;
+
+      if (user.full_name && typeof setAuthUser === 'function') {
+        setAuthUser({
+          role: 'student',
+          full_name: user.full_name,
+          email: user.email,
+          user_id: user.user_id,
+          avatar_url: user.avatar_url
+        });
+        if (typeof updateHeaderUI === 'function') updateHeaderUI();
+      }
+
+      const initials = getInitials(user.full_name);
+      const sidebarAvatar = document.getElementById('user-sidebar-avatar');
+      if (sidebarAvatar) sidebarAvatar.textContent = initials;
+
+      const sidebarName = document.getElementById('user-sidebar-name');
+      if (sidebarName) sidebarName.textContent = user.full_name || 'Student';
+
+      const sidebarEmail = document.getElementById('user-sidebar-email');
+      if (sidebarEmail) sidebarEmail.textContent = user.email || '';
+
+      const topbarAvatar = document.getElementById('user-topbar-avatar');
+      if (topbarAvatar) topbarAvatar.textContent = initials;
+
+      const welcomeSub = document.getElementById('user-welcome-subtitle');
+      if (welcomeSub) welcomeSub.textContent = `Welcome back, ${user.full_name || 'Student'}! Here's your rental overview.`;
+
+      // Stat 1: Current Rent
+      const rentAmountEl = document.getElementById('stat-current-rent-amount');
+      const rentSubEl = document.getElementById('stat-current-rent-sub');
+      if (rentAmountEl) {
+        rentAmountEl.textContent = rental ? `৳${Number(rental.monthly_rent).toLocaleString()}` : '৳0';
+      }
+      if (rentSubEl) {
+        rentSubEl.textContent = rental ? `${rental.property_title}, ${rental.neighborhood}` : 'No active rental';
+      }
+
+      // Stat 2: Rent Due Date
+      const dueDateEl = document.getElementById('stat-rent-due-date');
+      const dueSubEl = document.getElementById('stat-rent-due-sub');
+      if (dueDateEl) {
+        dueDateEl.textContent = rental && rental.lease_end ? formatDate(rental.lease_end) : 'N/A';
+      }
+      if (dueSubEl) {
+        dueSubEl.textContent = rental ? 'Active Lease' : 'No active lease';
+      }
+
+      // Stat 3: Payment Status
+      const payStatusEl = document.getElementById('stat-payment-status');
+      const payStatusSubEl = document.getElementById('stat-payment-status-sub');
+      if (payStatusEl) {
+        payStatusEl.textContent = stats.latest_payment_status || 'N/A';
+      }
+      if (payStatusSubEl) {
+        payStatusSubEl.textContent = stats.latest_payment_month ? formatMonth(stats.latest_payment_month) : 'Current Period';
+      }
+
+      // Stat 4: Applications
+      const appCountEl = document.getElementById('stat-applications-count');
+      const appSubEl = document.getElementById('stat-applications-sub');
+      if (appCountEl) {
+        appCountEl.textContent = stats.total_applications || '0';
+      }
+      if (appSubEl) {
+        appSubEl.textContent = `${stats.pending_applications || 0} pending, ${stats.approved_applications || 0} approved`;
+      }
+
+      // Notifications
+      const notifBadge = document.getElementById('notif-badge-count');
+      const notifList = document.getElementById('notif-list-container');
+      const notifications = data.notifications || [];
+      if (notifBadge) notifBadge.textContent = notifications.filter(n => !n.is_read).length || notifications.length;
+      
+      if (notifList) {
+        if (notifications.length === 0) {
+          notifList.innerHTML = '<div style="font-size: 13px; color: #94A3B8; padding: 8px;">No notifications.</div>';
+        } else {
+          notifList.innerHTML = notifications.slice(0, 4).map(n => {
+            const bg = n.notification_type === 'payment' ? '#FFF7ED' : (n.notification_type === 'maintenance' ? '#F0FDF4' : '#EFF6FF');
+            const border = n.notification_type === 'payment' ? '#FED7AA' : (n.notification_type === 'maintenance' ? '#BBF7D0' : '#BFDBFE');
+            const icon = n.notification_type === 'payment' ? '⏰' : (n.notification_type === 'maintenance' ? '✅' : '🔔');
+            return `
+              <div style="display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 8px; background: ${bg}; border: 1px solid ${border};">
+                <span style="font-size: 16px;">${icon}</span>
+                <span style="font-size: 13px; color: #374151;">${n.title || n.message}</span>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      // Recent Activity
+      const activityList = document.getElementById('activity-list-container');
+      const payments = data.payments || [];
+      const maintenance = data.maintenance || [];
+      if (activityList) {
+        let activities = [];
+        payments.forEach(p => {
+          activities.push({
+            icon: '💳',
+            title: `Payment of ৳${Number(p.amount).toLocaleString()} (${p.payment_type}) - ${p.status}`,
+            date: formatDate(p.created_at)
+          });
+        });
+        maintenance.forEach(m => {
+          activities.push({
+            icon: '🔧',
+            title: `Maintenance: ${m.title} (${m.status})`,
+            date: formatDate(m.updated_at || m.created_at)
+          });
+        });
+
+        if (activities.length === 0) {
+          activityList.innerHTML = '<div style="font-size: 13px; color: #94A3B8; padding: 8px;">No recent activity.</div>';
+        } else {
+          activityList.innerHTML = activities.slice(0, 4).map(act => `
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="width: 36px; height: 36px; border-radius: 50%; background: #F8FAFC; border: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: center; font-size: 16px;">${act.icon}</div>
+              <div>
+                <div style="font-size: 13px; color: #374151; font-weight: 500;">${act.title}</div>
+                <div style="font-size: 11px; color: #94A3B8; margin-top: 2px;">${act.date}</div>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+
+      // Current Rental
+      const rentalContainer = document.getElementById('current-rental-container');
+      if (rentalContainer) {
+        if (!rental) {
+          rentalContainer.innerHTML = `
+            <div style="padding: 16px; text-align: center; color: #64748B; font-size: 14px;">
+              You currently have no active rental agreement. <a href="browse.html" style="color: #2563EB; font-weight: 600;">Browse available properties →</a>
+            </div>
+          `;
+        } else {
+          const img = rental.property_image ? (rental.property_image.startsWith('http') ? rental.property_image : `https://images.unsplash.com/${rental.property_image}?w=200&h=130&fit=crop&auto=format`) : 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=200&h=130&fit=crop&auto=format';
+          rentalContainer.innerHTML = `
+            <div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;">
+              <div style="width: 160px; height: 110px; border-radius: 10px; overflow: hidden; background: #EFF6FF; flex-shrink: 0;">
+                <img src="${img}" alt="Property" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div style="flex: 1;">
+                <div style="display: flex; gap: 8px; margin-bottom: 6px;">
+                  <span class="badge badge-green">Active Lease</span>
+                  <span class="badge badge-blue">Verified</span>
+                </div>
+                <h4 style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0 0 4px;">${rental.property_title}</h4>
+                <p style="font-size: 13px; color: #64748B; margin: 0 0 12px;">📍 ${rental.full_address} · ${rental.distance_from_uiu_km} km from UIU</p>
+                <div class="grid-3">
+                  <div style="background: #F8FAFC; border-radius: 8px; padding: 8px 10px;">
+                    <div style="font-size: 11px; color: #94A3B8;">Monthly Rent</div>
+                    <div style="font-size: 13px; font-weight: 600; color: #0F172A;">৳${Number(rental.monthly_rent).toLocaleString()}</div>
+                  </div>
+                  <div style="background: #F8FAFC; border-radius: 8px; padding: 8px 10px;">
+                    <div style="font-size: 11px; color: #94A3B8;">Lease End</div>
+                    <div style="font-size: 13px; font-weight: 600; color: #0F172A;">${formatDate(rental.lease_end)}</div>
+                  </div>
+                  <div style="background: #F8FAFC; border-radius: 8px; padding: 8px 10px;">
+                    <div style="font-size: 11px; color: #94A3B8;">Landlord</div>
+                    <div style="font-size: 13px; font-weight: 600; color: #0F172A;">${rental.landlord_name || 'Property Owner'}</div>
+                  </div>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <a href="payment.html" class="btn-primary btn-sm">Pay Rent</a>
+                <a href="maintenance.html" class="btn-secondary btn-sm">Maintenance</a>
+                <a href="browse.html" class="btn-secondary btn-sm">Browse More</a>
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      // Applications Tab
+      const appsContainer = document.getElementById('applications-list-container');
+      const applications = data.applications || [];
+      if (appsContainer) {
+        if (applications.length === 0) {
+          appsContainer.innerHTML = '<div style="padding: 16px; color: #64748B; font-size: 14px;">No applications submitted yet.</div>';
+        } else {
+          appsContainer.innerHTML = applications.map(app => {
+            const badgeClass = app.status === 'approved' ? 'badge-green' : (app.status === 'pending' ? 'badge-orange' : 'badge-red');
+            const img = app.property_image ? (app.property_image.startsWith('http') ? app.property_image : `https://images.unsplash.com/${app.property_image}?w=80&h=60&fit=crop&auto=format`) : 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=80&h=60&fit=crop&auto=format';
+            return `
+              <div style="display: flex; gap: 14px; align-items: center; padding: 16px; border: 1px solid #E2E8F0; border-radius: 10px;">
+                <div style="width: 60px; height: 48px; border-radius: 8px; overflow: hidden; background: #EFF6FF; flex-shrink: 0;">
+                  <img src="${img}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div style="flex: 1;">
+                  <div style="font-size: 14px; font-weight: 600; color: #0F172A;">${app.property_title}, ${app.neighborhood}</div>
+                  <div style="font-size: 12px; color: #64748B;">Applied: ${formatDate(app.applied_at)} · ৳${Number(app.monthly_rent).toLocaleString()}/mo</div>
+                </div>
+                <span class="badge ${badgeClass}">${app.status.charAt(0).toUpperCase() + app.status.slice(1)}</span>
+                ${app.status === 'approved' ? '<a href="payment.html" class="btn-primary btn-sm">Pay Now</a>' : ''}
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      // Payments Tab
+      const payTbody = document.getElementById('payment-history-tbody');
+      if (payTbody) {
+        if (payments.length === 0) {
+          payTbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #94A3B8; padding: 16px;">No payment records found.</td></tr>';
+        } else {
+          payTbody.innerHTML = payments.map(p => {
+            const badgeClass = p.status === 'paid' ? 'badge-green' : (p.status === 'pending' ? 'badge-orange' : 'badge-red');
+            return `
+              <tr class="table-row">
+                <td style="font-weight: 500;">${p.payment_month ? formatMonth(p.payment_month) : formatDate(p.created_at)}</td>
+                <td style="font-weight: 700; color: #2563EB;">৳${Number(p.amount).toLocaleString()}</td>
+                <td>${p.method || 'N/A'}</td>
+                <td>${formatDate(p.paid_at || p.created_at)}</td>
+                <td><span class="badge ${badgeClass}">${p.status.charAt(0).toUpperCase() + p.status.slice(1)}</span></td>
+                <td><a href="payment.html" class="btn-secondary btn-sm">📄 View</a></td>
+              </tr>
+            `;
+          }).join('');
+        }
+      }
+    }
+  </script>
+</body>
+</html>

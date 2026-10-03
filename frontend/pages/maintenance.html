@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance Requests — UIU Student Rental System</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div style="padding: 18px 20px 14px; border-bottom: 1px solid #E2E8F0;">
+        <a href="../index.html" style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 34px; height: 34px; background: #2563EB; border-radius: 9px; display: flex; align-items: center; justify-content: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: #0F172A; line-height: 1.1;">UIU Rental</div>
+            <div style="font-size: 10px; color: #64748B; font-weight: 500;">Student Portal</div>
+          </div>
+        </a>
+      </div>
+
+      <nav style="padding: 10px; flex: 1;">
+        <a href="student-dashboard.html" class="sidebar-link"><span>⊞</span><span>Dashboard</span></a>
+        <a href="browse.html" class="sidebar-link"><span>🏠</span><span>Browse Rentals</span></a>
+        <a href="payment.html" class="sidebar-link"><span>💳</span><span>Payments</span></a>
+        <a href="maintenance.html" class="sidebar-link active"><span>🔧</span><span>Maintenance</span></a>
+        <a href="chat.html" class="sidebar-link"><span>💬</span><span>Chat</span></a>
+        <a href="profile.html" class="sidebar-link"><span>👤</span><span>Profile</span></a>
+        <a href="settings.html" class="sidebar-link"><span>⚙️</span><span>Settings</span></a>
+      </nav>
+
+      <!-- Logout -->
+      <div style="padding: 10px; border-top: 1px solid #E2E8F0;">
+        <a href="login.html" onclick="logoutUser()" class="sidebar-link" style="color: #EF4444; text-decoration: none;">
+          <span>🚪</span><span>Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <header class="top-bar">
+        <a id="user-topbar-avatar" class="topbar-avatar" href="profile.html" style="width: 34px; height: 34px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; margin-left: auto;">ST</a>
+      </header>
+
+      <main class="main-scroll-area fade-in">
+        <button onclick="window.history.back()" class="btn-secondary btn-sm" style="margin-bottom: 16px;">← Back</button>
+
+        <div class="flex justify-between items-center" style="margin-bottom: 28px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h1 class="page-title">Maintenance Requests</h1>
+            <p class="page-subtitle">Submit and track maintenance issues for your rental.</p>
+          </div>
+          <button class="btn-primary" onclick="openModal('new-request-modal')">+ New Request</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid-3" style="margin-bottom: 28px;">
+          <div class="stat-card" style="text-align: center;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #2563EB;"></div>
+            <div id="stat-total" style="font-size: 26px; font-weight: 800; color: #2563EB;">0</div>
+            <div style="font-size: 12px; color: #64748B; font-weight: 500; margin-top: 4px;">Total</div>
+          </div>
+          <div class="stat-card" style="text-align: center;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #F59E0B;"></div>
+            <div id="stat-pending" style="font-size: 26px; font-weight: 800; color: #F59E0B;">0</div>
+            <div style="font-size: 12px; color: #64748B; font-weight: 500; margin-top: 4px;">Pending</div>
+          </div>
+          <div class="stat-card" style="text-align: center;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #22C55E;"></div>
+            <div id="stat-resolved" style="font-size: 26px; font-weight: 800; color: #22C55E;">0</div>
+            <div style="font-size: 12px; color: #64748B; font-weight: 500; margin-top: 4px;">Resolved</div>
+          </div>
+        </div>
+
+        <!-- Requests List -->
+        <div id="requests-list-container" style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- Request 1 -->
+          <div class="card" style="padding: 24px;">
+            <div class="flex justify-between items-center" style="flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
+              <div>
+                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 6px;">
+                  <span style="font-size: 13px; font-weight: 700; color: #94A3B8;">#MR-042</span>
+                  <span class="badge badge-blue">In Progress</span>
+                  <span class="badge badge-orange">High Priority</span>
+                  <span class="badge badge-gray">Plumbing</span>
+                </div>
+                <h3 style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0 0 4px;">Broken Water Tap</h3>
+                <p style="font-size: 14px; color: #64748B; margin: 0;">The bathroom tap is leaking constantly.</p>
+              </div>
+              <span style="font-size: 12px; color: #94A3B8;">Nov 18, 2024</span>
+            </div>
+            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-top: 10px;">
+              <div style="font-size: 12px; font-weight: 700; color: #166534; margin-bottom: 4px;">💬 Landlord Response</div>
+              <div style="font-size: 13px; color: #374151;">Plumber scheduled for Nov 22.</div>
+            </div>
+            <a href="chat.html" class="btn-secondary btn-sm" style="margin-top: 12px; display: inline-flex;">💬 Chat with Landlord</a>
+          </div>
+
+          <!-- Request 2 -->
+          <div class="card" style="padding: 24px;">
+            <div class="flex justify-between items-center" style="flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
+              <div>
+                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 6px;">
+                  <span style="font-size: 13px; font-weight: 700; color: #94A3B8;">#MR-038</span>
+                  <span class="badge badge-green">Resolved</span>
+                  <span class="badge badge-blue">Medium Priority</span>
+                  <span class="badge badge-gray">Electrical</span>
+                </div>
+                <h3 style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0 0 4px;">AC Not Cooling</h3>
+                <p style="font-size: 14px; color: #64748B; margin: 0;">Air conditioning unit stopped working properly.</p>
+              </div>
+              <span style="font-size: 12px; color: #94A3B8;">Oct 30, 2024</span>
+            </div>
+            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-top: 10px;">
+              <div style="font-size: 12px; font-weight: 700; color: #166534; margin-bottom: 4px;">💬 Landlord Response</div>
+              <div style="font-size: 13px; color: #374151;">AC repaired and tested. Good to go!</div>
+            </div>
+            <a href="chat.html" class="btn-secondary btn-sm" style="margin-top: 12px; display: inline-flex;">💬 Chat with Landlord</a>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- New Request Modal -->
+  <div id="new-request-modal" class="modal-overlay">
+    <div class="modal-box" style="padding: 32px; max-width: 500px;">
+      <div class="flex justify-between items-center" style="margin-bottom: 24px;">
+        <h3 style="font-size: 18px; font-weight: 700; color: #0F172A; margin: 0;">New Maintenance Request</h3>
+        <button onclick="closeModal('new-request-modal')" style="background: none; border: none; font-size: 20px; cursor: pointer;">✕</button>
+      </div>
+      <form onsubmit="handleNewRequest(event)">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Issue Title *</label>
+            <input id="req-title-input" class="input-field" placeholder="e.g., Broken water tap, AC issue..." required>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Category</label>
+              <select id="req-category-select" class="input-field">
+                <option>Plumbing</option>
+                <option>Electrical</option>
+                <option>Structural</option>
+                <option>Security</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Priority</label>
+              <select id="req-priority-select" class="input-field">
+                <option>Low</option>
+                <option selected>Medium</option>
+                <option>High</option>
+                <option>Urgent</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Description *</label>
+            <textarea id="req-desc-input" class="input-field" rows="4" placeholder="Describe the problem in detail..." required></textarea>
+          </div>
+          <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button type="button" class="btn-secondary" onclick="closeModal('new-request-modal')" style="flex: 1;">Cancel</button>
+            <button type="submit" class="btn-primary" style="flex: 2;">Submit Request</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    function getStatusBadgeClass(status) {
+      const s = (status || '').toLowerCase();
+      if (s === 'resolved') return 'badge-green';
+      if (s === 'in progress') return 'badge-blue';
+      if (s === 'pending') return 'badge-yellow';
+      if (s === 'rejected' || s === 'cancelled') return 'badge-red';
+      return 'badge-gray';
+    }
+
+    function getPriorityBadgeClass(priority) {
+      const p = (priority || '').toLowerCase();
+      if (p === 'urgent') return 'badge-red';
+      if (p === 'high') return 'badge-orange';
+      if (p === 'medium') return 'badge-blue';
+      return 'badge-gray';
+    }
+
+    function escapeHtml(str) {
+      return (str || '')
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return 'N/A';
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) return dateStr;
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function loadCategories() {
+      fetch('../../backend/student/maintenance-categories.php')
+        .then(res => res.json())
+        .then(result => {
+          if (result && result.success && Array.isArray(result.data)) {
+            const selectEl = document.getElementById('req-category-select');
+            if (selectEl) {
+              selectEl.innerHTML = result.data.map(cat => 
+                `<option value="${cat.category_id}">${escapeHtml(cat.category_name)}</option>`
+              ).join('');
+            }
+          }
+        })
+        .catch(err => console.error('Error loading categories:', err));
+    }
+
+    function loadMaintenanceRequests() {
+      fetch('../../backend/student/maintenance.php')
+        .then(res => {
+          if (res.status === 401 || res.status === 403) {
+            window.location.href = 'login.html';
+            return;
+          }
+          return res.json();
+        })
+        .then(result => {
+          if (!result || !result.success) return;
+          const requests = result.data || [];
+          renderMaintenanceList(requests);
+        })
+        .catch(err => console.error('Error fetching maintenance requests:', err));
+    }
+
+    function renderMaintenanceList(requests) {
+      const container = document.getElementById('requests-list-container');
+      if (!container) return;
+
+      let total = requests.length;
+      let pending = 0;
+      let inProgress = 0;
+      let resolved = 0;
+
+      requests.forEach(r => {
+        const s = (r.status || '').toLowerCase();
+        if (s === 'pending') pending++;
+        else if (s === 'in progress') inProgress++;
+        else if (s === 'resolved') resolved++;
+      });
+
+      const statTotal = document.getElementById('stat-total');
+      const statPending = document.getElementById('stat-pending');
+      const statResolved = document.getElementById('stat-resolved');
+
+      if (statTotal) statTotal.textContent = total;
+      if (statPending) statPending.textContent = pending;
+      if (statResolved) statResolved.textContent = resolved;
+
+      if (requests.length === 0) {
+        container.innerHTML = `
+          <div class="card" style="padding: 30px; text-align: center; color: #64748B;">
+            No maintenance requests found. Click <strong>+ New Request</strong> above to submit one.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = requests.map(req => {
+        const statusBadge = getStatusBadgeClass(req.status);
+        const priorityBadge = getPriorityBadgeClass(req.priority);
+        const reqCode = `#MR-${String(req.request_id).padStart(3, '0')}`;
+        const note = req.landlord_notes || req.landlord_note || '';
+
+        return `
+          <div class="card" style="padding: 24px;">
+            <div class="flex justify-between items-center" style="flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
+              <div>
+                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 6px; flex-wrap: wrap;">
+                  <span style="font-size: 13px; font-weight: 700; color: #94A3B8;">${reqCode}</span>
+                  <span class="badge ${statusBadge}">${escapeHtml(req.status)}</span>
+                  <span class="badge ${priorityBadge}">${escapeHtml(req.priority)} Priority</span>
+                  <span class="badge badge-gray">${escapeHtml(req.category_name || 'General')}</span>
+                </div>
+                <h3 style="font-size: 16px; font-weight: 700; color: #0F172A; margin: 0 0 4px;">${escapeHtml(req.title)}</h3>
+                <p style="font-size: 14px; color: #64748B; margin: 0;">${escapeHtml(req.description)}</p>
+              </div>
+              <span style="font-size: 12px; color: #94A3B8;">${formatDate(req.created_at)}</span>
+            </div>
+            ${note ? `
+              <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-top: 10px;">
+                <div style="font-size: 12px; font-weight: 700; color: #166534; margin-bottom: 4px;">💬 Landlord Response (${escapeHtml(req.landlord_name || 'Landlord')})</div>
+                <div style="font-size: 13px; color: #374151;">${escapeHtml(note)}</div>
+              </div>
+            ` : ''}
+            <a href="chat.html?property_id=${req.property_id || ''}&landlord_id=${req.landlord_id || ''}" class="btn-secondary btn-sm" style="margin-top: 12px; display: inline-flex;">💬 Chat with Landlord</a>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function handleNewRequest(e) {
+      e.preventDefault();
+      const titleInput = document.getElementById('req-title-input');
+      const categorySelect = document.getElementById('req-category-select');
+      const prioritySelect = document.getElementById('req-priority-select');
+      const descInput = document.getElementById('req-desc-input');
+
+      const title = titleInput.value.trim();
+      const categoryId = categorySelect.value;
+      const priority = prioritySelect.value;
+      const description = descInput.value.trim();
+
+      if (!title || !description) return;
+
+      const payload = {
+        title: title,
+        category_id: categoryId,
+        priority: priority,
+        description: description
+      };
+
+      fetch('../../backend/student/maintenance.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result && result.success) {
+          titleInput.value = '';
+          descInput.value = '';
+          closeModal('new-request-modal');
+          loadMaintenanceRequests();
+          if (typeof showToast === 'function') {
+            showToast(result.message || 'Maintenance request submitted successfully!');
+          } else {
+            alert('Maintenance request submitted successfully!');
+          }
+        } else {
+          if (typeof showToast === 'function') {
+            showToast(result?.message || 'Failed to submit maintenance request', 'error');
+          } else {
+            alert(result?.message || 'Failed to submit maintenance request');
+          }
+        }
+      })
+      .catch(err => {
+        console.error('Error submitting maintenance request:', err);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCategories();
+      loadMaintenanceRequests();
+    });
+  </script>
+</body>
+</html>

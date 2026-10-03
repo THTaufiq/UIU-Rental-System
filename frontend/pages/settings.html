@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — UIU Student Rental System</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    .toggle-switch {
+      width: 44px; height: 24px; border-radius: 12px; background: #2563EB; position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0;
+    }
+    .toggle-switch.off { background: #E2E8F0; }
+    .toggle-circle {
+      position: absolute; top: 3px; left: 22px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: left 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .toggle-switch.off .toggle-circle { left: 3px; }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <div style="padding: 18px 20px 14px; border-bottom: 1px solid #E2E8F0;">
+        <a href="../index.html" style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 34px; height: 34px; background: #2563EB; border-radius: 9px; display: flex; align-items: center; justify-content: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: #0F172A; line-height: 1.1;">UIU Rental</div>
+            <div style="font-size: 10px; color: #64748B; font-weight: 500;">Student Portal</div>
+          </div>
+        </a>
+      </div>
+
+      <nav style="padding: 10px; flex: 1;">
+        <a href="student-dashboard.html" class="sidebar-link"><span>⊞</span><span>Dashboard</span></a>
+        <a href="browse.html" class="sidebar-link"><span>🏠</span><span>Browse Rentals</span></a>
+        <a href="payment.html" class="sidebar-link"><span>💳</span><span>Payments</span></a>
+        <a href="maintenance.html" class="sidebar-link"><span>🔧</span><span>Maintenance</span></a>
+        <a href="chat.html" class="sidebar-link"><span>💬</span><span>Chat</span></a>
+        <a href="profile.html" class="sidebar-link"><span>👤</span><span>Profile</span></a>
+        <a href="settings.html" class="sidebar-link active"><span>⚙️</span><span>Settings</span></a>
+      </nav>
+
+      <!-- Logout -->
+      <div style="padding: 10px; border-top: 1px solid #E2E8F0;">
+        <a href="login.html" onclick="logoutUser()" class="sidebar-link" style="color: #EF4444; text-decoration: none;">
+          <span>🚪</span><span>Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <header class="top-bar">
+        <a id="user-topbar-avatar" class="topbar-avatar" href="profile.html" style="width: 34px; height: 34px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; margin-left: auto;">ST</a>
+      </header>
+
+      <main class="main-scroll-area fade-in" style="max-width: 700px; margin: 0 auto;">
+        <button onclick="window.history.back()" class="btn-secondary btn-sm" style="margin-bottom: 16px;">← Back</button>
+        <div style="margin-bottom: 28px;">
+          <h1 class="page-title">Settings</h1>
+          <p class="page-subtitle">Manage your account preferences and notifications.</p>
+        </div>
+
+        <!-- Notification Preferences -->
+        <div class="card" style="padding: 28px; margin-bottom: 20px;">
+          <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 20px;">Notification Preferences</h3>
+
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div class="flex justify-between items-center" style="padding: 12px 16px; background: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0;">
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: #0F172A;">Email Notifications</div>
+                <div style="font-size: 12px; color: #64748B;">Receive updates via email</div>
+              </div>
+              <div class="toggle-switch" id="toggle-email" onclick="this.classList.toggle('off')"><div class="toggle-circle"></div></div>
+            </div>
+            <div class="flex justify-between items-center" style="padding: 12px 16px; background: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0;">
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: #0F172A;">Chat & Message Alerts</div>
+                <div style="font-size: 12px; color: #64748B;">Get alerts for instant chat messages</div>
+              </div>
+              <div class="toggle-switch" id="toggle-chat" onclick="this.classList.toggle('off')"><div class="toggle-circle"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Change Password Card -->
+        <div class="card" style="padding: 28px; margin-bottom: 20px;">
+          <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 16px;">Security & Password</h3>
+          <div class="grid-2" style="gap: 16px;">
+            <div>
+              <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Current Password</label>
+              <input type="password" class="input-field" id="pwd-current" placeholder="••••••••">
+            </div>
+            <div>
+              <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">New Password</label>
+              <input type="password" class="input-field" id="pwd-new" placeholder="••••••••">
+            </div>
+          </div>
+          <button class="btn-secondary btn-sm" onclick="changePassword()" style="margin-top: 14px;">Update Password</button>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 24px;">
+          <a href="student-dashboard.html" class="btn-secondary">Cancel</a>
+          <button class="btn-primary" onclick="saveSettings()" style="flex: 1; justify-content: center;">Save Preferences</button>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', loadSettings);
+
+    function loadSettings() {
+      fetch('../../backend/student/settings.php')
+        .then(res => {
+          if (res.status === 401 || res.status === 403) {
+            window.location.href = 'login.html';
+            return;
+          }
+          return res.json();
+        })
+        .then(result => {
+          if (!result || !result.success) return;
+          const s = result.data || {};
+          
+          const toggleEmail = document.getElementById('toggle-email');
+          if (toggleEmail) {
+            if (s.email_notifications) toggleEmail.classList.remove('off');
+            else toggleEmail.classList.add('off');
+          }
+
+          const toggleChat = document.getElementById('toggle-chat');
+          if (toggleChat) {
+            if (s.chat_notifications) toggleChat.classList.remove('off');
+            else toggleChat.classList.add('off');
+          }
+        })
+        .catch(err => console.error('Error loading settings:', err));
+    }
+
+    function saveSettings() {
+      const emailNotif = document.getElementById('toggle-email').classList.contains('off') ? 0 : 1;
+      const chatNotif = document.getElementById('toggle-chat').classList.contains('off') ? 0 : 1;
+
+      fetch('../../backend/student/settings.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'preferences',
+          email_notifications: emailNotif,
+          chat_notifications: chatNotif
+        })
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result && result.success) {
+          if (typeof showToast === 'function') showToast('Settings saved successfully!');
+        } else {
+          if (typeof showToast === 'function') showToast(result?.message || 'Failed to save settings', 'error');
+        }
+      })
+      .catch(err => {
+        console.error('Error saving settings:', err);
+        if (typeof showToast === 'function') showToast('Error saving settings', 'error');
+      });
+    }
+
+    function changePassword() {
+      const currentPassword = document.getElementById('pwd-current').value;
+      const newPassword = document.getElementById('pwd-new').value;
+
+      if (!currentPassword || !newPassword) {
+        if (typeof showToast === 'function') showToast('Both current and new password are required.', 'error');
+        return;
+      }
+
+      fetch('../../backend/student/settings.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'change_password',
+          current_password: currentPassword,
+          new_password: newPassword
+        })
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result && result.success) {
+          if (typeof showToast === 'function') showToast('Password changed successfully!');
+          document.getElementById('pwd-current').value = '';
+          document.getElementById('pwd-new').value = '';
+        } else {
+          if (typeof showToast === 'function') showToast(result?.message || 'Failed to change password', 'error');
+        }
+      })
+      .catch(err => {
+        console.error('Error changing password:', err);
+        if (typeof showToast === 'function') showToast('Error changing password', 'error');
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UIU Student Rental System — Home</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- ── Header / Navbar ── -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <!-- Logo -->
+      <a href="index.html" style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+        <div style="width: 36px; height: 36px; background: #2563EB; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="9 22 9 12 15 12 15 22" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-size: 16px; font-weight: 700; color: #0F172A; line-height: 1.1;">UIU Rental</div>
+          <div style="font-size: 10px; color: #64748B; font-weight: 500;">System</div>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <div style="display: flex; align-items: center; gap: 4px;" class="desktop-nav">
+        <a href="index.html" class="nav-link-btn active">Home</a>
+        <a href="pages/browse.html" class="nav-link-btn">Browse Rentals</a>
+        <a href="pages/about.html" class="nav-link-btn">About</a>
+        <a href="pages/contact.html" class="nav-link-btn">Contact</a>
+      </div>
+
+      <!-- Guest vs Authenticated User Right Actions -->
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <!-- Guest State -->
+        <div id="nav-guest-actions" style="display: flex; gap: 8px;">
+          <a href="pages/login.html" class="btn-secondary btn-sm">Login</a>
+          <a href="pages/signup.html" class="btn-primary btn-sm">Sign Up</a>
+        </div>
+
+        <!-- Auth State -->
+        <div id="nav-auth-actions" style="display: none; align-items: center; gap: 8px;">
+          <button id="nav-dashboard-shortcut" class="btn-secondary btn-sm">Dashboard</button>
+          <div style="position: relative;">
+            <button id="user-avatar-btn" style="width: 38px; height: 38px; border-radius: 50%; background: #2563EB; border: none; cursor: pointer; color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center;">
+              <span id="user-avatar-initials">RH</span>
+            </button>
+            <div id="user-dropdown-menu" style="display: none; position: absolute; top: calc(100% + 10px); right: 0; background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); min-width: 220px; z-index: 200; overflow: hidden;">
+              <div style="padding: 14px 16px; border-bottom: 1px solid #F1F5F9;">
+                <div id="user-name-display" style="font-size: 14px; font-weight: 700; color: #0F172A;">Rakib Hassan</div>
+                <div id="user-email-display" style="font-size: 12px; color: #64748B;">rakib@uiu.ac.bd</div>
+              </div>
+              <div style="padding: 6px 0;">
+                <a href="pages/profile.html" style="display: flex; align-items: center; gap: 10px; padding: 9px 16px; font-size: 14px; color: #374151;">👤 My Profile</a>
+                <a href="pages/settings.html" style="display: flex; align-items: center; gap: 10px; padding: 9px 16px; font-size: 14px; color: #374151;">⚙️ Settings</a>
+              </div>
+              <div style="border-top: 1px solid #F1F5F9; padding: 6px 0;">
+                <button onclick="logoutUser()" style="width: 100%; text-align: left; background: none; border: none; padding: 9px 16px; font-size: 14px; color: #EF4444; cursor: pointer; font-weight: 500;">🚪 Logout</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hamburger Icon for Mobile -->
+        <button id="nav-hamburger-btn" style="background: none; border: none; cursor: pointer; padding: 6px; border-radius: 8px; color: #0F172A; display: none;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Hero Section ── -->
+  <section style="background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 100%); padding: 60px 0;">
+    <div class="container" style="text-align: center; max-width: 900px;">
+      <span style="background: #DBEAFE; color: #1D4ED8; font-size: 13px; font-weight: 600; padding: 6px 16px; border-radius: 99px; display: inline-block; margin-bottom: 20px;">
+        ✨ UIU Student Rental Platform
+      </span>
+      <h1 style="font-size: 42px; font-weight: 800; color: #0F172A; line-height: 1.25; margin: 0 0 16px;">
+        Find Your Perfect Rental Near <span style="color: #2563EB;">UIU Campus</span>
+      </h1>
+      <p style="font-size: 16px; color: #64748B; line-height: 1.7; margin: 0;">
+        Search 2,400+ verified student flats, studio apartments, sublets, and mess rooms within 1 km of United International University, Badda, Dhaka.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Featured Listings Section ── -->
+  <section style="padding: 60px 0; background: var(--bg-section);">
+    <div class="container">
+      <div class="flex justify-between items-center" style="margin-bottom: 32px;">
+        <div>
+          <div class="section-label">Top Recommended</div>
+          <h2 class="page-title">Featured Student Rentals</h2>
+        </div>
+        <a href="pages/browse.html" class="btn-secondary btn-sm">View All 2,400+ →</a>
+      </div>
+
+      <div class="grid-3">
+        <!-- Card 1 -->
+        <div class="property-card" onclick="window.location.href='pages/browse.html'">
+          <div style="position: relative; height: 200px; background: #EFF6FF;">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=220&fit=crop&auto=format" alt="Studio" style="width: 100%; height: 100%; object-fit: cover;">
+            <span class="badge badge-blue" style="position: absolute; top: 12px; left: 12px;">✓ Verified</span>
+            <span style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); color: #fff; font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600;">📍 0.3 km</span>
+          </div>
+          <div style="padding: 16px;">
+            <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 6px;">Modern Studio Apartment</h3>
+            <p style="font-size: 12px; color: #64748B; margin: 0 0 10px;">📍 House 12, Road 3, Badda, Dhaka</p>
+            <div class="flex items-center gap-8" style="margin-bottom: 12px;">
+              <span class="star">★★★★★</span>
+              <span style="font-size: 13px; font-weight: 700;">4.8</span>
+              <span style="font-size: 12px; color: #94A3B8;">(24 reviews)</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <div><span style="font-size: 18px; font-weight: 800; color: #2563EB;">৳8,500</span><span style="font-size: 12px; color: #64748B;">/mo</span></div>
+              <span class="btn-primary btn-sm">View</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="property-card" onclick="window.location.href='pages/browse.html'">
+          <div style="position: relative; height: 200px; background: #EFF6FF;">
+            <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=220&fit=crop&auto=format" alt="Flat" style="width: 100%; height: 100%; object-fit: cover;">
+            <span class="badge badge-blue" style="position: absolute; top: 12px; left: 12px;">✓ Verified</span>
+            <span style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); color: #fff; font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600;">📍 0.6 km</span>
+          </div>
+          <div style="padding: 16px;">
+            <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 6px;">Furnished 2-Bed Flat</h3>
+            <p style="font-size: 12px; color: #64748B; margin: 0 0 10px;">📍 Road 2, Rampura, Dhaka</p>
+            <div class="flex items-center gap-8" style="margin-bottom: 12px;">
+              <span class="star">★★★★☆</span>
+              <span style="font-size: 13px; font-weight: 700;">4.6</span>
+              <span style="font-size: 12px; color: #94A3B8;">(18 reviews)</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <div><span style="font-size: 18px; font-weight: 800; color: #2563EB;">৳14,000</span><span style="font-size: 12px; color: #64748B;">/mo</span></div>
+              <span class="btn-primary btn-sm">View</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="property-card" onclick="window.location.href='pages/browse.html'">
+          <div style="position: relative; height: 200px; background: #EFF6FF;">
+            <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=400&h=220&fit=crop&auto=format" alt="Single" style="width: 100%; height: 100%; object-fit: cover;">
+            <span class="badge badge-green" style="position: absolute; top: 12px; left: 12px;">Available</span>
+            <span style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); color: #fff; font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600;">📍 0.2 km</span>
+          </div>
+          <div style="padding: 16px;">
+            <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 6px;">Single Room with Kitchen</h3>
+            <p style="font-size: 12px; color: #64748B; margin: 0 0 10px;">📍 Block B, Merul Badda, Dhaka</p>
+            <div class="flex items-center gap-8" style="margin-bottom: 12px;">
+              <span class="star">★★★★☆</span>
+              <span style="font-size: 13px; font-weight: 700;">4.4</span>
+              <span style="font-size: 12px; color: #94A3B8;">(12 reviews)</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <div><span style="font-size: 18px; font-weight: 800; color: #2563EB;">৳6,000</span><span style="font-size: 12px; color: #64748B;">/mo</span></div>
+              <span class="btn-primary btn-sm">View</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 1: WHY UIU RENTAL SYSTEM ── -->
+  <section style="padding: 70px 0; background: var(--bg-section);">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 44px;">
+        <div class="section-label">WHY UIU RENTAL SYSTEM</div>
+        <h2 class="page-title" style="font-size: 32px; font-weight: 800; color: #0F172A;">Built for UIU Students</h2>
+      </div>
+
+      <div class="why-grid">
+        <!-- Card 1 -->
+        <div class="why-card">
+          <div class="why-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+          </div>
+          <h3 class="why-card-title">Verified Listings</h3>
+          <p class="why-card-desc">Every property is manually inspected and verified before listing. No fake listings, no scams.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="why-card">
+          <div class="why-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="5" width="20" height="14" rx="2"/>
+              <line x1="2" y1="10" x2="22" y2="10"/>
+            </svg>
+          </div>
+          <h3 class="why-card-title">Secure Payments</h3>
+          <p class="why-card-desc">Pay rent securely via bKash, Nagad, Rocket, or card. All transactions are encrypted and tracked.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="why-card">
+          <div class="why-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+          </div>
+          <h3 class="why-card-title">Instant Applications</h3>
+          <p class="why-card-desc">Apply for any rental in seconds. Get landlord responses within 48 hours guaranteed.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="why-card">
+          <div class="why-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+          </div>
+          <h3 class="why-card-title">Maintenance Support</h3>
+          <p class="why-card-desc">Submit maintenance requests in-app. Track status and get updates from your landlord directly.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="why-card">
+          <div class="why-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <h3 class="why-card-title">Built-in Chat</h3>
+          <p class="why-card-desc">Communicate with landlords directly through our secure in-app messaging system.</p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="why-card">
+          <div class="why-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </div>
+          <h3 class="why-card-title">Student Verified</h3>
+          <p class="why-card-desc">Only UIU students can apply, ensuring all tenants are verified university community members.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2: STUDENT STORIES ── -->
+  <section style="padding: 70px 0; background: #FFFFFF;">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 44px;">
+        <div class="section-label">STUDENT STORIES</div>
+        <h2 class="page-title" style="font-size: 32px; font-weight: 800; color: #0F172A;">What Students Say</h2>
+      </div>
+
+      <div class="grid-3" style="gap: 24px;">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+          <div>
+            <div class="star" style="font-size: 16px; margin-bottom: 14px;">★★★★★</div>
+            <p class="testimonial-quote">"Found my perfect room in just 2 days! The platform made it so easy to filter by budget and distance from UIU."</p>
+          </div>
+          <div class="testimonial-user">
+            <div class="testimonial-avatar">RH</div>
+            <div>
+              <div class="testimonial-name">Rakib Hassan</div>
+              <div class="testimonial-sub">CSE Student, UIU</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card">
+          <div>
+            <div class="star" style="font-size: 16px; margin-bottom: 14px;">★★★★★</div>
+            <p class="testimonial-quote">"The verified listings gave me confidence. My landlord was responsive and the apartment matched exactly what was shown."</p>
+          </div>
+          <div class="testimonial-user">
+            <div class="testimonial-avatar">NJ</div>
+            <div>
+              <div class="testimonial-name">Nusrat Jahan</div>
+              <div class="testimonial-sub">BBA Student, UIU</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card">
+          <div>
+            <div class="star" style="font-size: 16px; margin-bottom: 14px;">★★★★★</div>
+            <p class="testimonial-quote">"Great platform! The maintenance request feature saved me a lot of hassle. Highly recommended for UIU students."</p>
+          </div>
+          <div class="testimonial-user">
+            <div class="testimonial-avatar">MI</div>
+            <div>
+              <div class="testimonial-name">Mehedi Islam</div>
+              <div class="testimonial-sub">EEE Student, UIU</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 3: FAQ ── -->
+  <section style="padding: 70px 0; background: var(--bg-section);">
+    <div class="container" style="max-width: 840px;">
+      <div style="text-align: center; margin-bottom: 44px;">
+        <div class="section-label">FAQS</div>
+        <h2 class="page-title" style="font-size: 32px; font-weight: 800; color: #0F172A;">Frequently Asked Questions</h2>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <!-- Q1 -->
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>How do I find rentals near UIU?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Use the Browse Rentals section to search and filter available properties near UIU.</p>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Are all properties verified?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes. Properties are reviewed and verified before being listed on the platform.</p>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>How do I apply for a rental?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Open a property, review the details, and use the application option to submit your rental request.</p>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>What payment methods are supported?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Supported payment methods include bKash, Nagad, Rocket, and card payments.</p>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Can I contact the landlord directly?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes. Students can communicate directly with landlords through the built-in chat system.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 4: CTA ── -->
+  <section style="background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); color: #FFFFFF; padding: 76px 0; text-align: center;">
+    <div class="container" style="max-width: 800px;">
+      <h2 style="font-size: 36px; font-weight: 800; margin: 0 0 14px; color: #FFFFFF; line-height: 1.25;">Ready to Find Your Home?</h2>
+      <p style="font-size: 16px; color: #DBEAFE; margin: 0 0 34px; line-height: 1.6;">Join thousands of UIU students who found their perfect rental through our platform.</p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <a href="pages/login.html" style="background: #FFFFFF; color: #2563EB; font-weight: 700; padding: 12px 28px; border-radius: 10px; font-size: 15px; text-decoration: none; display: inline-flex; align-items: center; transition: background 0.18s, transform 0.12s; box-shadow: 0 4px 14px rgba(0,0,0,0.15);">Get Started Free</a>
+        <a href="pages/browse.html" style="background: rgba(255,255,255,0.15); color: #FFFFFF; font-weight: 600; padding: 12px 28px; border-radius: 10px; font-size: 15px; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.4); display: inline-flex; align-items: center; transition: background 0.18s;">Browse Rentals</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 5: NEW FOOTER ── -->
+  <footer style="background: #0F172A; color: #94A3B8; padding: 60px 0 28px; font-size: 14px;">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px;">
+        <!-- Column 1 -->
+        <div>
+          <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; margin-bottom: 16px;">
+            <div style="width: 36px; height: 36px; background: #2563EB; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="9 22 9 12 15 12 15 22" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span style="font-size: 18px; font-weight: 700; color: #FFFFFF;">UIU Rental System</span>
+          </a>
+          <p style="color: #94A3B8; font-size: 13.5px; line-height: 1.6; margin: 0; max-width: 320px;">The official rental platform for United International University students and landlords in Dhaka, Bangladesh.</p>
+        </div>
+
+        <!-- Column 2 -->
+        <div>
+          <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #F8FAFC; margin: 0 0 18px;">PLATFORM</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+            <li><a href="pages/browse.html" style="color: #94A3B8; text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Browse Rentals</a></li>
+            <li><a href="pages/about.html" style="color: #94A3B8; text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">How It Works</a></li>
+            <li><a href="pages/about.html" style="color: #94A3B8; text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Pricing</a></li>
+            <li><a href="pages/login.html" style="color: #94A3B8; text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">For Landlords</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3 -->
+        <div>
+          <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #F8FAFC; margin: 0 0 18px;">COMPANY</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+            <li><a href="pages/about.html" style="color: #94A3B8; text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">About Us</a></li>
+            <li><a href="pages/contact.html" style="color: #94A3B8; text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Contact</a></li>
+            <li><a href="pages/about.html" style="color: #94A3B8; text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Careers</a></li>
+            <li><a href="pages/about.html" style="color: #94A3B8; text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Press</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4 -->
+        <div>
+          <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #F8FAFC; margin: 0 0 18px;">LEGAL</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+            <li><a href="#" style="color: #94A3B8; text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Privacy Policy</a></li>
+            <li><a href="#" style="color: #94A3B8; text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Terms of Service</a></li>
+            <li><a href="#" style="color: #94A3B8; text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Cookie Policy</a></li>
+            <li><a href="pages/contact.html" style="color: #94A3B8; text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Divider Line -->
+      <div style="border-top: 1px solid #1E293B; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #64748B;">
+        <div>© 2024 UIU Rental System. All rights reserved.</div>
+        <div>United International University, Dhaka, Bangladesh</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages — UIU Student Rental System</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    @keyframes typing { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <div style="padding: 18px 20px 14px; border-bottom: 1px solid #E2E8F0;">
+        <a href="../index.html" style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 34px; height: 34px; background: #2563EB; border-radius: 9px; display: flex; align-items: center; justify-content: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: #0F172A; line-height: 1.1;">UIU Rental</div>
+            <div style="font-size: 10px; color: #64748B; font-weight: 500;">Student Portal</div>
+          </div>
+        </a>
+      </div>
+
+      <nav style="padding: 10px; flex: 1;">
+        <a href="student-dashboard.html" class="sidebar-link"><span>⊞</span><span>Dashboard</span></a>
+        <a href="browse.html" class="sidebar-link"><span>🏠</span><span>Browse Rentals</span></a>
+        <a href="payment.html" class="sidebar-link"><span>💳</span><span>Payments</span></a>
+        <a href="maintenance.html" class="sidebar-link"><span>🔧</span><span>Maintenance</span></a>
+        <a href="chat.html" class="sidebar-link active"><span>💬</span><span>Chat</span></a>
+        <!-- <a href="reviews.html" class="sidebar-link"><span>⭐</span><span>Reviews</span></a> -->
+        <a href="profile.html" class="sidebar-link"><span>👤</span><span>Profile</span></a>
+        <a href="settings.html" class="sidebar-link"><span>⚙️</span><span>Settings</span></a>
+      </nav>
+
+      <!-- Logout -->
+      <div style="padding: 10px; border-top: 1px solid #E2E8F0;">
+        <a href="login.html" onclick="logoutUser()" class="sidebar-link" style="color: #EF4444; text-decoration: none;">
+          <span>🚪</span><span>Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <header class="top-bar">
+        <a id="user-topbar-avatar" class="topbar-avatar" href="profile.html" style="width: 34px; height: 34px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; margin-left: auto;">ST</a>
+      </header>
+
+      <main class="main-scroll-area fade-in" style="display: flex; flex-direction: column; height: calc(100vh - 60px); max-height: calc(100vh - 60px); box-sizing: border-box; overflow: hidden; min-height: 0;">
+        <button onclick="window.history.back()" class="btn-secondary btn-sm" style="align-self: flex-start; width: max-content; margin-bottom: 10px;">← Back</button>
+        <div style="margin-bottom: 12px;">
+          <h1 class="page-title">Messages</h1>
+          <p class="page-subtitle">Chat with your landlord and UIU support.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 300px 1fr; grid-template-rows: minmax(0, 1fr); flex: 1; min-height: 0; border: 1px solid #E2E8F0; border-radius: 16px; overflow: hidden; background: #fff;">
+          <!-- Conversation List -->
+          <div style="border-right: 1px solid #E2E8F0; display: flex; flex-direction: column;">
+            <div style="padding: 16px; border-bottom: 1px solid #E2E8F0;">
+              <input id="chat-search-input" class="input-field" placeholder="🔍 Search conversations..." style="font-size: 13px; padding: 8px 12px;" oninput="filterConversations()">
+            </div>
+            <div id="conversation-list-box" style="overflow-y: auto; flex: 1;">
+              <div style="padding: 20px; text-align: center; color: #94A3B8; font-size: 13px;">Loading conversations...</div>
+            </div>
+          </div>
+
+          <!-- Chat Window -->
+          <div style="display: flex; flex-direction: column; min-height: 0;">
+            <!-- Header -->
+            <div style="padding: 14px 20px; border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; gap: 12px;">
+              <div id="active-chat-avatar" style="width: 40px; height: 40px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 700;">KA</div>
+              <div style="flex: 1;">
+                <div id="active-chat-name" style="font-size: 15px; font-weight: 700; color: #0F172A;">Landlord Chat</div>
+                <div id="active-chat-sub" style="font-size: 12px; color: #22C55E;">● Active Conversation</div>
+              </div>
+            </div>
+
+            <!-- Message Feed -->
+            <div id="chat-messages-container" style="flex: 1; min-height: 0; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; background: #F8FAFC;">
+              <div style="text-align: center; color: #94A3B8; font-size: 13px; margin: auto;">Select a conversation to start chatting.</div>
+            </div>
+
+            <!-- Input Bar -->
+            <form onsubmit="handleSendMsg(event)" style="padding: 14px 20px; border-top: 1px solid #E2E8F0; display: flex; gap: 10px; align-items: flex-end; flex-shrink: 0;">
+              <input id="chat-text-input" placeholder="Type a message..." class="input-field" style="flex: 1; font-size: 14px;" required>
+              <button type="submit" class="btn-primary" style="padding: 10px 16px; flex-shrink: 0;">Send</button>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    let allConversations = [];
+    let activeConversationId = null;
+    let activeLandlordId = null;
+    let activePropertyId = null;
+
+    function getInitials(name) {
+      if (!name) return 'U';
+      const parts = name.trim().split(' ');
+      if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+      return name.substring(0, 2).toUpperCase();
+    }
+
+    function formatTime(dateStr) {
+      if (!dateStr) return '';
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr;
+      return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function escapeHtml(str) {
+      return (str || '')
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    let studentPollingInterval = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramCid = urlParams.get('conversation_id');
+      const paramLid = urlParams.get('landlord_id');
+      const paramPid = urlParams.get('property_id');
+
+      if (paramLid) activeLandlordId = parseInt(paramLid);
+      if (paramPid) activePropertyId = parseInt(paramPid);
+
+      loadConversations(paramCid ? parseInt(paramCid) : null);
+
+      studentPollingInterval = setInterval(() => {
+        if (activeConversationId) {
+          fetchMessages(activeConversationId, true);
+        }
+      }, 4000);
+    });
+
+    function loadConversations(autoSelectCid = null) {
+      fetch('../../backend/student/chat.php')
+        .then(res => {
+          if (res.status === 401 || res.status === 403) {
+            window.location.href = 'login.html';
+            return;
+          }
+          return res.json();
+        })
+        .then(result => {
+          if (!result || !result.success) return;
+          allConversations = result.data || [];
+          renderConversationList();
+
+          if (autoSelectCid && allConversations.some(c => parseInt(c.conversation_id) === autoSelectCid)) {
+            selectConversation(autoSelectCid);
+          } else if (activeLandlordId || activePropertyId) {
+            // Find existing conversation matching landlord or property
+            const matched = activePropertyId
+              ? allConversations.find(c => parseInt(c.property_id) === activePropertyId)
+              : allConversations.find(c => parseInt(c.other_user_id) === activeLandlordId);
+            if (matched) {
+              selectConversation(parseInt(matched.conversation_id));
+            } else {
+              const headerName = document.getElementById('active-chat-name');
+              if (headerName) headerName.textContent = 'New Conversation';
+            }
+          } else if (allConversations.length > 0 && !activeConversationId) {
+            selectConversation(parseInt(allConversations[0].conversation_id));
+          }
+        })
+        .catch(err => console.error('Error loading conversations:', err));
+    }
+
+    function renderConversationList() {
+      const listBox = document.getElementById('conversation-list-box');
+      if (!listBox) return;
+
+      if (allConversations.length === 0) {
+        listBox.innerHTML = '<div style="padding: 20px; text-align: center; color: #94A3B8; font-size: 13px;">No conversations yet.</div>';
+        return;
+      }
+
+      listBox.innerHTML = allConversations.map(c => {
+        const isSelected = activeConversationId === parseInt(c.conversation_id);
+        const initials = getInitials(c.other_user_name);
+        const timeStr = formatTime(c.last_message_at || c.created_at);
+
+        return `
+          <div onclick="selectConversation(${c.conversation_id})" id="con-${c.conversation_id}" 
+            style="padding: 14px 16px; cursor: pointer; display: flex; gap: 12px; align-items: center; background: ${isSelected ? '#EFF6FF' : '#fff'}; border-left: 3px solid ${isSelected ? '#2563EB' : 'transparent'}; border-bottom: 1px solid #F1F5F9;">
+            <div style="position: relative; flex-shrink: 0;">
+              <div style="width: 44px; height: 44px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 700;">${initials}</div>
+            </div>
+            <div style="flex: 1; overflow: hidden;">
+              <div class="flex justify-between items-center">
+                <span style="font-size: 14px; font-weight: 700; color: #0F172A;">${escapeHtml(c.other_user_name)}</span>
+                <span style="font-size: 11px; color: #94A3B8;">${timeStr}</span>
+              </div>
+              <div style="font-size: 12px; color: #94A3B8; margin-bottom: 2px;">${escapeHtml(c.property_title || 'Rental Inquiry')}</div>
+              <div style="font-size: 12px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(c.last_message || 'Started a conversation')}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterConversations() {
+      const q = document.getElementById('chat-search-input')?.value.toLowerCase() || '';
+      const items = document.querySelectorAll('#conversation-list-box > div');
+      items.forEach(el => {
+        const text = el.textContent.toLowerCase();
+        el.style.display = text.includes(q) ? 'flex' : 'none';
+      });
+    }
+
+    function selectConversation(cid) {
+      activeConversationId = parseInt(cid);
+      renderConversationList();
+      fetchMessages(cid, false);
+    }
+
+    function fetchMessages(cid, isSilent = false) {
+      const container = document.getElementById('chat-messages-container');
+      if (container && !isSilent) {
+        container.innerHTML = '<div style="text-align: center; color: #94A3B8; font-size: 13px; margin: auto;">Loading messages...</div>';
+      }
+
+      fetch(`../../backend/student/chat.php?conversation_id=${cid}`)
+        .then(res => res.json())
+        .then(result => {
+          if (!result || !result.success) {
+            if (container && !isSilent) container.innerHTML = `<div style="text-align: center; color: #EF4444; font-size: 13px; margin: auto;">${result?.message || 'Error loading messages'}</div>`;
+            return;
+          }
+
+          const data = result.data || {};
+          const other = data.other_user || {};
+          const messages = data.messages || [];
+
+          const avatarEl = document.getElementById('active-chat-avatar');
+          const nameEl = document.getElementById('active-chat-name');
+          const subEl = document.getElementById('active-chat-sub');
+
+          if (avatarEl) avatarEl.textContent = getInitials(other.full_name);
+          if (nameEl) nameEl.textContent = other.full_name || 'Landlord';
+          if (subEl) subEl.textContent = `● ${other.role_name ? (other.role_name.charAt(0).toUpperCase() + other.role_name.slice(1)) : 'User'} · ${other.property_title || 'Rental'}`;
+
+          renderMessageFeed(messages, other, isSilent);
+        })
+        .catch(err => {
+          if (!isSilent) console.error('Error fetching messages:', err);
+        });
+    }
+
+    function renderMessageFeed(messages, other, isSilent = false) {
+      const container = document.getElementById('chat-messages-container');
+      if (!container) return;
+
+      if (messages.length === 0) {
+        if (!isSilent) container.innerHTML = '<div style="text-align: center; color: #94A3B8; font-size: 13px; margin: auto;">No messages yet. Send a message below!</div>';
+        return;
+      }
+
+      const otherInitials = getInitials(other.full_name);
+      const isAtBottom = container.scrollHeight - container.clientHeight <= container.scrollTop + 50;
+
+      container.innerHTML = messages.map(m => {
+        const isMe = parseInt(m.sender_id) !== parseInt(other.user_id);
+        const timeStr = formatTime(m.sent_at);
+
+        if (isMe) {
+          return `
+            <div style="display: flex; justify-content: flex-end; gap: 8px; align-items: flex-end;">
+              <div style="max-width: 70%;">
+                <div style="padding: 10px 14px; border-radius: 16px 16px 4px 16px; background: #2563EB; color: #fff; font-size: 14px; line-height: 1.5; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+                  ${escapeHtml(m.message_text)}
+                </div>
+                <div style="font-size: 11px; color: #94A3B8; margin-top: 3px; text-align: right;">${timeStr} <span style="color: #2563EB;">✓✓</span></div>
+              </div>
+            </div>
+          `;
+        } else {
+          return `
+            <div style="display: flex; justify-content: flex-start; gap: 8px; align-items: flex-end;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 10px; font-weight: 700;">${otherInitials}</div>
+              <div style="max-width: 70%;">
+                <div style="padding: 10px 14px; border-radius: 16px 16px 16px 4px; background: #fff; color: #0F172A; font-size: 14px; line-height: 1.5; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+                  ${escapeHtml(m.message_text)}
+                </div>
+                <div style="font-size: 11px; color: #94A3B8; margin-top: 3px;">${timeStr}</div>
+              </div>
+            </div>
+          `;
+        }
+      }).join('');
+
+      if (!isSilent || isAtBottom) {
+        container.scrollTop = container.scrollHeight;
+      }
+    }
+
+    function handleSendMsg(e) {
+      e.preventDefault();
+      const input = document.getElementById('chat-text-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const payload = {
+        message_text: text
+      };
+
+      if (activeConversationId) {
+        payload.conversation_id = activeConversationId;
+      }
+      if (activeLandlordId) {
+        payload.landlord_id = activeLandlordId;
+      }
+      if (activePropertyId) {
+        payload.property_id = activePropertyId;
+      }
+
+      input.value = '';
+
+      fetch('../../backend/student/chat.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result && result.success) {
+          const cid = result.data.conversation_id;
+          activeConversationId = cid;
+          selectConversation(cid);
+          loadConversations(cid);
+        } else {
+          if (typeof showToast === 'function') {
+            showToast(result?.message || 'Failed to send message', 'error');
+          } else {
+            alert(result?.message || 'Failed to send message');
+          }
+        }
+      })
+      .catch(err => console.error('Error sending message:', err));
+    }
+  </script>
+</body>
+</html>

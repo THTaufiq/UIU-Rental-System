@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reviews & Ratings — UIU Student Rental System</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <div style="padding: 18px 20px 14px; border-bottom: 1px solid #E2E8F0;">
+        <a href="../index.html" style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 34px; height: 34px; background: #2563EB; border-radius: 9px; display: flex; align-items: center; justify-content: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: #0F172A; line-height: 1.1;">UIU Rental</div>
+            <div style="font-size: 10px; color: #64748B; font-weight: 500;">Student Portal</div>
+          </div>
+        </a>
+      </div>
+
+      <nav style="padding: 10px; flex: 1;">
+        <a href="student-dashboard.html" class="sidebar-link"><span>⊞</span><span>Dashboard</span></a>
+        <a href="browse.html" class="sidebar-link"><span>🏠</span><span>Browse Rentals</span></a>
+        <a href="payment.html" class="sidebar-link"><span>💳</span><span>Payments</span></a>
+        <a href="maintenance.html" class="sidebar-link"><span>🔧</span><span>Maintenance</span></a>
+        <a href="chat.html" class="sidebar-link"><span>💬</span><span>Chat</span></a>
+        <a href="reviews.html" class="sidebar-link active"><span>⭐</span><span>Reviews</span></a>
+        <a href="profile.html" class="sidebar-link"><span>👤</span><span>Profile</span></a>
+        <a href="settings.html" class="sidebar-link"><span>⚙️</span><span>Settings</span></a>
+      </nav>
+    </aside>
+
+    <div class="main-content">
+      <header class="top-bar">
+        <a id="user-topbar-avatar" class="topbar-avatar" href="profile.html" style="width: 34px; height: 34px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; margin-left: auto;">ST</a>
+      </header>
+
+      <main class="main-scroll-area fade-in tab-wrapper">
+        <button onclick="window.history.back()" class="btn-secondary btn-sm" style="margin-bottom: 16px;">← Back</button>
+        <div style="margin-bottom: 28px;">
+          <h1 class="page-title">Reviews & Ratings</h1>
+          <p class="page-subtitle">Rate your rental experience and help other students.</p>
+        </div>
+
+        <div class="tab-container">
+          <button class="tab-btn active" data-tab-target="tab-property-reviews">Property Reviews</button>
+          <button class="tab-btn" data-tab-target="tab-my-reviews">My Reviews</button>
+          <button class="tab-btn" data-tab-target="tab-write-review">Write a Review</button>
+        </div>
+
+        <!-- ── TAB 1: PROPERTY REVIEWS ── -->
+        <div id="tab-property-reviews" class="tab-content active">
+          <!-- Summary Box -->
+          <div class="card" style="padding: 28px; margin-bottom: 24px;">
+            <div style="display: flex; gap: 40px; align-items: center; flex-wrap: wrap;">
+              <div style="text-align: center;">
+                <div style="font-size: 56px; font-weight: 800; color: #0F172A; line-height: 1;">4.8</div>
+                <div style="color: #F59E0B; font-size: 20px;">★★★★★</div>
+                <div style="font-size: 13px; color: #64748B; margin-top: 6px;">4 reviews</div>
+              </div>
+
+              <div class="grid-2" style="flex: 1; min-width: 220px; gap: 12px;">
+                <div style="background: #F8FAFC; border-radius: 8px; padding: 12px 14px; border: 1px solid #E2E8F0;">
+                  <div style="font-size: 12px; color: #64748B;">Cleanliness</div>
+                  <div style="font-weight: 700; color: #0F172A;">★ 4.9</div>
+                </div>
+                <div style="background: #F8FAFC; border-radius: 8px; padding: 12px 14px; border: 1px solid #E2E8F0;">
+                  <div style="font-size: 12px; color: #64748B;">Location</div>
+                  <div style="font-weight: 700; color: #0F172A;">★ 5.0</div>
+                </div>
+                <div style="background: #F8FAFC; border-radius: 8px; padding: 12px 14px; border: 1px solid #E2E8F0;">
+                  <div style="font-size: 12px; color: #64748B;">Value</div>
+                  <div style="font-weight: 700; color: #0F172A;">★ 4.6</div>
+                </div>
+                <div style="background: #F8FAFC; border-radius: 8px; padding: 12px 14px; border: 1px solid #E2E8F0;">
+                  <div style="font-size: 12px; color: #64748B;">Landlord</div>
+                  <div style="font-weight: 700; color: #0F172A;">★ 4.8</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reviews List -->
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="card" style="padding: 24px;">
+              <div class="flex justify-between items-center" style="margin-bottom: 12px;">
+                <div style="display: flex; gap: 12px; align-items: center;">
+                  <div style="width: 42px; height: 42px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 700;">RH</div>
+                  <div>
+                    <div style="font-size: 15px; font-weight: 700; color: #0F172A;">Rakib Hassan <span class="badge badge-green" style="font-size: 11px;">✓ Verified</span></div>
+                    <div style="color: #F59E0B; font-size: 13px;">★★★★★</div>
+                  </div>
+                </div>
+                <span style="font-size: 12px; color: #94A3B8;">Nov 15, 2024</span>
+              </div>
+              <p style="font-size: 14px; color: #374151; line-height: 1.7; margin: 0;">Excellent apartment! Clean and well-maintained, great landlord.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TAB 2: MY REVIEWS ── -->
+        <div id="tab-my-reviews" class="tab-content">
+          <div class="card" style="padding: 24px;">
+            <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 4px;">Modern Studio Apartment, Badda</div>
+            <div style="font-size: 13px; color: #64748B; margin-bottom: 6px;">Landlord: Kamal Ahmed · Nov 15, 2024</div>
+            <div style="color: #F59E0B; font-size: 14px; margin-bottom: 10px;">★★★★★</div>
+            <p style="font-size: 14px; color: #374151; margin: 0; line-height: 1.7;">Excellent apartment! Clean, well-maintained, and very close to UIU.</p>
+          </div>
+        </div>
+
+        <!-- ── TAB 3: WRITE REVIEW ── -->
+        <div id="tab-write-review" class="tab-content">
+          <div class="card" style="padding: 32px; max-width: 580px;">
+            <h3 style="font-size: 18px; font-weight: 700; color: #0F172A; margin: 0 0 24px;">Write a Review</h3>
+            <form onsubmit="handleReviewSubmit(event)">
+              <div style="display: flex; flex-direction: column; gap: 18px;">
+                <div>
+                  <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Property</label>
+                  <select class="input-field">
+                    <option>Modern Studio Apartment, Badda</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Property Rating *</label>
+                  <div style="color: #F59E0B; font-size: 28px; cursor: pointer;">★★★★★</div>
+                </div>
+                <div>
+                  <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Your Review *</label>
+                  <textarea class="input-field" rows="5" placeholder="Share your honest experience..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 13px;">Submit Review</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    let selectedRatingVal = 5;
+    let studentProperties = [];
+
+    function escapeHtml(str) {
+      return (str || '')
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '';
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr;
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadPropertyReviews(1);
+      loadMyReviews();
+      loadStudentEligibleProperties();
+    });
+
+    function loadPropertyReviews(propertyId) {
+      fetch(`../../backend/student/reviews.php?property_id=${propertyId}`)
+        .then(res => res.json())
+        .then(result => {
+          if (!result || !result.success) return;
+          const reviews = result.data || [];
+          renderPropertyReviews(reviews);
+        })
+        .catch(err => console.error('Error fetching property reviews:', err));
+    }
+
+    function renderPropertyReviews(reviews) {
+      const total = reviews.length;
+      const avg = total > 0 ? (reviews.reduce((sum, r) => sum + parseInt(r.rating), 0) / total).toFixed(1) : '4.8';
+
+      const avgEl = document.querySelector('#tab-property-reviews .card div[style*="font-size: 56px"]');
+      if (avgEl) avgEl.textContent = avg;
+
+      const countEl = document.querySelector('#tab-property-reviews .card div[style*="4 reviews"]');
+      if (countEl) countEl.textContent = `${total} reviews`;
+
+      const listContainer = document.querySelector('#tab-property-reviews > div:nth-child(2)');
+      if (!listContainer) return;
+
+      if (reviews.length === 0) {
+        listContainer.innerHTML = '<div class="card" style="padding: 24px; color: #94A3B8; text-align: center;">No reviews for this property yet.</div>';
+        return;
+      }
+
+      listContainer.innerHTML = reviews.map(r => `
+        <div class="card" style="padding: 24px;">
+          <div class="flex justify-between items-center" style="margin-bottom: 12px;">
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <div style="width: 42px; height: 42px; border-radius: 50%; background: #2563EB; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 700;">
+                ${(r.reviewer_name || 'ST').substring(0, 2).toUpperCase()}
+              </div>
+              <div>
+                <div style="font-size: 15px; font-weight: 700; color: #0F172A;">
+                  ${escapeHtml(r.reviewer_name)} <span class="badge badge-green" style="font-size: 11px;">✓ Verified Student</span>
+                </div>
+                <div style="color: #F59E0B; font-size: 13px;">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+              </div>
+            </div>
+            <span style="font-size: 12px; color: #94A3B8;">${formatDate(r.created_at)}</span>
+          </div>
+          <p style="font-size: 14px; color: #374151; line-height: 1.7; margin: 0;">${escapeHtml(r.comment)}</p>
+          ${r.landlord_reply ? `
+            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-top: 12px;">
+              <div style="font-size: 12px; font-weight: 700; color: #166534; margin-bottom: 4px;">💬 Landlord Response (${escapeHtml(r.landlord_name || 'Landlord')})</div>
+              <div style="font-size: 13px; color: #374151;">${escapeHtml(r.landlord_reply)}</div>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    function loadMyReviews() {
+      fetch('../../backend/student/reviews.php')
+        .then(res => {
+          if (res.status === 401 || res.status === 403) return;
+          return res.json();
+        })
+        .then(result => {
+          if (!result || !result.success) return;
+          const myReviews = result.data || [];
+          renderMyReviews(myReviews);
+        })
+        .catch(err => console.error('Error fetching my reviews:', err));
+    }
+
+    function renderMyReviews(myReviews) {
+      const container = document.getElementById('tab-my-reviews');
+      if (!container) return;
+
+      if (myReviews.length === 0) {
+        container.innerHTML = '<div class="card" style="padding: 24px; color: #94A3B8; text-align: center;">You have not submitted any reviews yet.</div>';
+        return;
+      }
+
+      container.innerHTML = myReviews.map(r => `
+        <div class="card" style="padding: 24px; margin-bottom: 16px;">
+          <div style="font-size: 15px; font-weight: 700; color: #0F172A; margin-bottom: 4px;">${escapeHtml(r.property_title || 'Property')}</div>
+          <div style="font-size: 13px; color: #64748B; margin-bottom: 6px;">Landlord: ${escapeHtml(r.landlord_name || 'Owner')} · ${formatDate(r.created_at)}</div>
+          <div style="color: #F59E0B; font-size: 14px; margin-bottom: 10px;">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+          <p style="font-size: 14px; color: #374151; margin: 0; line-height: 1.7;">${escapeHtml(r.comment)}</p>
+          ${r.landlord_reply ? `
+            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px 14px; margin-top: 12px;">
+              <div style="font-size: 12px; font-weight: 700; color: #166534; margin-bottom: 4px;">💬 Landlord Response (${escapeHtml(r.landlord_name || 'Landlord')})</div>
+              <div style="font-size: 13px; color: #374151;">${escapeHtml(r.landlord_reply)}</div>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    function loadStudentEligibleProperties() {
+      fetch('../../backend/student/dashboard.php')
+        .then(res => res.json())
+        .then(result => {
+          if (!result || !result.success || !result.data) return;
+          const activeRental = result.data.active_rental;
+          const apps = result.data.applications || [];
+
+          const selectEl = document.querySelector('#tab-write-review select');
+          if (!selectEl) return;
+
+          let propsMap = {};
+          if (activeRental) {
+            propsMap[activeRental.property_id] = activeRental.property_title + (activeRental.neighborhood ? (', ' + activeRental.neighborhood) : '');
+          }
+          apps.forEach(a => {
+            propsMap[a.property_id] = a.property_title + (a.neighborhood ? (', ' + a.neighborhood) : '');
+          });
+
+          const propIds = Object.keys(propsMap);
+          if (propIds.length === 0) {
+            selectEl.innerHTML = '<option value="1">Modern Studio Apartment, Badda</option>';
+          } else {
+            selectEl.innerHTML = propIds.map(id => 
+              `<option value="${id}">${escapeHtml(propsMap[id])}</option>`
+            ).join('');
+          }
+        })
+        .catch(err => console.error('Error loading eligible properties:', err));
+    }
+
+    function setWriteRating(val) {
+      selectedRatingVal = val;
+      const starsDiv = document.querySelector('#tab-write-review div[style*="font-size: 28px"]');
+      if (starsDiv) {
+        starsDiv.textContent = '★'.repeat(val) + '☆'.repeat(5 - val);
+      }
+    }
+
+    function handleReviewSubmit(e) {
+      e.preventDefault();
+      const selectEl = document.querySelector('#tab-write-review select');
+      const textarea = document.querySelector('#tab-write-review textarea');
+      const propertyId = selectEl ? parseInt(selectEl.value) : 1;
+      const comment = textarea ? textarea.value.trim() : '';
+
+      if (!comment) {
+        if (typeof showToast === 'function') showToast('Please enter a review comment.', 'error');
+        return;
+      }
+
+      fetch('../../backend/student/reviews.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          property_id: propertyId,
+          rating: selectedRatingVal,
+          comment: comment
+        })
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result && result.success) {
+          if (textarea) textarea.value = '';
+          loadMyReviews();
+          loadPropertyReviews(propertyId);
+          if (typeof showToast === 'function') {
+            showToast('Thank you! Your review has been submitted successfully.');
+          } else {
+            alert('Review submitted successfully!');
+          }
+        } else {
+          if (typeof showToast === 'function') {
+            showToast(result?.message || 'Failed to submit review.', 'error');
+          } else {
+            alert(result?.message || 'Failed to submit review');
+          }
+        }
+      })
+      .catch(err => console.error('Error submitting review:', err));
+    }
+  </script>
+</body>
+</html>

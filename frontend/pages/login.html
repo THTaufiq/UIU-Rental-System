@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — UIU Student Rental System</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    #login-layout {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 768px) {
+      #login-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body style="background: #fff;">
+
+  <div id="login-layout">
+    <!-- Left Gradient Banner Panel -->
+    <div style="background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 60%, #2563EB 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 48px; position: relative; overflow: hidden;">
+      <div style="position: absolute; inset: 0; background-image: radial-gradient(circle at 30% 40%, rgba(37,99,235,0.3) 0%, transparent 50%);"></div>
+      <div style="position: relative; z-index: 1; text-align: center; max-width: 380px;">
+        <div style="width: 64px; height: 64px; background: rgba(255,255,255,0.15); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h1 style="font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 12px;">UIU Rental System</h1>
+        <p style="font-size: 15px; color: rgba(255,255,255,0.72); line-height: 1.7; margin-bottom: 40px;">Your trusted platform for student rentals near United International University, Dhaka.</p>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 16px; border: 1px solid rgba(255,255,255,0.12);">
+            <span style="font-size: 14px; color: rgba(255,255,255,0.85);">✅ 2,400+ verified listings</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 16px; border: 1px solid rgba(255,255,255,0.12);">
+            <span style="font-size: 14px; color: rgba(255,255,255,0.85);">🔒 Secure rent payments</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 16px; border: 1px solid rgba(255,255,255,0.12);">
+            <span style="font-size: 14px; color: rgba(255,255,255,0.85);">💬 Direct landlord chat</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 16px; border: 1px solid rgba(255,255,255,0.12);">
+            <span style="font-size: 14px; color: rgba(255,255,255,0.85);">⚡ Instant applications</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Login Form Panel -->
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 48px; background: #fff;">
+      <div style="width: 100%; max-width: 400px;" class="fade-in">
+        <div style="margin-bottom: 32px;">
+          <h2 style="font-size: 28px; font-weight: 700; color: #0F172A; margin: 0 0 8px;">Welcome back</h2>
+          <p style="font-size: 14px; color: #64748B; margin: 0;">Sign in to your account to continue</p>
+        </div>
+
+        <!-- Role Tabs -->
+        <div style="display: flex; background: #F8FAFC; border-radius: 10px; padding: 4px; margin-bottom: 28px; border: 1px solid #E2E8F0;" id="role-tab-bar">
+          <button type="button" class="role-tab-btn active" data-role="student" style="flex: 1; padding: 8px 0; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; background: #2563EB; color: #fff;">Student</button>
+          <button type="button" class="role-tab-btn" data-role="landlord" style="flex: 1; padding: 8px 0; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; background: transparent; color: #64748B;">Landlord</button>
+          <button type="button" class="role-tab-btn" data-role="admin" style="flex: 1; padding: 8px 0; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; background: transparent; color: #64748B;">Admin</button>
+        </div>
+
+        <form id="login-form" onsubmit="handleLoginSubmit(event)">
+          <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
+            <div>
+              <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Email Address</label>
+              <input id="login-email" class="input-field" type="email" placeholder="student@uiu.ac.bd" value="student@uiu.ac.bd" required>
+            </div>
+            <div>
+              <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Password</label>
+              <input id="login-password" class="input-field" type="password" placeholder="Enter your password" value="student123" required>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #64748B; cursor: pointer;">
+                <input type="checkbox" checked style="accent-color: #2563EB;"> Remember me
+              </label>
+              <span style="font-size: 13px; color: #2563EB; cursor: pointer; font-weight: 500;">Forgot password?</span>
+            </div>
+          </div>
+
+          <!-- Inline Error / Status Message Container -->
+          <div id="login-message" style="display: none; padding: 14px 16px; border-radius: 10px; background: #FEF2F2; border: 1px solid #FCA5A5; color: #991B1B; font-size: 13px; line-height: 1.5; margin-bottom: 20px;"></div>
+
+          <button type="submit" id="login-btn" class="btn-primary" style="width: 100%; justify-content: center; padding: 13px; font-size: 15px;">
+            Sign In
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 24px; font-size: 14px; color: #64748B;">
+          Don't have an account? <a href="signup.html" style="color: #2563EB; font-weight: 600;">Sign up free</a>
+        </div>
+
+        <!-- Demo Accounts Box -->
+        <div style="margin-top: 24px; padding: 16px; background: #F8FAFC; border-radius: 10px; border: 1px solid #E2E8F0;">
+          <div style="font-size: 12px; font-weight: 600; color: #64748B; margin-bottom: 8px;">DEMO ACCOUNTS (Click to select)</div>
+          <div onclick="selectDemoRole('student')" style="font-size: 12px; color: #64748B; margin-bottom: 6px; cursor: pointer;">
+            <span style="font-weight: 600; color: #2563EB;">Student:</span> student@uiu.ac.bd / student123
+          </div>
+          <div onclick="selectDemoRole('landlord')" style="font-size: 12px; color: #64748B; margin-bottom: 6px; cursor: pointer;">
+            <span style="font-weight: 600; color: #059669;">Landlord:</span> landlord@uiu.ac.bd / landlord123
+          </div>
+          <div onclick="selectDemoRole('admin')" style="font-size: 12px; color: #64748B; cursor: pointer;">
+            <span style="font-weight: 600; color: #7C3AED;">Admin:</span> admin@uiu.ac.bd / admin123
+          </div>
+        </div>
+
+        <a href="../index.html" style="margin-top: 16px; font-size: 13px; color: #64748B; display: inline-flex; align-items: center; gap: 4px;">
+          ← Back to home
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    let activeRole = 'student';
+
+    document.querySelectorAll('.role-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectDemoRole(btn.getAttribute('data-role'));
+      });
+    });
+
+    function hideLoginMessage() {
+      const msgBox = document.getElementById('login-message');
+      if (msgBox) {
+        msgBox.style.display = 'none';
+        msgBox.innerHTML = '';
+      }
+    }
+
+    function showLoginMessage(messageText, isSuspended = false) {
+      const msgBox = document.getElementById('login-message');
+      if (!msgBox) return;
+
+      if (isSuspended) {
+        msgBox.style.background = '#FEF2F2';
+        msgBox.style.borderColor = '#FCA5A5';
+        msgBox.style.color = '#991B1B';
+        msgBox.innerHTML = `
+          <div style="font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; font-size: 14px; color: #991B1B;">
+            <span>⚠️ Account Suspended</span>
+          </div>
+          <div>Your account is currently suspended. Access is restricted.<br>Please contact the administrator for assistance.</div>
+        `;
+      } else {
+        msgBox.style.background = '#FEF2F2';
+        msgBox.style.borderColor = '#FCA5A5';
+        msgBox.style.color = '#991B1B';
+        msgBox.textContent = messageText;
+      }
+      msgBox.style.display = 'block';
+    }
+
+    function selectDemoRole(role) {
+      activeRole = role;
+      hideLoginMessage();
+
+      document.querySelectorAll('.role-tab-btn').forEach(b => {
+        const isSel = b.getAttribute('data-role') === role;
+        b.style.background = isSel ? '#2563EB' : 'transparent';
+        b.style.color = isSel ? '#fff' : '#64748B';
+      });
+
+      const emailInput = document.getElementById('login-email');
+      const passInput = document.getElementById('login-password');
+      if (role === 'student') {
+        emailInput.value = 'student@uiu.ac.bd';
+        passInput.value = 'student123';
+      } else if (role === 'landlord') {
+        emailInput.value = 'landlord@uiu.ac.bd';
+        passInput.value = 'landlord123';
+      } else if (role === 'admin') {
+        emailInput.value = 'admin@uiu.ac.bd';
+        passInput.value = 'admin123';
+      }
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      hideLoginMessage();
+
+      const loginBtn = document.getElementById('login-btn');
+      loginBtn.textContent = 'Signing in...';
+      loginBtn.style.opacity = '0.7';
+
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      fetch('../../backend/public/login/login.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          role: activeRole
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          hideLoginMessage();
+          if (typeof setAuthUser === 'function') {
+            setAuthUser(data.user);
+          } else {
+            localStorage.setItem('uiu_user_role', data.user.role);
+            localStorage.setItem('uiu_user_name', data.user.full_name);
+          }
+          const redirectTarget = localStorage.getItem('uiu_login_redirect');
+          if (redirectTarget) {
+            localStorage.removeItem('uiu_login_redirect');
+            window.location.href = redirectTarget;
+          } else {
+            window.location.href = data.redirect;
+          }
+        } else {
+          loginBtn.textContent = 'Sign In';
+          loginBtn.style.opacity = '1';
+
+          const isSuspended = (data.account_status === 'suspended') || 
+                              (data.message && data.message.toLowerCase().includes('suspended'));
+
+          if (isSuspended) {
+            showLoginMessage('', true);
+          } else {
+            showLoginMessage(data.message || 'Login failed. Please check your credentials.');
+          }
+        }
+      })
+      .catch(err => {
+        console.error('Backend request error during login:', err);
+        loginBtn.textContent = 'Sign In';
+        loginBtn.style.opacity = '1';
+        showLoginMessage('Network or server error occurred. Please try again.');
+      });
+    }
+  </script>
+</body>
+</html>

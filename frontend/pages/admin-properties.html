@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Management & Approvals — UIU Rental Admin</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+      <div style="padding: 18px 20px 14px; border-bottom: 1px solid #E2E8F0;">
+        <a href="../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+          <div style="width: 34px; height: 34px; background: #DC2626; border-radius: 9px; display: flex; align-items: center; justify-content: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: #0F172A; line-height: 1.1;">UIU Rental</div>
+            <div style="font-size: 10px; color: #DC2626; font-weight: 700;">System Admin</div>
+          </div>
+        </a>
+      </div>
+
+      <div style="padding: 14px 20px; border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; gap: 10px;">
+        <div style="width: 38px; height: 38px; border-radius: 50%; background: #DC2626; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 700;">
+          AD
+        </div>
+        <div style="overflow: hidden;">
+          <div style="font-size: 13px; font-weight: 700; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">System Administrator</div>
+          <div style="font-size: 11px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">admin@uiu.ac.bd</div>
+          <span style="display: inline-block; margin-top: 3px; font-size: 10px; font-weight: 700; background: rgba(220,38,38,0.1); color: #DC2626; border-radius: 99px; padding: 1px 8px;">
+            Super Admin
+          </span>
+        </div>
+      </div>
+
+      <nav style="padding: 10px; flex: 1;">
+        <a href="admin-dashboard.html" class="sidebar-link"><span>⊞</span><span>Dashboard</span></a>
+        <a href="admin-users.html" class="sidebar-link"><span>👥</span><span>User Management</span></a>
+        <a href="admin-properties.html" class="sidebar-link active"><span>🏠</span><span>Property Approvals</span></a>
+        <a href="admin-categories.html" class="sidebar-link"><span>🏷️</span><span>Categories</span></a>
+        <a href="admin-reports.html" class="sidebar-link"><span>📊</span><span>Reports & Analytics</span></a>
+        <a href="admin-settings.html" class="sidebar-link"><span>⚙️</span><span>Platform Settings</span></a>
+        <a href="admin-profile.html" class="sidebar-link"><span>👤</span><span>Admin Profile</span></a>
+      </nav>
+
+      <div style="padding: 10px; border-top: 1px solid #E2E8F0;">
+        <button onclick="logoutUser()" class="sidebar-link" style="color: #EF4444; width: 100%; border: none; background: none; text-align: left; cursor: pointer;">
+          <span>🚪</span><span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ── Main Content ── -->
+    <div class="main-content">
+      <header class="top-bar">
+        <div style="display: flex; align-items: center; gap: 12px; margin-left: auto;">
+          <a href="admin-profile.html" style="width: 34px; height: 34px; border-radius: 50%; background: #DC2626; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; text-decoration: none;">AD</a>
+        </div>
+      </header>
+
+      <main class="main-scroll-area fade-in">
+        <div style="margin-bottom: 28px;">
+          <h1 class="page-title">Property Approvals & Management</h1>
+          <p class="page-subtitle">Review property listings, verify safety documents, and approve student listings.</p>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="card" style="padding: 20px; margin-bottom: 24px;">
+          <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; flex: 1;">
+              <input class="input-field" placeholder="Search title, location, or landlord..." id="prop-search-input" onkeyup="filterAdminProps()" style="max-width: 300px;">
+              <select class="input-field" id="prop-status-filter" onchange="filterAdminProps()" style="width: auto;">
+                <option value="all">All Statuses</option>
+                <option value="pending">Pending Review</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+              <select class="input-field" id="prop-type-filter" onchange="filterAdminProps()" style="width: auto;">
+                <option value="all">All Types</option>
+                <option value="studio">Studio Apartment</option>
+                <option value="single">Single Room</option>
+                <option value="flat">Flat</option>
+                <option value="mess">Mess / Shared</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid of Property Cards -->
+        <div class="grid-3" id="admin-prop-grid">
+          
+          <!-- Property Card 1 -->
+          <div class="card admin-p-card" data-status="approved" data-type="studio" id="p-card-1" style="overflow: hidden;">
+            <div style="padding: 14px 16px 0;">
+              <span class="badge badge-green" id="p-badge-1">Approved</span>
+            </div>
+            <div style="padding: 16px;">
+              <h4 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 4px;">Modern Studio Apartment</h4>
+              <div style="font-size: 12px; color: #64748B; margin-bottom: 8px;">📍 Badda · By Kamal Ahmed</div>
+              <div style="font-size: 15px; font-weight: 800; color: #2563EB; margin-bottom: 14px;">৳8,500<span style="font-size: 12px; font-weight: 400; color: #64748B;">/mo</span></div>
+              <div style="display: flex; gap: 8px;" id="p-actions-1">
+                <a href="property.html?id=1&from=admin" class="btn-secondary btn-sm" style="flex: 1; text-align: center; text-decoration: none;">View</a>
+                <button class="btn-danger btn-sm" onclick="removeProperty(1)">Remove</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Property Card 2 (Pending Review) -->
+          <div class="card admin-p-card" data-status="pending" data-type="mess" id="p-card-2" style="overflow: hidden;">
+            <div style="padding: 14px 16px 0;">
+              <span class="badge badge-orange" id="p-badge-2">Pending Review</span>
+            </div>
+            <div style="padding: 16px;">
+              <h4 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 4px;">Mess accommodation, Shahjadpur</h4>
+              <div style="font-size: 12px; color: #64748B; margin-bottom: 8px;">📍 Shahjadpur · By Abdul Kader</div>
+              <div style="font-size: 15px; font-weight: 800; color: #2563EB; margin-bottom: 14px;">৳4,500<span style="font-size: 12px; font-weight: 400; color: #64748B;">/mo</span></div>
+              <div style="display: flex; gap: 8px;" id="p-actions-2">
+                <a href="property.html?id=4&from=admin" class="btn-secondary btn-sm" style="flex: 1; text-align: center; text-decoration: none;">View</a>
+                <button class="btn-primary btn-sm" style="flex: 1;" onclick="approveAdminProperty(2)">Approve</button>
+                <button class="btn-danger btn-sm" style="flex: 1;" onclick="rejectAdminProperty(2)">Reject</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Property Card 3 -->
+          <div class="card admin-p-card" data-status="approved" data-type="flat" id="p-card-3" style="overflow: hidden;">
+            <div style="padding: 14px 16px 0;">
+              <span class="badge badge-green" id="p-badge-3">Approved</span>
+            </div>
+            <div style="padding: 16px;">
+              <h4 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 4px;">2-Bed Flat, Rampura</h4>
+              <div style="font-size: 12px; color: #64748B; margin-bottom: 8px;">📍 Rampura · By Rina Begum</div>
+              <div style="font-size: 15px; font-weight: 800; color: #2563EB; margin-bottom: 14px;">৳14,000<span style="font-size: 12px; font-weight: 400; color: #64748B;">/mo</span></div>
+              <div style="display: flex; gap: 8px;" id="p-actions-3">
+                <a href="property.html?id=2&from=admin" class="btn-secondary btn-sm" style="flex: 1; text-align: center; text-decoration: none;">View</a>
+                <button class="btn-danger btn-sm" onclick="removeProperty(3)">Remove</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    let currentAdminProperties = [];
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadAdminProperties();
+    });
+
+    function loadAdminProperties() {
+      const search = document.getElementById('prop-search-input').value.trim();
+      const status = document.getElementById('prop-status-filter').value;
+      const type = document.getElementById('prop-type-filter').value;
+
+      const params = new URLSearchParams();
+      if (search) params.append('search', search);
+      if (status !== 'all') params.append('status', status);
+      if (type !== 'all') params.append('category_id', type);
+
+      const grid = document.getElementById('admin-prop-grid');
+      if (grid) {
+        grid.innerHTML = '<div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: #64748B;">Loading property listings...</div>';
+      }
+
+      fetch('../../backend/admin/properties.php?' + params.toString())
+        .then(res => res.json())
+        .then(res => {
+          if (res.success && Array.isArray(res.data)) {
+            currentAdminProperties = res.data;
+            renderAdminPropertiesGrid(res.data);
+          } else {
+            if (grid) {
+              grid.innerHTML = '<div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: #EF4444;">' + (res.message || 'Error loading properties.') + '</div>';
+            }
+          }
+        })
+        .catch(err => {
+          console.error('Error fetching admin properties:', err);
+          if (grid) {
+            grid.innerHTML = '<div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: #EF4444;">Failed to connect to backend server.</div>';
+          }
+        });
+    }
+
+    function filterAdminProps() {
+      loadAdminProperties();
+    }
+
+    function getImageUrl(img) {
+      const defaultPlaceholder = 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=180&fit=crop&auto=format';
+      if (!img) return defaultPlaceholder;
+      if (img.startsWith('http://') || img.startsWith('https://')) return img;
+      if (img.startsWith('photo-')) return `https://images.unsplash.com/${img}?w=400&h=180&fit=crop&auto=format`;
+      if (img.startsWith('/')) return `../..${img}`;
+      return `../../${img}`;
+    }
+
+    function renderAdminPropertiesGrid(properties) {
+      const grid = document.getElementById('admin-prop-grid');
+      if (!grid) return;
+
+      if (properties.length === 0) {
+        grid.innerHTML = '<div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: #64748B;">No properties match the selected criteria.</div>';
+        return;
+      }
+
+      let html = '';
+      properties.forEach(p => {
+        const pStatus = (p.status || 'pending').toLowerCase();
+        let badgeClass = 'badge-green';
+        let badgeText = 'Approved';
+
+        if (pStatus === 'pending') {
+          badgeClass = 'badge-orange';
+          badgeText = 'Pending Review';
+        } else if (pStatus === 'rejected') {
+          badgeClass = 'badge-red';
+          badgeText = 'Rejected';
+        } else if (pStatus === 'removed') {
+          badgeClass = 'badge-red';
+          badgeText = 'Removed';
+        } else if (pStatus === 'rented') {
+          badgeClass = 'badge-blue';
+          badgeText = 'Rented';
+        }
+
+        const rawImg = p.primary_image || p.image_url;
+        const imgUrl = getImageUrl(rawImg);
+        const rentFormatted = p.monthly_rent ? '৳' + Number(p.monthly_rent).toLocaleString() : '৳0';
+        const isVerifBadge = p.verified ? '<span class="badge badge-green" style="position: absolute; top: 10px; right: 10px;">✓ Verified</span>' : '';
+
+        let actionsHtml = '';
+        if (pStatus === 'pending') {
+          actionsHtml = `
+            <a href="../pages/property.html?id=${p.property_id}&from=admin" class="btn-secondary btn-sm" style="flex: 1; text-align: center; text-decoration: none;">View</a>
+            <button class="btn-primary btn-sm" style="flex: 1;" onclick="approveAdminProperty(${p.property_id})">Approve</button>
+            <button class="btn-danger btn-sm" style="flex: 1;" onclick="rejectAdminProperty(${p.property_id})">Reject</button>
+          `;
+        } else {
+          actionsHtml = `
+            <a href="../pages/property.html?id=${p.property_id}&from=admin" class="btn-secondary btn-sm" style="flex: 1; text-align: center; text-decoration: none;">View Details</a>
+            ${p.verified ? `<button class="btn-secondary btn-sm" onclick="togglePropertyVerification(${p.property_id}, 0)">Unverify</button>` : `<button class="btn-primary btn-sm" onclick="togglePropertyVerification(${p.property_id}, 1)">Verify</button>`}
+            ${pStatus !== 'removed' ? `<button class="btn-danger btn-sm" onclick="removeProperty(${p.property_id})">Remove</button>` : ''}
+          `;
+        }
+
+        html += `
+          <div class="card admin-p-card" data-status="${pStatus}" id="p-card-${p.property_id}" style="overflow: hidden;">
+            <div style="height: 150px; background: #EFF6FF; position: relative;">
+              <img src="${imgUrl}" alt="${escapeHtml(p.title)}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=180&fit=crop&auto=format';">
+              <span class="badge ${badgeClass}" style="position: absolute; top: 10px; left: 10px;" id="p-badge-${p.property_id}">${badgeText}</span>
+              ${isVerifBadge}
+            </div>
+            <div style="padding: 16px;">
+              <h4 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 4px;">${escapeHtml(p.title)}</h4>
+              <div style="font-size: 12px; color: #64748B; margin-bottom: 8px;">📍 ${escapeHtml(p.neighborhood || p.city || 'Dhaka')} · By ${escapeHtml(p.landlord_name)}</div>
+              <div style="font-size: 15px; font-weight: 800; color: #2563EB; margin-bottom: 14px;">${rentFormatted}<span style="font-size: 12px; font-weight: 400; color: #64748B;">/mo</span></div>
+              <div style="display: flex; gap: 8px;" id="p-actions-${p.property_id}">
+                ${actionsHtml}
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      grid.innerHTML = html;
+    }
+
+    function approveAdminProperty(id) {
+      // 1. Update status to approved
+      fetch('../../backend/admin/update-property-status.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ property_id: id, status: 'approved' })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          // 2. Mark verified
+          fetch('../../backend/admin/update-property-verification.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ property_id: id, verified: 1 })
+          });
+          if (typeof showToast === 'function') showToast('Property listing approved & verified successfully!');
+          else alert('Property listing approved!');
+          loadAdminProperties();
+        } else {
+          alert(res.message || 'Error approving property');
+        }
+      })
+      .catch(err => console.error('Error approving property:', err));
+    }
+
+    function rejectAdminProperty(id) {
+      fetch('../../backend/admin/update-property-status.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ property_id: id, status: 'rejected' })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          if (typeof showToast === 'function') showToast('Property listing rejected.', 'error');
+          else alert('Property listing rejected.');
+          loadAdminProperties();
+        } else {
+          alert(res.message || 'Error rejecting property');
+        }
+      })
+      .catch(err => console.error('Error rejecting property:', err));
+    }
+
+    function removeProperty(id) {
+      fetch('../../backend/admin/update-property-status.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ property_id: id, status: 'removed' })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          if (typeof showToast === 'function') showToast('Property listing removed.');
+          else alert('Property listing removed.');
+          loadAdminProperties();
+        } else {
+          alert(res.message || 'Error removing property');
+        }
+      })
+      .catch(err => console.error('Error removing property:', err));
+    }
+
+    function togglePropertyVerification(id, verifiedVal) {
+      fetch('../../backend/admin/update-property-verification.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ property_id: id, verified: verifiedVal })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          if (typeof showToast === 'function') showToast(res.message);
+          else alert(res.message);
+          loadAdminProperties();
+        } else {
+          alert(res.message || 'Error updating verification');
+        }
+      })
+      .catch(err => console.error('Error updating verification:', err));
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+</html>

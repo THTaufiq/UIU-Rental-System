@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Property — UIU Student Rental System</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+      <div style="padding: 18px 20px 14px; border-bottom: 1px solid #E2E8F0;">
+        <a href="../index.html" style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 34px; height: 34px; background: #2563EB; border-radius: 9px; display: flex; align-items: center; justify-content: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: #0F172A; line-height: 1.1;">UIU Rental</div>
+            <div style="font-size: 10px; color: #64748B; font-weight: 500;">Landlord Portal</div>
+          </div>
+        </a>
+      </div>
+
+      <div style="padding: 14px 20px; border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; gap: 10px;">
+        <div id="landlord-sidebar-avatar" style="width: 38px; height: 38px; border-radius: 50%; background: #059669; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 700; flex-shrink: 0;">
+          LL
+        </div>
+        <div style="overflow: hidden;">
+          <div id="landlord-sidebar-name" style="font-size: 13px; font-weight: 700; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Landlord User</div>
+          <div id="landlord-sidebar-email" style="font-size: 11px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">landlord@uiu.ac.bd</div>
+          <span style="display: inline-block; margin-top: 3px; font-size: 10px; font-weight: 700; background: rgba(5,150,105,0.1); color: #059669; border-radius: 99px; padding: 1px 8px;">
+            Landlord
+          </span>
+        </div>
+      </div>
+
+      <nav style="padding: 10px; flex: 1;">
+        <a href="landlord-dashboard.html" class="sidebar-link"><span>⊞</span><span>Dashboard</span></a>
+        <a href="landlord-maintenance.html" class="sidebar-link"><span>🔧</span><span>Maintenance</span></a>
+        <a href="landlord-chat.html" class="sidebar-link"><span>💬</span><span>Chat</span></a>
+        <a href="landlord-reports.html" class="sidebar-link"><span>📊</span><span>Reports</span></a>
+        <a href="landlord-profile.html" class="sidebar-link"><span>👤</span><span>Profile</span></a>
+        <a href="landlord-settings.html" class="sidebar-link"><span>⚙️</span><span>Settings</span></a>
+      </nav>
+
+      <div style="padding: 10px; border-top: 1px solid #E2E8F0;">
+        <button onclick="logoutUser()" class="sidebar-link" style="color: #EF4444; width: 100%; border: none; background: none; text-align: left; cursor: pointer;">
+          <span>🚪</span><span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ── Main Content ── -->
+    <div class="main-content">
+      <header class="top-bar">
+        <div style="display: flex; align-items: center; gap: 12px; margin-left: auto;">
+          <a id="landlord-topbar-avatar" class="topbar-avatar" href="landlord-profile.html" style="width: 34px; height: 34px; border-radius: 50%; background: #059669; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; text-decoration: none;">LL</a>
+        </div>
+      </header>
+
+      <main class="main-scroll-area fade-in" style="max-width: 760px; margin: 0 auto;">
+        <a href="landlord-dashboard.html" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #64748B; text-decoration: none; margin-bottom: 20px; font-weight: 500;">
+          ← Back to Dashboard
+        </a>
+
+        <div style="margin-bottom: 28px;">
+          <h1 class="page-title">Add New Property</h1>
+          <p class="page-subtitle">List your rental property for UIU students.</p>
+        </div>
+
+        <!-- Progress Steps -->
+        <div style="display: flex; align-items: center; margin-bottom: 36px;">
+          <div style="display: flex; align-items: center; flex: 1;" id="step-node-1">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <div id="step-badge-1" style="width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;">1</div>
+              <span style="font-size: 11px; color: #2563EB; font-weight: 700; white-space: nowrap;">Basic Info</span>
+            </div>
+            <div style="flex: 1; height: 2px; background: #E2E8F0; margin: 0 8px; margin-bottom: 18px;" id="step-line-1"></div>
+          </div>
+
+          <div style="display: flex; align-items: center; flex: 1;" id="step-node-2">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <div id="step-badge-2" style="width: 32px; height: 32px; border-radius: 50%; background: #E2E8F0; color: #94A3B8; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;">2</div>
+              <span style="font-size: 11px; color: #94A3B8; white-space: nowrap;">Pricing</span>
+            </div>
+            <div style="flex: 1; height: 2px; background: #E2E8F0; margin: 0 8px; margin-bottom: 18px;" id="step-line-2"></div>
+          </div>
+
+          <div style="display: flex; align-items: center; flex: 1;" id="step-node-3">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <div id="step-badge-3" style="width: 32px; height: 32px; border-radius: 50%; background: #E2E8F0; color: #94A3B8; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;">3</div>
+              <span style="font-size: 11px; color: #94A3B8; white-space: nowrap;">Facilities</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── STEP 1: BASIC INFO ── -->
+        <div id="form-step-1" class="card" style="padding: 28px;">
+          <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 20px;">Basic Information</h3>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+              <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Property Title *</label>
+              <input class="input-field" placeholder="e.g., Modern Studio Apartment with AC near UIU Campus" id="prop-title" value="Modern Studio Apartment">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Property Type *</label>
+                <select class="input-field" id="prop-type">
+                  <option value="" disabled selected>Loading categories...</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Area / Neighborhood *</label>
+                <select class="input-field" id="prop-neigh">
+                  <option value="Badda" selected>Badda</option>
+                  <option value="Merul Badda">Merul Badda</option>
+                  <option value="Rampura">Rampura</option>
+                  <option value="Aftabnagar">Aftabnagar</option>
+                  <option value="Shahjadpur">Shahjadpur</option>
+                  <option value="Banasree">Banasree</option>
+                  <option value="Khilgaon">Khilgaon</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Full Address *</label>
+              <input class="input-field" placeholder="House #12, Road #3, Block C, Badda, Dhaka" id="prop-address" value="House 12, Road 3, Block C, Badda, Dhaka">
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Floor</label>
+                <select class="input-field" id="prop-floor">
+                  <option value="Ground Floor">Ground Floor</option>
+                  <option value="1st Floor">1st Floor</option>
+                  <option value="2nd Floor" selected>2nd Floor</option>
+                  <option value="3rd Floor">3rd Floor</option>
+                  <option value="4th Floor">4th Floor</option>
+                  <option value="5th+ Floor">5th+ Floor</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Bedrooms</label>
+                <select class="input-field" id="prop-bed">
+                  <option value="1" selected>1 Room</option>
+                  <option value="2">2 Rooms</option>
+                  <option value="3">3 Rooms</option>
+                  <option value="4">4+ Rooms</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Area (sqft)</label>
+                <input class="input-field" type="number" placeholder="550" id="prop-sqft" value="550">
+              </div>
+            </div>
+            <div>
+              <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Property Description *</label>
+              <textarea class="input-field" id="prop-desc" rows="4" style="resize: vertical;">Spacious studio apartment located just 5 minutes walk from UIU permanent campus. Fully tiled floor, generator backup, 24/7 security guard, and high speed internet ready.</textarea>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+              <a href="landlord-dashboard.html" class="btn-secondary" style="text-decoration: none;">Cancel</a>
+              <button class="btn-primary" style="flex: 1;" onclick="goToStep(2)">Next: Pricing & Availability →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── STEP 2: PRICING ── -->
+        <div id="form-step-2" class="card" style="padding: 28px; display: none;">
+          <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 20px;">Pricing & Availability</h3>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Monthly Rent (৳) *</label>
+                <input class="input-field" type="number" placeholder="8500" id="prop-rent" value="8500">
+              </div>
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Security Deposit (৳) *</label>
+                <input class="input-field" type="number" placeholder="8500" id="prop-deposit" value="8500">
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Available From *</label>
+                <input class="input-field" type="date" id="prop-date" value="2024-12-01">
+              </div>
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Minimum Stay (months)</label>
+                <select class="input-field" id="prop-stay">
+                  <option value="3">3 Months</option>
+                  <option value="6" selected>6 Months</option>
+                  <option value="12">12 Months</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">House Rules</label>
+              <textarea class="input-field" id="prop-rules" rows="3" style="resize: vertical;">No smoking inside room. Guests allowed until 10 PM. Rent must be paid by the 5th of each month.</textarea>
+            </div>
+            <div style="background: #EFF6FF; border-radius: 8px; padding: 12px; border: 1px solid #BFDBFE; font-size: 13px; color: #1E40AF;">
+              💡 Properties priced between ৳4,000–৳15,000 receive 3× more student inquiries on UIU Rental.
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+              <button class="btn-secondary" onclick="goToStep(1)">← Back</button>
+              <button class="btn-primary" style="flex: 1;" onclick="goToStep(3)">Next: Facilities →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── STEP 3: FACILITIES ── -->
+        <div id="form-step-3" class="card" style="padding: 28px; display: none;">
+          <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 20px;">Facilities & Amenities</h3>
+          <p style="font-size: 13px; color: #64748B; margin-bottom: 16px;">Select all features available in your property:</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px;" id="facility-pills">
+            <p style="font-size: 13px; color: #64748B;">Loading facilities...</p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-secondary" onclick="goToStep(2)">← Back</button>
+            <button class="btn-success" style="flex: 1;" onclick="submitPropertyListing()">🚀 Submit Property Listing</button>
+          </div>
+        </div>
+          
+          <div id="submit-success-box" style="display: none; text-align: center; padding: 20px 0;">
+            <div style="font-size: 44px; margin-bottom: 10px;">🎉</div>
+            <div style="font-size: 18px; font-weight: 700; color: #22C55E;" id="success-box-title">Property Listing Submitted!</div>
+            <p style="font-size: 13px; color: #64748B; margin-top: 4px;">Your property has been saved and is available in your landlord portal.</p>
+            <a href="landlord-dashboard.html" class="btn-primary" style="margin-top: 16px; display: inline-block; text-decoration: none;">Return to Dashboard</a>
+          </div>
+
+          <div id="submit-action-box" style="display: none; gap: 10px;">
+            <button class="btn-secondary" onclick="goToStep(3)">← Back</button>
+            <button class="btn-success" style="flex: 1;" onclick="submitPropertyListing()">🚀 Submit Property Listing</button>
+          </div>
+
+      </main>
+    </div>
+  </div>
+
+  <style>
+    .facility-chip {
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.18s;
+      background: #F8FAFC;
+      color: #374151;
+      border: 1.5px solid #E2E8F0;
+    }
+    .facility-chip.active {
+      background: #2563EB;
+      color: #fff;
+      border-color: #2563EB;
+    }
+  </style>
+
+  <script src="../js/app.js"></script>
+  <script>
+    let currentStep = 1;
+    let editingPropertyId = null;
+
+    function goToStep(step) {
+      document.getElementById('form-step-1').style.display = 'none';
+      document.getElementById('form-step-2').style.display = 'none';
+      document.getElementById('form-step-3').style.display = 'none';
+
+      document.getElementById('form-step-' + step).style.display = 'block';
+      currentStep = step;
+
+      for (let i = 1; i <= 3; i++) {
+        const badge = document.getElementById('step-badge-' + i);
+        const line = document.getElementById('step-line-' + i);
+        if (badge) {
+          if (i < step) {
+            badge.style.background = '#2563EB';
+            badge.style.color = '#fff';
+            badge.innerText = '✓';
+          } else if (i === step) {
+            badge.style.background = '#2563EB';
+            badge.style.color = '#fff';
+            badge.innerText = i;
+          } else {
+            badge.style.background = '#E2E8F0';
+            badge.style.color = '#94A3B8';
+            badge.innerText = i;
+          }
+        }
+        if (line) line.style.background = i < step ? '#2563EB' : '#E2E8F0';
+      }
+    }
+
+    function toggleChip(btn) {
+      if (btn.classList.contains('active')) {
+        btn.classList.remove('active');
+        btn.innerText = btn.innerText.replace('✓ ', '');
+      } else {
+        btn.classList.add('active');
+        btn.innerText = '✓ ' + btn.innerText;
+      }
+    }
+
+    function submitPropertyListing() {
+      const selectedFids = [];
+      document.querySelectorAll('.facility-chip.active').forEach(chip => {
+        const fid = chip.getAttribute('data-fid');
+        if (fid) selectedFids.push(parseInt(fid));
+      });
+
+      const payload = {
+        property_id: editingPropertyId,
+        title: document.getElementById('prop-title').value.trim(),
+        category_id: parseInt(document.getElementById('prop-type').value),
+        neighborhood: document.getElementById('prop-neigh').value,
+        full_address: document.getElementById('prop-address').value.trim(),
+        floor_label: document.getElementById('prop-floor').value,
+        bedroom_count: parseFloat(document.getElementById('prop-bed').value),
+        area_sqft: parseFloat(document.getElementById('prop-sqft').value),
+        description: document.getElementById('prop-desc').value.trim(),
+        monthly_rent: parseFloat(document.getElementById('prop-rent').value),
+        security_deposit: parseFloat(document.getElementById('prop-deposit').value),
+        facility_ids: selectedFids
+      };
+
+      const url = editingPropertyId ? '../../backend/landlord/edit-property.php' : '../../backend/landlord/add-property.php';
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      };
+
+      fetch(url, requestOptions)
+      .then(res => res.json())
+      .then(result => {
+        if (result && result.success) {
+          const submitActionBox = document.getElementById('submit-action-box');
+          if (submitActionBox) submitActionBox.style.display = 'none';
+          document.getElementById('submit-success-box').style.display = 'block';
+          if (editingPropertyId) {
+            document.getElementById('success-box-title').textContent = 'Property Listing Updated!';
+          }
+          if (typeof showToast === 'function') showToast(result.message || 'Property saved successfully!');
+        } else {
+          if (typeof showToast === 'function') showToast(result?.message || 'Failed to save property', 'error');
+        }
+      })
+      .catch(err => {
+        console.error('Error saving property:', err);
+        if (typeof showToast === 'function') showToast('Error saving property', 'error');
+      });
+    }
+
+    function loadCategories() {
+      return fetch('../../backend/landlord/categories.php')
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(res => {
+          const select = document.getElementById('prop-type');
+          if (!select) return;
+          const list = (res && res.data && Array.isArray(res.data)) ? res.data : ((res && res.categories && Array.isArray(res.categories)) ? res.categories : []);
+          if (res && res.success && list.length > 0) {
+            let html = '';
+            list.forEach((cat, idx) => {
+              html += `<option value="${cat.category_id}" ${idx === 0 ? 'selected' : ''}>${escapeHtml(cat.category_name)}</option>`;
+            });
+            select.innerHTML = html;
+          } else {
+            select.innerHTML = '<option value="" disabled selected>No active categories found</option>';
+          }
+        })
+        .catch(err => {
+          console.error('Error loading categories:', err);
+          const select = document.getElementById('prop-type');
+          if (select) {
+            select.innerHTML = '<option value="" disabled selected>Unable to load categories</option>';
+          }
+        });
+    }
+
+    function loadFacilities(propertyId = null) {
+      const url = propertyId ? `../../backend/landlord/facilities.php?property_id=${propertyId}` : '../../backend/landlord/facilities.php';
+      return fetch(url)
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(res => {
+          const container = document.getElementById('facility-pills');
+          if (!container) return;
+
+          const allFacs = (res && res.data && Array.isArray(res.data.all_facilities)) ? res.data.all_facilities : [];
+          const assignedFacs = (res && res.data && Array.isArray(res.data.property_facilities)) ? res.data.property_facilities : [];
+
+          if (allFacs.length === 0) {
+            container.innerHTML = '<p style="font-size: 13px; color: #64748B;">No facilities available.</p>';
+            return;
+          }
+
+          let html = '';
+          allFacs.forEach(f => {
+            const isAssigned = assignedFacs.includes(Number(f.facility_id));
+            const activeClass = isAssigned ? 'facility-chip active' : 'facility-chip';
+            const labelText = isAssigned ? '✓ ' + escapeHtml(f.facility_name) : escapeHtml(f.facility_name);
+            html += `<button type="button" class="${activeClass}" data-fid="${f.facility_id}" onclick="toggleChip(this)">${labelText}</button>`;
+          });
+          container.innerHTML = html;
+        })
+        .catch(err => {
+          console.error('Error loading facilities:', err);
+          const container = document.getElementById('facility-pills');
+          if (container) {
+            container.innerHTML = '<p style="font-size: 13px; color: #EF4444;">Failed to load facilities. Please refresh the page.</p>';
+          }
+        });
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const editId = params.get('id') || params.get('property_id');
+
+      loadCategories().then(() => {
+        loadFacilities(editId);
+        if (editId) {
+          editingPropertyId = parseInt(editId);
+          const titleEl = document.querySelector('.page-title');
+          const subtitleEl = document.querySelector('.page-subtitle');
+          if (titleEl) titleEl.innerText = 'Edit Property Listing';
+          if (subtitleEl) subtitleEl.innerText = 'Update your property details for UIU students.';
+
+          fetch(`../../backend/landlord/edit-property.php?property_id=${editingPropertyId}`)
+            .then(res => res.json())
+            .then(result => {
+              if (!result || !result.success) return;
+              const p = result.data.property || {};
+              document.getElementById('prop-title').value = p.title || '';
+              if (p.category_id) {
+                document.getElementById('prop-type').value = p.category_id;
+              }
+              document.getElementById('prop-neigh').value = p.neighborhood || 'Badda';
+              document.getElementById('prop-address').value = p.full_address || '';
+              document.getElementById('prop-floor').value = p.floor_label || '2nd Floor';
+              document.getElementById('prop-bed').value = p.bedroom_count || 1;
+              document.getElementById('prop-sqft').value = p.area_sqft || 500;
+              document.getElementById('prop-desc').value = p.description || '';
+              document.getElementById('prop-rent').value = p.monthly_rent || 0;
+              document.getElementById('prop-deposit').value = p.security_deposit || 0;
+            })
+            .catch(err => console.error('Error loading edit details:', err));
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+</body>
+</html>

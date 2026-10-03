@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landlord Settings — UIU Student Rental System</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+      <div style="padding: 18px 20px 14px; border-bottom: 1px solid #E2E8F0;">
+        <a href="../index.html" style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 34px; height: 34px; background: #2563EB; border-radius: 9px; display: flex; align-items: center; justify-content: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: #0F172A; line-height: 1.1;">UIU Rental</div>
+            <div style="font-size: 10px; color: #64748B; font-weight: 500;">Landlord Portal</div>
+          </div>
+        </a>
+      </div>
+
+      <div style="padding: 14px 20px; border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; gap: 10px;">
+        <div id="landlord-sidebar-avatar" style="width: 38px; height: 38px; border-radius: 50%; background: #059669; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 700; flex-shrink: 0;">
+          LL
+        </div>
+        <div style="overflow: hidden;">
+          <div id="landlord-sidebar-name" style="font-size: 13px; font-weight: 700; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Landlord User</div>
+          <div id="landlord-sidebar-email" style="font-size: 11px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">landlord@uiu.ac.bd</div>
+          <span style="display: inline-block; margin-top: 3px; font-size: 10px; font-weight: 700; background: rgba(5,150,105,0.1); color: #059669; border-radius: 99px; padding: 1px 8px;">
+            Landlord
+          </span>
+        </div>
+      </div>
+
+      <nav style="padding: 10px; flex: 1;">
+        <a href="landlord-dashboard.html" class="sidebar-link"><span>⊞</span><span>Dashboard</span></a>
+        <a href="landlord-maintenance.html" class="sidebar-link"><span>🔧</span><span>Maintenance</span></a>
+        <a href="landlord-chat.html" class="sidebar-link"><span>💬</span><span>Chat</span></a>
+        <a href="landlord-reports.html" class="sidebar-link"><span>📊</span><span>Reports</span></a>
+        <a href="landlord-profile.html" class="sidebar-link"><span>👤</span><span>Profile</span></a>
+        <a href="landlord-settings.html" class="sidebar-link active"><span>⚙️</span><span>Settings</span></a>
+      </nav>
+
+      <div style="padding: 10px; border-top: 1px solid #E2E8F0;">
+        <button onclick="logoutUser()" class="sidebar-link" style="color: #EF4444; width: 100%; border: none; background: none; text-align: left; cursor: pointer;">
+          <span>🚪</span><span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ── Main Content ── -->
+    <div class="main-content">
+      <header class="top-bar">
+        <div style="display: flex; align-items: center; gap: 12px; margin-left: auto;">
+          <a id="landlord-topbar-avatar" class="topbar-avatar" href="landlord-profile.html" style="width: 34px; height: 34px; border-radius: 50%; background: #059669; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; text-decoration: none;">LL</a>
+        </div>
+      </header>
+
+      <main class="main-scroll-area fade-in" style="max-width: 800px; margin: 0 auto;">
+        <div style="margin-bottom: 28px;">
+          <h1 class="page-title">Landlord Settings</h1>
+          <p class="page-subtitle">Configure payouts, notifications, and security options.</p>
+        </div>
+
+        <!-- Payout Configuration -->
+        <div class="card" style="padding: 28px; margin-bottom: 24px;">
+          <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 16px;">Rent Payout Account</h3>
+          <p style="font-size: 13px; color: #64748B; margin-bottom: 20px;">Where student rent payments should be deposited:</p>
+
+          <form onsubmit="savePayoutSettings(event)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Preferred Payout Method</label>
+                <select class="input-field" id="ll-payout-method">
+                  <option value="bkash">bKash Merchant / Personal</option>
+                  <option value="nagad">Nagad Account</option>
+                  <option value="rocket">Rocket Account</option>
+                  <option value="bank_transfer">Bank Account Transfer</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">bKash Account Number</label>
+                <input class="input-field" id="ll-bkash-num" placeholder="017...">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Nagad Account Number</label>
+                <input class="input-field" id="ll-nagad-num" placeholder="018...">
+              </div>
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Bank Name (Optional)</label>
+                <input class="input-field" id="ll-bank-name" placeholder="e.g. Dutch-Bangla Bank">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Account Number</label>
+                <input class="input-field" id="ll-bank-acc" placeholder="e.g. 2050...">
+              </div>
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Bank Routing Number</label>
+                <input class="input-field" id="ll-bank-routing" placeholder="e.g. 125260...">
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary">Save Payout Preferences</button>
+          </form>
+        </div>
+
+        <!-- Notifications -->
+        <div class="card" style="padding: 28px; margin-bottom: 24px;">
+          <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 16px;">Notification Preferences</h3>
+
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #F1F5F9;">
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: #0F172A;">Rental Applications</div>
+                <div style="font-size: 12px; color: #64748B;">Receive instant notifications when students apply for your property.</div>
+              </div>
+              <input type="checkbox" id="chk-app-notif" checked style="width: 18px; height: 18px; accent-color: #2563EB;" onchange="saveNotificationPreferences()">
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #F1F5F9;">
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: #0F172A;">Rent Payment Receipts</div>
+                <div style="font-size: 12px; color: #64748B;">Get notified when rent is deposited via bKash/Nagad.</div>
+              </div>
+              <input type="checkbox" id="chk-pay-notif" checked style="width: 18px; height: 18px; accent-color: #2563EB;" onchange="saveNotificationPreferences()">
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: #0F172A;">Maintenance Alerts</div>
+                <div style="font-size: 12px; color: #64748B;">Notify when a tenant logs a repair ticket.</div>
+              </div>
+              <input type="checkbox" id="chk-maint-notif" checked style="width: 18px; height: 18px; accent-color: #2563EB;" onchange="saveNotificationPreferences()">
+            </div>
+          </div>
+        </div>
+
+        <!-- Security -->
+        <div class="card" style="padding: 28px;">
+          <h3 style="font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 16px;">Security & Password</h3>
+
+          <form onsubmit="savePasswordSettings(event)">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px;">
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Current Password</label>
+                <input class="input-field" type="password" id="ll-pwd-current" placeholder="••••••••">
+              </div>
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">New Password</label>
+                <input class="input-field" type="password" id="ll-pwd-new" placeholder="••••••••">
+              </div>
+              <div>
+                <label style="font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px;">Confirm Password</label>
+                <input class="input-field" type="password" id="ll-pwd-confirm" placeholder="••••••••">
+              </div>
+            </div>
+
+            <button type="submit" class="btn-secondary">Update Password</button>
+          </form>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', loadLandlordSettings);
+
+    function loadLandlordSettings() {
+      fetch('../../backend/landlord/settings.php')
+        .then(res => {
+          if (res.status === 401 || res.status === 403) {
+            window.location.href = 'login.html';
+            return;
+          }
+          return res.json();
+        })
+        .then(result => {
+          if (!result || !result.success) return;
+          const user = result.data.user || {};
+          const s = result.data.settings || {};
+          const p = result.data.payout || {};
+
+          if (user.full_name && typeof setAuthUser === 'function') {
+            setAuthUser({
+              role: 'landlord',
+              full_name: user.full_name,
+              email: user.email,
+              user_id: user.user_id,
+              avatar_url: user.avatar_url
+            });
+            if (typeof updateHeaderUI === 'function') updateHeaderUI();
+          }
+
+          document.getElementById('ll-payout-method').value = p.payout_method || 'bkash';
+          document.getElementById('ll-bkash-num').value = p.bkash_number || p.bkash_account || '';
+          document.getElementById('ll-nagad-num').value = p.nagad_number || p.nagad_account || '';
+          document.getElementById('ll-bank-name').value = p.bank_name || '';
+          document.getElementById('ll-bank-acc').value = p.bank_account_no || p.bank_account_number || '';
+          document.getElementById('ll-bank-routing').value = p.bank_routing_no || '';
+
+          document.getElementById('chk-app-notif').checked = !!s.application_notifications;
+          document.getElementById('chk-pay-notif').checked = !!s.payment_notifications;
+          document.getElementById('chk-maint-notif').checked = !!s.maintenance_notifications;
+        })
+        .catch(err => console.error('Error loading landlord settings:', err));
+    }
+
+    function savePayoutSettings(e) {
+      e.preventDefault();
+      const method = document.getElementById('ll-payout-method').value;
+      const bkash = document.getElementById('ll-bkash-num').value.trim();
+      const nagad = document.getElementById('ll-nagad-num').value.trim();
+      const bankName = document.getElementById('ll-bank-name').value.trim();
+      const bankAcc = document.getElementById('ll-bank-acc').value.trim();
+      const bankRouting = document.getElementById('ll-bank-routing').value.trim();
+
+      fetch('../../backend/landlord/settings.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'payout',
+          payout_method: method,
+          bkash_number: bkash,
+          bkash_account: bkash,
+          nagad_number: nagad,
+          nagad_account: nagad,
+          bank_name: bankName,
+          bank_account_no: bankAcc,
+          bank_account_number: bankAcc,
+          bank_routing_no: bankRouting
+        })
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result && result.success) {
+          if (typeof showToast === 'function') showToast(result.message || 'Payout preferences saved successfully!');
+          else alert(result.message || 'Payout preferences saved successfully!');
+        } else {
+          if (typeof showToast === 'function') showToast(result?.message || 'Failed to save payout settings', 'error');
+          else alert(result?.message || 'Failed to save payout settings');
+        }
+      })
+      .catch(err => console.error('Error saving payout settings:', err));
+    }
+
+    function saveNotificationPreferences() {
+      const appNotif = document.getElementById('chk-app-notif').checked ? 1 : 0;
+      const payNotif = document.getElementById('chk-pay-notif').checked ? 1 : 0;
+      const maintNotif = document.getElementById('chk-maint-notif').checked ? 1 : 0;
+
+      fetch('../../backend/landlord/settings.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'preferences',
+          application_notifications: appNotif,
+          payment_notifications: payNotif,
+          maintenance_notifications: maintNotif
+        })
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result && result.success) {
+          if (typeof showToast === 'function') showToast('Notification preferences updated!');
+        }
+      })
+      .catch(err => console.error('Error updating notification preferences:', err));
+    }
+
+    function savePasswordSettings(e) {
+      e.preventDefault();
+      const currentPassword = document.getElementById('ll-pwd-current').value;
+      const newPassword = document.getElementById('ll-pwd-new').value;
+      const confirmPassword = document.getElementById('ll-pwd-confirm').value;
+
+      if (!currentPassword || !newPassword) {
+        if (typeof showToast === 'function') showToast('Current and new password are required.', 'error');
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        if (typeof showToast === 'function') showToast('New password and confirm password do not match.', 'error');
+        return;
+      }
+
+      fetch('../../backend/landlord/settings.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'change_password',
+          current_password: currentPassword,
+          new_password: newPassword,
+          confirm_password: confirmPassword
+        })
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result && result.success) {
+          if (typeof showToast === 'function') showToast('Password changed successfully!');
+          document.getElementById('ll-pwd-current').value = '';
+          document.getElementById('ll-pwd-new').value = '';
+          document.getElementById('ll-pwd-confirm').value = '';
+        } else {
+          if (typeof showToast === 'function') showToast(result?.message || 'Failed to change password', 'error');
+        }
+      })
+      .catch(err => console.error('Error changing password:', err));
+    }
+  </script>
+</body>
+</html>
