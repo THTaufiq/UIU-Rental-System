@@ -7,6 +7,7 @@ require_once __DIR__ . '/../common/db.php';
 require_once __DIR__ . '/../common/auth.php';
 
 // Require logged-in landlord role
+// Require logged-in landlord role
 requireRole('landlord');
 
 // Always identify landlord using $_SESSION['user_id']
